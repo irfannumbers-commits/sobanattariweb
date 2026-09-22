@@ -645,7 +645,25 @@
       iframe.replaceWith(buildYtFacade(iframe.dataset.ytId, iframe.dataset.ytTitle));
     }
 
+    // Re-warm YouTube's connections right as the user reaches for a facade
+    // (hover on desktop, touch on mobile) — the static <link rel="preconnect">
+    // tags in <head> cover the first few seconds after page load, but a
+    // browser drops an idle preconnection after ~10s, so a visitor who
+    // waits before clicking would otherwise pay the full DNS/TLS cost again.
+    let ytWarmed = false;
+    function warmYtConnections() {
+      if (ytWarmed) return;
+      ytWarmed = true;
+      ['https://www.youtube.com', 'https://www.google.com', 'https://googlevideo.com'].forEach(function (origin) {
+        const link = document.createElement('link');
+        link.rel = 'preconnect';
+        link.href = origin;
+        document.head.appendChild(link);
+      });
+    }
+
     function playYtFacade(facade) {
+      warmYtConnections();
       document.querySelectorAll('.yt-facade-iframe').forEach(stopYtVideo);
       const id = facade.dataset.ytId;
       const title = facade.dataset.ytTitle;
@@ -662,6 +680,8 @@
     }
 
     ytFacades.forEach(function (facade) {
+      facade.addEventListener('pointerenter', warmYtConnections, { once: true });
+      facade.addEventListener('touchstart', warmYtConnections, { once: true, passive: true });
       facade.addEventListener('click', function () { playYtFacade(facade); });
     });
   }

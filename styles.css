@@ -1479,10 +1479,12 @@ a.contact-card:focus-visible { outline: 2px solid var(--accent); outline-offset:
   transition: transform var(--transition), background-color var(--transition), border-color var(--transition);
 }
 .yt-facade-play svg { fill: #fff; margin-left: 3px; transition: fill var(--transition); }
+.yt-facade-play svg path { fill: #fff; transition: fill var(--transition); }
 .yt-facade:hover .yt-facade-play, .yt-facade:focus-visible .yt-facade-play {
   transform: translate(-50%, -50%) scale(1.1); background: var(--accent); border-color: var(--accent);
 }
-.yt-facade:hover .yt-facade-play svg, .yt-facade:focus-visible .yt-facade-play svg { fill: #111; }
+.yt-facade:hover .yt-facade-play svg, .yt-facade:hover .yt-facade-play svg path,
+.yt-facade:focus-visible .yt-facade-play svg, .yt-facade:focus-visible .yt-facade-play svg path { fill: #111; }
 .yt-facade:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .short-content h3 { font-size: 12.5px; font-weight: 700; line-height: 1.35; margin: 0; color: var(--text-dark); }
 @media (max-width: 1024px) {
