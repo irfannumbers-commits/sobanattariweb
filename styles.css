@@ -2948,6 +2948,9 @@ a.contact-card:focus-visible { outline: 2px solid var(--accent); outline-offset:
   position: absolute; inset: 0; z-index: 2;
   background: linear-gradient(180deg, rgba(0,0,0,0.10) 40%, rgba(0,0,0,0.62) 100%);
 }
+/* Updates page cards have no tag sitting on the image anymore, so
+   the darkening gradient is no longer needed — show the original photo. */
+.updates-section .event-teaser-image::after { display: none; }
 .event-teaser-link:hover .event-teaser-image::before,
 .event-teaser-link:focus-visible .event-teaser-image::before { transform: scale(1.08); }
 .event-teaser-tag {
