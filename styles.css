@@ -3202,7 +3202,6 @@ a.contact-card:focus-visible { outline: 2px solid var(--accent); outline-offset:
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 14px;
 }
 .contact-fab-btn {
   width: 58px; height: 58px; border-radius: 50%; flex-shrink: 0;
@@ -3220,6 +3219,9 @@ a.contact-card:focus-visible { outline: 2px solid var(--accent); outline-offset:
 .contact-fab-wrap.is-open .contact-fab-icon-close { display: block; }
 
 .contact-fab-panel {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 14px);
   width: min(310px, calc(100vw - 40px));
   background: var(--bg-light);
   border: 1px solid var(--border-light);
@@ -3267,7 +3269,7 @@ a.contact-card:focus-visible { outline: 2px solid var(--accent); outline-offset:
 .contact-fab-link-text small { font-size: 12px; color: var(--text-muted); overflow-wrap: anywhere; }
 
 @media (max-width: 480px) {
-  .contact-fab-wrap { right: 14px; bottom: max(14px, env(safe-area-inset-bottom)); gap: 12px; }
+  .contact-fab-wrap { right: 14px; bottom: max(14px, env(safe-area-inset-bottom)); }
   .contact-fab-btn { width: 52px; height: 52px; }
   .contact-fab-btn svg { width: 22px; height: 22px; }
 }
