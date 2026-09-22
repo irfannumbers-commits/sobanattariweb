@@ -62,6 +62,7 @@
       'events': 'updates',
       'videos': 'videos',
       'books': 'books',
+      'seerat-mustafa-modern-science': 'books',
       // local .html fallback (pre-rewrite / file:// testing)
       'index': 'home',
       'biography': 'about',

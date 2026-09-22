@@ -130,20 +130,8 @@
 <section id="volunteer-form" class="section-off-white">
   <div class="container contact-form animate-on-scroll" style="max-width:600px;">
     <div class="section-header"><span class="section-label">Join Our Team</span><h2>Volunteer Registration</h2></div>
-    <p class="section-intro" style="margin-bottom:32px;">Register as a flood relief volunteer. We'll contact you when the next operation is launched.</p>
-    <form id="relief-form" onsubmit="handleReliefSubmit(event)">
-      <label class="field-label">Full Name *</label>
-      <input type="text" placeholder="Your full name" required />
-      <label class="field-label">Phone / WhatsApp *</label>
-      <input type="tel" placeholder="+92 324 4008906" required />
-      <label class="field-label">Skills / Availability</label>
-      <textarea placeholder="e.g. Medical training, logistics, driving, fundraising, weekends available..."></textarea>
-      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Register as Volunteer</button>
-    </form>
-    <div id="relief-success" class="form-success" style="display:none;text-align:center;">
-      <div class="ttl">JazakAllah Khair!</div>
-      <p>You're registered as a flood relief volunteer. We'll notify you when the next operation is launched. May Allah reward your intention.</p>
-    </div>
+    <p class="section-intro" style="margin-bottom:20px;">Online volunteer registration is being set up. Check back soon, or reach out to us directly to join the next relief operation.</p>
+    <span class="course-enroll-soon" aria-disabled="true">Registration Opening Soon</span>
   </div>
 </section>
 
@@ -209,7 +197,6 @@
   function toggleMenu() { const menu = document.getElementById('mobile-menu'); const backdrop = document.getElementById('mobile-menu-backdrop'); const button = document.getElementById('nav-hamburger'); const open = menu.classList.toggle('open'); backdrop.classList.toggle('open', open); menu.setAttribute('aria-hidden', String(!open)); button.setAttribute('aria-expanded', String(open)); document.body.classList.toggle('menu-open', open); if (open) menu.querySelector('.nav-mobile-close').focus(); }
   function closeMenu() { document.getElementById('mobile-menu').classList.remove('open'); document.getElementById('mobile-menu-backdrop').classList.remove('open'); document.getElementById('mobile-menu').setAttribute('aria-hidden', 'true'); document.getElementById('nav-hamburger').setAttribute('aria-expanded', 'false'); document.body.classList.remove('menu-open'); }
   document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
-  function handleReliefSubmit(e){ e.preventDefault(); e.target.style.display='none'; document.getElementById('relief-success').style.display='block'; }
   (function () { const nav = document.getElementById('navbar'); const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 80); onScroll(); window.addEventListener('scroll', onScroll, { passive: true }); })();
   const revealObs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); revealObs.unobserve(e.target); } }); }, { threshold: 0.1 });
   document.querySelectorAll('.animate-on-scroll').forEach(el => revealObs.observe(el));

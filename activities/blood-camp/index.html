@@ -128,26 +128,8 @@
 <section id="register" class="section-off-white">
   <div class="container contact-form animate-on-scroll" style="max-width:600px;">
     <div class="section-header"><span class="section-label">Register to Donate</span><h2>Join the Camp</h2></div>
-    <p class="section-intro" style="margin-bottom:32px;">Register below and our team will reach out with confirmation and location details for the nearest camp.</p>
-    <form id="blood-form" onsubmit="handleBloodSubmit(event)">
-      <label class="field-label">Full Name *</label>
-      <input type="text" placeholder="Your full name" required />
-      <label class="field-label">Phone Number *</label>
-      <input type="tel" placeholder="+92 324 4008906" required />
-      <label class="field-label">Blood Group *</label>
-      <select required>
-        <option value="">Select your blood group</option>
-        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
-        <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
-      </select>
-      <label class="field-label">City *</label>
-      <input type="text" placeholder="Your city" required />
-      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Register for Blood Camp</button>
-    </form>
-    <div id="blood-success" class="form-success" style="display:none;text-align:center;">
-      <div class="ttl">JazakAllah Khair!</div>
-      <p>Your registration is confirmed. Our team will contact you with camp details. May Allah accept this act of service.</p>
-    </div>
+    <p class="section-intro" style="margin-bottom:20px;">Online registration for upcoming blood camps is being set up. Check back soon, or reach out to us directly to be added to the next drive.</p>
+    <span class="course-enroll-soon" aria-disabled="true">Registration Opening Soon</span>
   </div>
 </section>
 
@@ -213,7 +195,6 @@
   function toggleMenu() { const menu = document.getElementById('mobile-menu'); const backdrop = document.getElementById('mobile-menu-backdrop'); const button = document.getElementById('nav-hamburger'); const open = menu.classList.toggle('open'); backdrop.classList.toggle('open', open); menu.setAttribute('aria-hidden', String(!open)); button.setAttribute('aria-expanded', String(open)); document.body.classList.toggle('menu-open', open); if (open) menu.querySelector('.nav-mobile-close').focus(); }
   function closeMenu() { document.getElementById('mobile-menu').classList.remove('open'); document.getElementById('mobile-menu-backdrop').classList.remove('open'); document.getElementById('mobile-menu').setAttribute('aria-hidden', 'true'); document.getElementById('nav-hamburger').setAttribute('aria-expanded', 'false'); document.body.classList.remove('menu-open'); }
   document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
-  function handleBloodSubmit(e){ e.preventDefault(); e.target.style.display='none'; document.getElementById('blood-success').style.display='block'; }
   (function () { const nav = document.getElementById('navbar'); const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 80); onScroll(); window.addEventListener('scroll', onScroll, { passive: true }); })();
   const revealObs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); revealObs.unobserve(e.target); } }); }, { threshold: 0.1 });
   document.querySelectorAll('.animate-on-scroll').forEach(el => revealObs.observe(el));
