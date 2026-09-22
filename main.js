@@ -597,7 +597,7 @@
     modalId: 'yt-modal',
     badge: 'YouTube',
     title: 'Our YouTube Channels',
-    intro: 'Three channels, one mission &mdash; pick where to watch.',
+    intro: 'Lectures, shorts &amp; speeches &mdash; three channels, one message.',
     icon: YT_ICON,
     channels: [
       { name: 'Soban Attari', count: '1M', href: 'https://www.youtube.com/@SobanAttari26' },
@@ -612,11 +612,57 @@
     modalId: 'ig-modal',
     badge: 'Instagram',
     title: 'Our Instagram Accounts',
-    intro: 'Two accounts, one mission &mdash; pick where to follow.',
+    intro: 'Daily reminders &amp; reflections &mdash; two accounts, one message.',
     icon: IG_ICON,
     channels: [
       { name: 'Soban Attari', count: '545K', href: 'https://www.instagram.com/sobanattari26/' },
       { name: 'Youth Talk', count: '24.3K', href: 'https://www.instagram.com/youthtalk.official/' }
     ]
   });
+
+  // ---- YouTube click-to-load facades (videos page) ----
+  // Swaps a thumbnail + play button for a real iframe only on click, so a
+  // page with many embeds doesn't fire them all at once on load. Starting a
+  // new video stops whichever one was already playing, so only one plays
+  // at a time.
+  const ytFacades = document.querySelectorAll('.yt-facade');
+  if (ytFacades.length) {
+    const YT_PLAY_ICON = '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';
+
+    function buildYtFacade(id, title) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'yt-facade';
+      btn.dataset.ytId = id;
+      btn.dataset.ytTitle = title;
+      btn.setAttribute('aria-label', 'Play video: ' + title);
+      btn.innerHTML = `<img class="yt-facade-thumb" src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt="" loading="lazy" /><span class="yt-facade-play" aria-hidden="true">${YT_PLAY_ICON}</span>`;
+      btn.addEventListener('click', function () { playYtFacade(btn); });
+      return btn;
+    }
+
+    function stopYtVideo(iframe) {
+      iframe.replaceWith(buildYtFacade(iframe.dataset.ytId, iframe.dataset.ytTitle));
+    }
+
+    function playYtFacade(facade) {
+      document.querySelectorAll('.yt-facade-iframe').forEach(stopYtVideo);
+      const id = facade.dataset.ytId;
+      const title = facade.dataset.ytTitle;
+      const iframe = document.createElement('iframe');
+      iframe.className = 'yt-facade-iframe';
+      iframe.dataset.ytId = id;
+      iframe.dataset.ytTitle = title;
+      iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = title;
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      facade.replaceWith(iframe);
+    }
+
+    ytFacades.forEach(function (facade) {
+      facade.addEventListener('click', function () { playYtFacade(facade); });
+    });
+  }
 })();

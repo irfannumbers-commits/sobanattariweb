@@ -11,6 +11,13 @@
 }
 
 :root {
+  /* This site has no dark theme — opt out of the OS/browser's automatic
+     dark-mode repainting (Android Chrome "Force Dark", Samsung Internet,
+     etc.), which otherwise heuristically inverts backgrounds and text and
+     is what was making the stats row and page backgrounds flip on some
+     devices. */
+  color-scheme: only light;
+
   /* Section backgrounds — alternating light/dark */
   --bg-light:        #ffffff;
   --bg-off-white:    #f7f7f7;
@@ -1418,7 +1425,7 @@ a.contact-card:focus-visible { outline: 2px solid var(--accent); outline-offset:
 .dcard.center { text-align: center; }
 .past-episodes-grid { align-items: stretch; }
 .past-episode-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
-.past-episode-video { aspect-ratio: 16 / 9; background: var(--bg-dark); overflow: hidden; }
+.past-episode-video { position: relative; aspect-ratio: 16 / 9; background: var(--bg-dark); overflow: hidden; }
 .past-episode-video iframe { width: 100%; height: 100%; border: 0; display: block; }
 .past-episode-content { padding: 22px 22px 24px; display: flex; flex: 1; flex-direction: column; gap: 10px; }
 .past-episode-label { color: var(--accent-dark); font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
@@ -1454,6 +1461,29 @@ a.contact-card:focus-visible { outline: 2px solid var(--accent); outline-offset:
 .short-video { position: relative; aspect-ratio: 9 / 16; background: var(--bg-dark); overflow: hidden; }
 .short-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
 .short-content { padding: 12px 14px 16px; }
+
+/* ---- YouTube click-to-load facade — replaces eager iframes so the page
+   doesn't fire 14 embeds at once, and only one video plays at a time ---- */
+.yt-facade {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  padding: 0; margin: 0; border: 0; background: var(--bg-dark);
+  cursor: pointer; display: block;
+}
+.yt-facade-thumb { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.85; transition: opacity var(--transition); }
+.yt-facade:hover .yt-facade-thumb, .yt-facade:focus-visible .yt-facade-thumb { opacity: 1; }
+.yt-facade-play {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(17,17,17,0.55); border: 2px solid rgba(255,255,255,0.85);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--transition), background-color var(--transition), border-color var(--transition);
+}
+.yt-facade-play svg { fill: #fff; margin-left: 3px; transition: fill var(--transition); }
+.yt-facade:hover .yt-facade-play, .yt-facade:focus-visible .yt-facade-play {
+  transform: translate(-50%, -50%) scale(1.1); background: var(--accent); border-color: var(--accent);
+}
+.yt-facade:hover .yt-facade-play svg, .yt-facade:focus-visible .yt-facade-play svg { fill: #111; }
+.yt-facade:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .short-content h3 { font-size: 12.5px; font-weight: 700; line-height: 1.35; margin: 0; color: var(--text-dark); }
 @media (max-width: 1024px) {
   .shorts-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
