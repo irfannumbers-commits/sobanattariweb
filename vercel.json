@@ -39,9 +39,13 @@
     { "source": "/activities/flood-relief.html", "destination": "/activities/flood-relief/", "permanent": true },
     { "source": "/activities/plantation.html", "destination": "/activities/plantation/", "permanent": true },
 
-    { "source": "/events/females-session-sep-2026.html", "destination": "/events/females-session-sep-2026/", "permanent": true },
+    { "source": "/events/females-session-sep-2026.html", "destination": "/events/females-session-oct-2026/", "permanent": true },
     { "source": "/events/youth-talks-lahore-sep-2026.html", "destination": "/events/youth-talks-lahore-sep-2026/", "permanent": true },
-    { "source": "/events/youth-talks-karachi-sep-2026.html", "destination": "/events/youth-talks-karachi-sep-2026/", "permanent": true },
-    { "source": "/events/deeni-tulba-ai-nov-2026.html", "destination": "/events/deeni-tulba-ai-nov-2026/", "permanent": true }
+    { "source": "/events/youth-talks-karachi-sep-2026.html", "destination": "/events/youth-talks-karachi-oct-2026/", "permanent": true },
+    { "source": "/events/deeni-tulba-ai-nov-2026.html", "destination": "/events/deeni-tulba-ai-oct-2026/", "permanent": true },
+
+    { "source": "/events/females-session-sep-2026/", "destination": "/events/females-session-oct-2026/", "permanent": true },
+    { "source": "/events/deeni-tulba-ai-nov-2026/", "destination": "/events/deeni-tulba-ai-oct-2026/", "permanent": true },
+    { "source": "/events/youth-talks-karachi-sep-2026/", "destination": "/events/youth-talks-karachi-oct-2026/", "permanent": true }
   ]
 }

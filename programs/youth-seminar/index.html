@@ -35,42 +35,13 @@
     <div class="nav-links" id="nav-links">
       <a href="/">Home</a>
       <a href="/soban-attari-biography/">About</a>
-      <a href="/updates/" data-nav="updates"><span class="updates-shine"></span>Updates<span class="updates-dot" aria-hidden="true"></span></a>
+      <a href="/updates/"><span class="updates-shine"></span>Updates</a>
       <a href="/activities/">Projects</a>
       <a href="/videos/">Videos</a>
-      <div class="nav-dropdown-wrapper">
-        <button class="nav-dropdown-toggle" data-dropdown="what-we-offer" aria-haspopup="true" aria-expanded="false">
-          What We Offer
-          <svg class="nav-dropdown-arrow" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="2,3 5,7 8,3"/></svg>
-        </button>
-        <div class="nav-dropdown-menu" data-dropdown-menu="what-we-offer">
-          <div class="nav-dropdown-mega">
-            <div>
-              <div class="nav-dropdown-group-title">Talks &amp; Events</div>
-              <a href="/programs/youth-talks/" class="nav-dropdown-item">Youth Talks</a>
-              <a href="/programs/youth-seminar/" class="nav-dropdown-item">Youth Seminar</a>
-              <a href="/activities/" class="nav-dropdown-item">Community Events</a>
-            </div>
-            <div>
-              <div class="nav-dropdown-group-title">Impact Programs</div>
-              <a href="/activities/blood-camp/" class="nav-dropdown-item">Blood Donation</a>
-              <a href="/activities/flood-relief/" class="nav-dropdown-item">Flood Relief</a>
-              <a href="/activities/plantation/" class="nav-dropdown-item">Plantation Drive</a>
-            </div>
-            <div>
-              <div class="nav-dropdown-group-title">Online Courses</div>
-              <a href="/#courses" class="nav-dropdown-item">Parenting Mastery</a>
-              <a href="/#courses" class="nav-dropdown-item">Life Skills for Modern Muslims</a>
-              <a href="/#courses" class="nav-dropdown-item">Islamic Psychology</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a href="/#books">Books</a>
       <a href="/#contact">Contact</a>
       <a href="/#book-session" class="nav-cta">Book a Session</a>
     </div>
-    <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
@@ -79,19 +50,9 @@
   <div class="nav-mobile-header"><span class="nav-mobile-title">Menu</span><button class="nav-mobile-close" type="button" onclick="closeMenu()" aria-label="Close menu">&times;</button></div>
   <a href="/" onclick="closeMenu()">Home</a>
   <a href="/soban-attari-biography/" onclick="closeMenu()">About</a>
-  <div class="mobile-group-title">Talks &amp; Events</div>
-  <a href="/programs/youth-talks/" class="mobile-sub" onclick="closeMenu()">Youth Talks</a>
-  <a href="/programs/youth-seminar/" class="mobile-sub" onclick="closeMenu()">Youth Seminar</a>
-  <a href="/activities/" class="mobile-sub" onclick="closeMenu()">Community Events</a>
-  <div class="mobile-group-title">Impact Programs</div>
-  <a href="/activities/blood-camp/" class="mobile-sub" onclick="closeMenu()">Blood Donation</a>
-  <a href="/activities/flood-relief/" class="mobile-sub" onclick="closeMenu()">Flood Relief</a>
-  <a href="/activities/plantation/" class="mobile-sub" onclick="closeMenu()">Plantation Drive</a>
-  <div class="mobile-group-title">Online Courses</div>
-  <a href="/#courses" class="mobile-sub" onclick="closeMenu()">Parenting Mastery</a>
-  <a href="/#courses" class="mobile-sub" onclick="closeMenu()">Life Skills for Modern Muslims</a>
-  <a href="/#courses" class="mobile-sub" onclick="closeMenu()">Islamic Psychology</a>
-  <a href="/#books" onclick="closeMenu()">Books</a>
+  <a href="/updates/" onclick="closeMenu()"><span class="updates-shine"></span>Updates</a>
+  <a href="/activities/" onclick="closeMenu()">Projects</a>
+  <a href="/videos/" onclick="closeMenu()">Videos</a>
   <a href="/#contact" onclick="closeMenu()">Contact</a>
   <a href="/#book-session" onclick="closeMenu()">Book a Session</a>
 </div>

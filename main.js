@@ -475,15 +475,4 @@
       if (e.key === 'Escape' && wrap.classList.contains('is-open')) { close(); btn.focus(); }
     });
   })();
-
-  // ---- "Share on WhatsApp" buttons (event pages) — opens a pre-written
-  // caption (title, date/time/location, a short pitch, and the page link)
-  // straight into WhatsApp / WhatsApp Web via a wa.me share link. No-ops on
-  // pages that don't have one.
-  document.querySelectorAll('.share-whatsapp-btn[data-share-text]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      const text = btn.getAttribute('data-share-text');
-      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
-    });
-  });
 })();
