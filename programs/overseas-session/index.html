@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light" />
+  <link rel="icon" type="image/svg+xml" href="/brand_assets/favicon.svg" />
   <title>Overseas Youth Talks · Soban Attari</title>
   <meta name="description" content="An invitation for young people, in Pakistan and abroad, who want to contribute to this positive, reformative work." />
   <link rel="canonical" href="https://sobanattari.com/programs/overseas-session/" />
@@ -79,7 +80,7 @@
         <p>We are happy to guide and support you wherever possible, and we would also value your ideas, experiences, connections, and local insights.</p>
         <p><strong>Let&rsquo;s connect, support one another, and work together to create a positive and lasting impact.</strong></p>
       </div>
-      <a href="#ovs-form" class="btn btn-primary">Fill Out the Form</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc7hsKjmbagqgUWG6q9c8mJi8ZzzfjXTR8eyiKfvsDDO6PRcg/viewform" target="_blank" rel="noopener" class="btn btn-primary">Fill Out the Form</a>
     </div>
   </div>
 </section>
@@ -97,50 +98,9 @@
     <div class="fos-form-card animate-on-scroll">
       <div class="fos-form-head">
         <span class="section-label">Overseas Youth Talks — Get in Touch</span>
-        <p>Fill in the details below &mdash; our team will follow up with you.</p>
+        <p>Fill out the short Google Form below &mdash; our team will follow up with you.</p>
       </div>
-      <form class="fos-form" id="ovs-form-el"
-            action="https://docs.google.com/forms/d/e/1FAIpQLSc7hsKjmbagqgUWG6q9c8mJi8ZzzfjXTR8eyiKfvsDDO6PRcg/formResponse"
-            method="POST" target="ovs-hidden-iframe" novalidate>
-        <div class="fos-field">
-          <input type="text" id="ovs-name" name="entry.1370994313" placeholder=" " autocomplete="name" required />
-          <label for="ovs-name">Name</label>
-          <div class="fos-field-msg">Please enter your name.</div>
-        </div>
-        <div class="fos-field">
-          <input type="tel" id="ovs-whatsapp" name="entry.1871187537" placeholder=" " autocomplete="tel" inputmode="tel" required />
-          <label for="ovs-whatsapp">WhatsApp Number</label>
-          <div class="fos-field-msg">Enter a valid number (7–15 digits).</div>
-        </div>
-        <div class="fos-field">
-          <input type="email" id="ovs-email" name="entry.738361601" placeholder=" " autocomplete="email" required />
-          <label for="ovs-email">Email</label>
-          <div class="fos-field-msg">Enter a valid email address.</div>
-        </div>
-        <div class="fos-field">
-          <input type="text" id="ovs-country" name="entry.174100082" placeholder=" " autocomplete="country-name" required />
-          <label for="ovs-country">Country</label>
-          <div class="fos-field-msg">Please enter your country.</div>
-        </div>
-        <div class="fos-field fos-field--full">
-          <textarea id="ovs-help" name="entry.720280526" placeholder=" "></textarea>
-          <label for="ovs-help">How would you like to contribute or collaborate?</label>
-        </div>
-        <div class="fos-submit-row">
-          <button type="submit" class="fos-submit">
-            <span class="label-send">Submit</span>
-            <span class="spinner" aria-hidden="true"></span>
-          </button>
-          <p class="fos-privacy">Your details are shared only with the Soban Attari team.</p>
-        </div>
-        <div class="fos-success" id="ovs-form-success" role="status" aria-live="polite" hidden>
-          <div class="check"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg></div>
-          <h3>Thank you</h3>
-          <p>We&rsquo;ve received your details. Our team will reach out to you soon.</p>
-        </div>
-        <p class="fos-hp" aria-hidden="true"><label>Do not fill this field <input type="text" name="ovs_company" tabindex="-1" autocomplete="off" /></label></p>
-      </form>
-      <iframe class="fos-hidden-iframe" name="ovs-hidden-iframe" title="Form response target" tabindex="-1" aria-hidden="true"></iframe>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc7hsKjmbagqgUWG6q9c8mJi8ZzzfjXTR8eyiKfvsDDO6PRcg/viewform" target="_blank" rel="noopener" class="btn btn-primary">Fill Out the Form</a>
     </div>
   </div>
 </section>
@@ -208,71 +168,6 @@
   (function () { const nav = document.getElementById('navbar'); const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 80); onScroll(); window.addEventListener('scroll', onScroll, { passive: true }); })();
   const revealObs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); revealObs.unobserve(e.target); } }); }, { threshold: 0.1 });
   document.querySelectorAll('.animate-on-scroll').forEach(el => revealObs.observe(el));
-
-  /* Overseas Youth Talks get-in-touch form — native fields, posts to Google
-     Forms via hidden iframe (same technique as the FOS chapter form). */
-  (function () {
-    const form = document.getElementById('ovs-form-el');
-    if (!form) return;
-    const successPanel = document.getElementById('ovs-form-success');
-    const frame = document.querySelector('.fos-hidden-iframe[name="ovs-hidden-iframe"]');
-    let submitting = false, done = false, fallbackTimer = null;
-
-    const rules = {
-      'ovs-name':     v => v.trim().length >= 2,
-      'ovs-whatsapp': v => { const d = v.replace(/\D/g, ''); return d.length >= 7 && d.length <= 15 && !/^(\d)\1+$/.test(d); },
-      'ovs-email':    v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
-      'ovs-country':  v => v.trim().length >= 2
-    };
-
-    function validateField(id) {
-      const input = document.getElementById(id);
-      const ok = rules[id](input.value);
-      input.closest('.fos-field').classList.toggle('has-error', !ok);
-      return ok;
-    }
-
-    Object.keys(rules).forEach(id => {
-      const input = document.getElementById(id);
-      input.addEventListener('blur', () => validateField(id));
-      input.addEventListener('input', () => {
-        if (input.closest('.fos-field').classList.contains('has-error')) validateField(id);
-      });
-    });
-
-    function showSuccess() {
-      if (done) return;
-      done = true;
-      clearTimeout(fallbackTimer);
-      form.classList.remove('is-submitting');
-      form.classList.add('is-done');
-      const head = form.closest('.fos-form-card').querySelector('.fos-form-head');
-      if (head) head.hidden = true;
-      successPanel.hidden = false;
-      void successPanel.offsetWidth;
-      successPanel.classList.add('show');
-      successPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    form.addEventListener('submit', function (e) {
-      const hp = form.elements['ovs_company'];
-      if (hp && hp.value !== '') { e.preventDefault(); return; }
-
-      let firstInvalid = null;
-      Object.keys(rules).forEach(id => {
-        if (!validateField(id) && !firstInvalid) firstInvalid = document.getElementById(id);
-      });
-      if (firstInvalid) { e.preventDefault(); firstInvalid.focus(); return; }
-
-      submitting = true;
-      form.classList.add('is-submitting');
-      fallbackTimer = setTimeout(showSuccess, 2600);
-    });
-
-    if (frame) {
-      frame.addEventListener('load', function () { if (submitting) showSuccess(); });
-    }
-  })();
 </script>
   <script src="/main.js"></script>
 </body>

@@ -180,7 +180,6 @@ events.html             # Events listing
 blogs.html              # University sessions
 programs/
   youth-talks.html
-  growth-room.html
   youth-seminar.html
 activities/
   blood-camp.html

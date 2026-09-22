@@ -390,4 +390,72 @@
       facade.addEventListener('click', function () { playYtFacade(facade); });
     });
   }
+
+  // ---- Floating "Contact Us" button — every page, always reachable ----
+  // The full #contact section (home page only) and the "Contact" nav link
+  // are otherwise the only ways to reach out, and on mobile that means
+  // opening the hamburger menu first. This stays pinned bottom-right on
+  // every page so WhatsApp/Call/Email are always one tap away.
+  (function setupContactFab() {
+    const WHATSAPP_ICON = '<svg viewBox="0 0 24 24" fill="#111"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>';
+    const CALL_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+    const MAIL_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>';
+    const CHAT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>';
+    const CLOSE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'contact-fab-wrap';
+    wrap.innerHTML = `
+      <div class="contact-fab-panel" id="contact-fab-panel" role="dialog" aria-modal="false" aria-labelledby="contact-fab-title" aria-hidden="true">
+        <div class="contact-fab-panel-head">
+          <span id="contact-fab-title">Get in Touch</span>
+          <button type="button" class="contact-fab-close" aria-label="Close contact options">&times;</button>
+        </div>
+        <div class="contact-fab-links">
+          <a class="contact-fab-link" href="https://wa.me/923244008906" target="_blank" rel="noopener">
+            <span class="contact-fab-link-icon">${WHATSAPP_ICON}</span>
+            <span class="contact-fab-link-text"><b>WhatsApp</b><small>+92 324 4008906</small></span>
+          </a>
+          <a class="contact-fab-link" href="tel:+923244008906">
+            <span class="contact-fab-link-icon">${CALL_ICON}</span>
+            <span class="contact-fab-link-text"><b>Call</b><small>+92 324 4008906</small></span>
+          </a>
+          <a class="contact-fab-link" href="mailto:team@sobanattari.com">
+            <span class="contact-fab-link-icon">${MAIL_ICON}</span>
+            <span class="contact-fab-link-text"><b>Email</b><small>team@sobanattari.com</small></span>
+          </a>
+        </div>
+      </div>
+      <button type="button" class="contact-fab-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="contact-fab-panel" aria-label="Contact us">
+        <span class="contact-fab-icon-open" aria-hidden="true">${CHAT_ICON}</span>
+        <span class="contact-fab-icon-close" aria-hidden="true">${CLOSE_ICON}</span>
+      </button>`;
+    document.body.appendChild(wrap);
+
+    const btn = wrap.querySelector('.contact-fab-btn');
+    const panel = wrap.querySelector('.contact-fab-panel');
+    const closeBtn = wrap.querySelector('.contact-fab-close');
+
+    function open() {
+      wrap.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+      panel.setAttribute('aria-hidden', 'false');
+    }
+    function close() {
+      wrap.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      panel.setAttribute('aria-hidden', 'true');
+    }
+
+    btn.addEventListener('click', function () {
+      if (wrap.classList.contains('is-open')) close(); else open();
+    });
+    closeBtn.addEventListener('click', function () { close(); btn.focus(); });
+    document.addEventListener('click', function (e) {
+      if (wrap.classList.contains('is-open') && !wrap.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && wrap.classList.contains('is-open')) { close(); btn.focus(); }
+    });
+  })();
 })();
