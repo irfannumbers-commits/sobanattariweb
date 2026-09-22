@@ -29,7 +29,7 @@
         <a href="${projects}" data-nav="projects">Projects</a>
         <a href="${videos}" data-nav="videos">Videos</a>
         <a href="${books}" data-nav="books">Books</a>
-        <a href="${home}#contact">Contact</a>
+        <a href="${home}#contact" data-nav="contact">Contact</a>
         <a href="${home}#book-session" class="nav-cta">Book a Session</a>
       </div>
       <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMenu()" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
@@ -44,7 +44,7 @@
       <a href="${projects}" data-nav="projects" onclick="closeMenu()">Projects</a>
       <a href="${videos}" data-nav="videos" onclick="closeMenu()">Videos</a>
       <a href="${books}" data-nav="books" onclick="closeMenu()">Books</a>
-      <a href="${home}#contact" onclick="closeMenu()">Contact</a>
+      <a href="${home}#contact" data-nav="contact" onclick="closeMenu()">Contact</a>
       <a href="${home}#book-session" onclick="closeMenu()">Book a Session</a>`;
 
     /* ---- active / current link ---- */
@@ -73,6 +73,29 @@
         el.classList.add('active');
         el.setAttribute('aria-current', 'page');
       });
+    }
+
+    /* ---- Home page only: "Contact" nav link takes over the active/underline
+           state while the #contact section is in view, and hands it back to
+           "Home" once the visitor scrolls elsewhere on the page. ---- */
+    const contactSection = navKey === 'home' ? document.getElementById('contact') : null;
+    if (contactSection) {
+      const homeLinks = document.querySelectorAll('[data-nav="home"]');
+      const contactLinks = document.querySelectorAll('[data-nav="contact"]');
+      const setActiveGroup = function (links, isActive) {
+        links.forEach(function (el) {
+          el.classList.toggle('active', isActive);
+          if (isActive) el.setAttribute('aria-current', 'page');
+          else el.removeAttribute('aria-current');
+        });
+      };
+      const contactSpy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          setActiveGroup(contactLinks, entry.isIntersecting);
+          setActiveGroup(homeLinks, !entry.isIntersecting);
+        });
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+      contactSpy.observe(contactSection);
     }
 
     /* ---- Mobile drawer: single source of truth for open/close, with a focus
@@ -188,8 +211,7 @@
               if (o.soon) {
                 return `
             <div class="channels-row is-disabled" aria-disabled="true">
-              <span class="channels-info"><b>${o.title}</b><small>${o.desc}</small></span>
-              <span class="course-enroll-soon" aria-hidden="true">Coming Soon</span>
+              <span class="channels-info"><b>${o.title}<span class="channels-soon-tag">Coming Soon</span></b><small>${o.desc}</small></span>
             </div>`;
               }
               return `
@@ -453,4 +475,15 @@
       if (e.key === 'Escape' && wrap.classList.contains('is-open')) { close(); btn.focus(); }
     });
   })();
+
+  // ---- "Share on WhatsApp" buttons (event pages) — opens a pre-written
+  // caption (title, date/time/location, a short pitch, and the page link)
+  // straight into WhatsApp / WhatsApp Web via a wa.me share link. No-ops on
+  // pages that don't have one.
+  document.querySelectorAll('.share-whatsapp-btn[data-share-text]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const text = btn.getAttribute('data-share-text');
+      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
+    });
+  });
 })();

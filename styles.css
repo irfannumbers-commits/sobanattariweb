@@ -2129,16 +2129,31 @@ a.contact-card:focus-visible { outline: 2px solid var(--accent); outline-offset:
 .channels-row:hover { border-color: var(--accent); background: var(--accent-dim); transform: translateY(-2px); }
 .channels-icon { flex-shrink: 0; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
 .channels-icon svg { width: 28px; height: 28px; display: block; }
-.channels-info { display: flex; flex-direction: column; gap: 3px; flex: 1; }
-.channels-info b { font-family: var(--font-body); font-weight: 700; font-size: 15px; color: var(--text-dark); }
-.channels-info small { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+.channels-info { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+.channels-info b { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-family: var(--font-body); font-weight: 700; font-size: 15px; color: var(--text-dark); }
+.channels-info small { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; overflow-wrap: anywhere; }
 .channels-arrow { flex-shrink: 0; font-size: 18px; color: var(--text-muted); transition: transform var(--transition), color var(--transition); }
 .channels-row:hover .channels-arrow { color: var(--accent); transform: translateX(3px); }
 .channels-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-/* Not-yet-available option (e.g. One-to-One Session) — same row, no link */
-.channels-row.is-disabled { cursor: default; }
+/* Not-yet-available option (e.g. One-to-One Session) — same row, no link. The
+   "Coming Soon" tag sits inline next to the title instead of as a separate
+   right-hand column, so it can never get squeezed on narrow screens. */
+.channels-row.is-disabled { cursor: default; align-items: flex-start; }
 .channels-row.is-disabled:hover { border-color: var(--border-light); background: none; transform: none; }
+.channels-soon-tag {
+  display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0;
+  padding: 3px 10px; border: 1px solid var(--border-light); border-radius: 100px;
+  background: var(--bg-off-white); color: var(--text-muted);
+  font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+  white-space: nowrap;
+}
+.channels-soon-tag::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+@media (max-width: 400px) {
+  .channels-info b { gap: 6px; }
+  .channels-soon-tag { padding: 3px 8px; font-size: 9.5px; }
+}
 
 /* =========================================================
    HIDE THE 01 / 02 / 03 BADGE ON EVENT / UPDATE CARD IMAGES
