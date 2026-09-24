@@ -2914,6 +2914,10 @@ a.contact-card:focus-visible { outline: 2px solid var(--accent); outline-offset:
 .event-teasers.event-teasers-1up { grid-template-columns: minmax(0, 1fr); max-width: 600px; }
 .event-teaser-link { display: flex; color: inherit; }
 .event-teaser-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.event-teaser-link.is-disabled { cursor: default; }
+.event-teaser-link.is-disabled:hover .event-teaser,
+.event-teaser-link.is-disabled:focus-visible .event-teaser { transform: none; border-color: var(--border-light); box-shadow: none; }
+.event-teaser-link.is-disabled:hover .event-teaser-image::before { transform: none; }
 .event-teaser {
   display: flex; flex-direction: column;
   width: 100%; overflow: hidden;
