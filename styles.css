@@ -3157,13 +3157,9 @@ a.contact-card:focus-visible { outline: 2px solid var(--accent); outline-offset:
   .event-sticky-cta .event-sticky-btn { flex-shrink: 0; padding: 13px 18px; font-size: 12px; letter-spacing: 1.2px; }
   .event-sticky-cta .event-sticky-btn:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 3px; }
   .event-sticky-cta .event-sticky-btn:active { transform: scale(0.97); }
-
-  /* keep the contact bubble clear of the bar */
-  .contact-fab-wrap { transition: transform 0.35s ease; }
-  body.has-event-cta .contact-fab-wrap { transform: translateY(-72px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .event-sticky-cta, .contact-fab-wrap { transition: none; }
+  .event-sticky-cta { transition: none; }
 }
 
 /* Sections after the poster+details block are tightened —
