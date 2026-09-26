@@ -3106,6 +3106,7 @@ a.contact-card:focus-visible { outline: 2px solid var(--accent); outline-offset:
   border: 1px solid rgba(245, 197, 24, 0.3);
 }
 .event-header .event-detail-topics { margin-top: 14px; justify-content: flex-start; }
+.event-header .ysk-schedule-row { margin-top: 18px; }
 
 /* Sections after the poster+details block are tightened —
    this is a quick-facts page, not a long scroll. */
