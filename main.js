@@ -471,4 +471,60 @@
       if (e.key === 'Escape' && wrap.classList.contains('is-open')) { close(); btn.focus(); }
     });
   })();
+
+  // ---- Event pages: sticky mobile action bar ----
+  // On phones the poster + details push the Register / Directions button
+  // below the fold. This pins a compact copy of the page's primary action
+  // (with event name + date/time) to the bottom of the screen, and hides it
+  // whenever the real buttons or the footer are on screen. Built from the
+  // page's own markup, so each event page needs no extra HTML.
+  (function setupEventStickyCta() {
+    const actions = document.querySelector('.event-hero-actions');
+    const primary = actions && actions.querySelector('.btn');
+    const title = document.querySelector('.event-header h1');
+    if (!primary || !title || !('IntersectionObserver' in window)) return;
+
+    const facts = Array.from(document.querySelectorAll('.event-meta-bar .event-meta-pill'))
+      .slice(0, 2)
+      .map(function (pill) {
+        // "Monday, 28 September 2026" → "28 Sep" so the time still fits
+        return pill.textContent.trim()
+          .replace(/^[A-Za-z]+,\s*/, '')
+          .replace(/\s*\d{4}$/, '')
+          .replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/,
+            function (m) { return m.slice(0, 3); });
+      })
+      .join(' · ');
+
+    const bar = document.createElement('div');
+    bar.className = 'event-sticky-cta';
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'Event quick action');
+    bar.innerHTML = '<div class="event-sticky-info"><strong></strong><span></span></div>';
+    bar.querySelector('strong').textContent = title.textContent.trim();
+    bar.querySelector('span').textContent = facts;
+
+    const cta = primary.cloneNode(true);
+    cta.classList.add('event-sticky-btn');
+    bar.appendChild(cta);
+    document.body.appendChild(bar);
+
+    const hiddenBy = new Set();
+    function sync() {
+      const show = hiddenBy.size === 0;
+      bar.classList.toggle('is-visible', show);
+      bar.setAttribute('aria-hidden', String(!show));
+      cta.tabIndex = show ? 0 : -1;
+      document.body.classList.toggle('has-event-cta', show);
+    }
+
+    const watch = [actions, document.getElementById('footer')].filter(Boolean);
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) hiddenBy.add(e.target); else hiddenBy.delete(e.target);
+      });
+      sync();
+    });
+    watch.forEach(function (el) { io.observe(el); });
+  })();
 })();
