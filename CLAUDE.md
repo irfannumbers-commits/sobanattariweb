@@ -14,7 +14,7 @@
 | Property | Value |
 |---|---|
 | Site | Soban Attari — Islamic Scholar, Speaker & Educator |
-| Live URL | https://sobanattariweb.vercel.app/ |
+| Live URL | https://www.sobanattari.com/ |
 | Deployment | Vercel (auto-deploys from main branch) |
 | Stack | Vanilla HTML + CSS + JS (multi-page) |
 | Brand Accent | `#F5C518` (Gold) — used sparingly: labels, CTAs, hover accents, ticker, logo "ATTARI" only |
