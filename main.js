@@ -10,30 +10,15 @@
   const books = '/books/';
 
   // ---- Site data: update these when events change ----
-  // upcomingCount feeds the hero CTA badge and the Updates page badge;
-  // nextEvent feeds the "Next:" chip in the homepage hero (null hides it).
+  // upcomingCount feeds the Updates page "Live Updates" badge.
   const SITE_DATA = {
-    upcomingCount: 4,
-    nextEvent: { title: 'Deeni Students & AI', date: 'Sun 4 Oct', href: '/events/deeni-tulba-ai-oct-2026/' }
+    upcomingCount: 4
   };
 
   document.querySelectorAll('[data-upcoming-count]').forEach(function (el) {
     el.textContent = SITE_DATA.upcomingCount;
   });
 
-  (function renderHeroNextEvent() {
-    const slot = document.getElementById('hero-next');
-    const ev = SITE_DATA.nextEvent;
-    if (!slot || !ev) return;
-    slot.innerHTML = `
-      <a class="hero-next-chip" href="${ev.href}">
-        <span class="hero-live-dot" aria-hidden="true"></span>
-        <b>Next</b>
-        <span class="hn-title">${ev.title}</span>
-        <span class="hn-date">· ${ev.date}</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>`;
-  })();
 
   // Small pulsing live-dot next to "Updates" — desktop nav, every page,
   // same treatment as the home page (the old hand-drawn circle is retired).
