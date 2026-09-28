@@ -9,6 +9,32 @@
   const videos = '/videos/';
   const books = '/books/';
 
+  // ---- Site data: update these when events change ----
+  // upcomingCount feeds the hero CTA badge and the Updates page badge;
+  // nextEvent feeds the "Next:" chip in the homepage hero (null hides it).
+  const SITE_DATA = {
+    upcomingCount: 4,
+    nextEvent: { title: 'Deeni Students & AI', date: 'Sun 4 Oct', href: '/events/deeni-tulba-ai-oct-2026/' }
+  };
+
+  document.querySelectorAll('[data-upcoming-count]').forEach(function (el) {
+    el.textContent = SITE_DATA.upcomingCount;
+  });
+
+  (function renderHeroNextEvent() {
+    const slot = document.getElementById('hero-next');
+    const ev = SITE_DATA.nextEvent;
+    if (!slot || !ev) return;
+    slot.innerHTML = `
+      <a class="hero-next-chip" href="${ev.href}">
+        <span class="hero-live-dot" aria-hidden="true"></span>
+        <b>Next</b>
+        <span class="hn-title">${ev.title}</span>
+        <span class="hn-date">· ${ev.date}</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>`;
+  })();
+
   // Small pulsing live-dot next to "Updates" — desktop nav, every page,
   // same treatment as the home page (the old hand-drawn circle is retired).
   const updatesScribble = '';
@@ -463,14 +489,21 @@
     // Event detail pages keep the screen for their sticky Register / Directions bar
     if (location.pathname.indexOf('/events/') === 0) return;
     const EMAIL = 'team@sobanattari.com';
+    const HINT_KEY = 'sa-email-hint-seen';
     const MAIL_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>';
     const CLOSE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+    const SEND_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>';
 
-    // Compact email bubble: a click toggles a small pill with the address.
+    // Compact email bubble: a click toggles a small "Email us" pill with the
+    // address; a one-time hint (and a hover label on desktop) explains it.
     const wrap = document.createElement('div');
     wrap.className = 'contact-fab-wrap';
     wrap.innerHTML = `
-      <a class="contact-fab-panel" id="contact-fab-panel" href="mailto:${EMAIL}" aria-hidden="true" tabindex="-1">${EMAIL}</a>
+      <a class="contact-fab-panel" id="contact-fab-panel" href="mailto:${EMAIL}" aria-hidden="true" tabindex="-1">
+        <span class="cfp-text"><small>Email us</small><b>${EMAIL}</b></span>
+        <span class="cfp-go">${SEND_ICON}</span>
+      </a>
+      <div class="contact-fab-hint" role="status" aria-live="polite"></div>
       <button type="button" class="contact-fab-btn" aria-expanded="false" aria-controls="contact-fab-panel" aria-label="Email us">
         <span class="contact-fab-icon-open" aria-hidden="true">${MAIL_ICON}</span>
         <span class="contact-fab-icon-close" aria-hidden="true">${CLOSE_ICON}</span>
@@ -479,8 +512,12 @@
 
     const btn = wrap.querySelector('.contact-fab-btn');
     const panel = wrap.querySelector('.contact-fab-panel');
+    const hint = wrap.querySelector('.contact-fab-hint');
+    hint.dataset.label = 'Email us';
 
+    function hideHint() { wrap.classList.remove('show-hint'); }
     function open() {
+      hideHint();
       wrap.classList.add('is-open');
       btn.setAttribute('aria-expanded', 'true');
       btn.setAttribute('aria-label', 'Hide email');
@@ -498,12 +535,30 @@
     btn.addEventListener('click', function () {
       if (wrap.classList.contains('is-open')) close(); else open();
     });
+    hint.addEventListener('click', open);
     document.addEventListener('click', function (e) {
       if (wrap.classList.contains('is-open') && !wrap.contains(e.target)) close();
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && wrap.classList.contains('is-open')) { close(); btn.focus(); }
     });
+
+    // First-visit hint: "Questions? Email us" pops out once, then never again.
+    let hintScheduled = false;
+    function scheduleHint() {
+      if (hintScheduled) return;
+      hintScheduled = true;
+      let seen = false;
+      try { seen = localStorage.getItem(HINT_KEY) === '1'; } catch (err) { /* storage blocked: show it */ }
+      if (seen) return;
+      setTimeout(function () {
+        if (wrap.classList.contains('is-open') || wrap.classList.contains('is-hidden')) { hintScheduled = false; return; }
+        hint.textContent = 'Questions? Email us';
+        wrap.classList.add('show-hint');
+        try { localStorage.setItem(HINT_KEY, '1'); } catch (err) { /* ignore */ }
+        setTimeout(hideHint, 5000);
+      }, 2000);
+    }
 
     // Home page: stay out of the way while the hero (and the purpose strip
     // right under it) fills the screen; appear once the hero scrolls away.
@@ -513,8 +568,10 @@
       new IntersectionObserver(function (entries) {
         const heroVisible = entries[0].intersectionRatio >= 0.35;
         wrap.classList.toggle('is-hidden', heroVisible);
-        if (heroVisible) close();
+        if (heroVisible) { close(); hideHint(); } else scheduleHint();
       }, { threshold: [0, 0.35] }).observe(hero);
+    } else {
+      scheduleHint();
     }
   })();
 
