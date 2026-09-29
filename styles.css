@@ -1709,13 +1709,22 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 .plant-gallery a { position: relative; overflow: hidden; display: block; }
 .plant-gallery img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
 .plant-gallery a:hover img { transform: scale(1.05); }
+/* ── Projects: Community Welfare cards (whole photo, never cropped) ── */
+.event-type-card h3 { font-size: clamp(25px, 1.8vw, 32px); line-height: 1.08; margin-bottom: 10px; position: relative; z-index: 1; }
+.welfare-image { isolation: isolate; background: var(--bg-dark); }
+.welfare-image .sp-fg { object-fit: contain; }
+.event-type-card:hover .welfare-image .sp-bg { transform: scale(1.15); }
+.welfare-section .section-intro { margin-left: auto; margin-right: auto; }
+@media (max-width: 640px) { .event-type-card h3 { font-size: 27px; } }
+
 /* ── Home: horizontally scrollable session recaps (inside #institutions) ── */
-.recap-rail-wrap { position: relative; margin-top: var(--space-lg); }
-.recap-rail-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
-.recap-rail-head h3 { font-size: clamp(20px, 2.2vw, 26px); }
+.recap-rail-wrap { position: relative; margin-top: var(--space-xl); padding-top: var(--space-xl); border-top: 1px solid var(--border-light); }
+.recap-rail-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
+.recap-rail-head h2 { font-size: clamp(30px, 3.6vw, 48px); margin: 10px 0 10px; }
+.recap-rail-head p { font-size: 16px; color: var(--text-muted); max-width: 520px; margin: 0; }
 .recap-rail-nav { display: flex; gap: 8px; }
 .recap-nav {
-  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
   background: var(--bg-light); color: var(--text-dark); border: 1px solid var(--border-light);
   transition: background var(--transition), border-color var(--transition), color var(--transition), opacity var(--transition), transform 0.2s ease;
 }
@@ -1724,46 +1733,45 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 .recap-nav:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .recap-nav:disabled { opacity: 0.35; cursor: default; }
 .recap-rail {
-  display: grid; grid-auto-flow: column; grid-auto-columns: clamp(250px, 29%, 340px); gap: 20px;
+  display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 48px) / 3); gap: 24px;
   overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 2px; overscroll-behavior-x: contain;
   padding: 4px 2px 18px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
 .recap-rail::-webkit-scrollbar { display: none; }
-/* soft edge fade hints there is more to scroll */
-.recap-rail-wrap::after {
-  content: ''; position: absolute; right: 0; top: 62px; bottom: 18px; width: 56px; pointer-events: none;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0), var(--bg-light)); transition: opacity var(--transition);
-}
-.recap-rail-wrap.at-end::after { opacity: 0; }
 .recap-card {
   scroll-snap-align: start; display: flex; flex-direction: column; overflow: hidden;
-  background: var(--bg-light); border: 1px solid var(--border-light); border-radius: 14px;
+  background: var(--bg-light); border: 1px solid var(--border-light); border-radius: 18px;
   box-shadow: 0 1px 2px rgba(17, 17, 17, 0.04), 0 10px 26px -18px rgba(17, 17, 17, 0.25);
   transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 .recap-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 2px 4px rgba(17, 17, 17, 0.05), 0 22px 40px -20px rgba(17, 17, 17, 0.32); }
 .recap-card:active { transform: translateY(-1px); }
 .recap-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-.recap-media { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; isolation: isolate; background: var(--bg-dark); }
+.recap-media { position: relative; display: block; aspect-ratio: 5 / 4; overflow: hidden; isolation: isolate; background: var(--bg-dark); }
 .recap-media .sp-fg { transition: transform .5s cubic-bezier(.22, 1, .36, 1); }
 .recap-card:hover .recap-media .sp-fg { transform: scale(1.04); }
-.recap-body { display: flex; flex-direction: column; gap: 8px; padding: 18px 20px 20px; flex: 1; }
-.recap-uni { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent-dark); }
-.recap-title { font-family: var(--font-display); font-size: 17px; font-weight: 700; line-height: 1.3; color: var(--text-dark); }
-.recap-more { margin-top: auto; padding-top: 6px; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); transition: color var(--transition); }
+.recap-body { display: flex; flex-direction: column; gap: 10px; padding: 24px 26px 26px; flex: 1; }
+.recap-uni { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent-dark); }
+.recap-text { font-size: 14px; line-height: 1.6; color: var(--text-body); }
+.recap-title { font-family: var(--font-display); font-size: clamp(19px, 1.6vw, 22px); font-weight: 700; line-height: 1.3; color: var(--text-dark); }
+.recap-more { margin-top: auto; padding-top: 10px; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); transition: color var(--transition); }
 .recap-more svg { transition: transform var(--transition); }
 .recap-card:hover .recap-more { color: var(--accent-dark); }
 .recap-card:hover .recap-more svg { transform: translateX(3px); }
 .recap-card-all { background: var(--bg-dark); border-color: var(--bg-dark); }
-.recap-all-inner { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 28px; }
-.recap-card-all .recap-title { color: var(--text-light); font-size: 20px; }
+.recap-all-inner { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 36px; }
+.recap-card-all .recap-title { color: var(--text-light); font-size: clamp(24px, 2.2vw, 30px); }
 .recap-card-all .recap-more { color: var(--text-light-muted); margin-top: 0; }
 .recap-card-all:hover .recap-more { color: var(--accent); }
-.recap-all { text-align: center; margin-top: 28px; }
+.recap-all { text-align: center; margin-top: 36px; }
+@media (min-width: 769px) and (max-width: 1024px) {
+  .recap-rail { grid-auto-columns: calc((100% - 24px) / 2); }
+}
 @media (max-width: 768px) {
-  .recap-rail { grid-auto-columns: 78%; gap: 14px; }
+  .recap-rail-wrap { margin-top: var(--space-lg); padding-top: var(--space-lg); }
+  .recap-rail { grid-auto-columns: 84%; gap: 16px; }
   .recap-rail-nav { display: none; }
-  .recap-rail-wrap::after { top: 50px; width: 32px; }
+  .recap-body { padding: 20px 22px 22px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .recap-card, .recap-media .sp-fg, .recap-nav { transition: none; }

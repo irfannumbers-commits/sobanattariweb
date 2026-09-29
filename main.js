@@ -18,10 +18,10 @@
   // ---- Home page: horizontal rail of university session recaps ----
   // Each entry links to /blog/<slug>/ and uses brand_assets/sessions/<slug>-1.jpg.
   const HOME_RECAPS = [
-    { slug: 'uet-lahore', uni: 'UET Lahore', title: 'Seerat Seminar and Ilm-o-Iftar at UET Lahore' },
-    { slug: 'bahria-university-karachi', uni: 'Bahria University Karachi', title: 'International Seerah Conference and “Confusion to Clarity”' },
-    { slug: 'arid-university-gujrat', uni: 'Arid University Gujrat', title: 'Istiqbal-e-Ramadan Seminar at Arid University' },
-    { slug: 'punjab-university', uni: 'Punjab University · Lahore', title: 'Seerah & Business Seminar, Milaad and Plantation Drive' }
+    { slug: 'uet-lahore', uni: 'UET Lahore', title: 'Seerat Seminar and Ilm-o-Iftar at UET Lahore', text: 'A packed main auditorium of professors and students.' },
+    { slug: 'bahria-university-karachi', uni: 'Bahria University Karachi', title: 'International Seerah Conference and “Confusion to Clarity”', text: 'Finding your purpose in life, with future doctors and faculty.' },
+    { slug: 'arid-university-gujrat', uni: 'Arid University Gujrat', title: 'Istiqbal-e-Ramadan Seminar at Arid University', text: 'Welcoming the holy month with professors and students.' },
+    { slug: 'punjab-university', uni: 'Punjab University · Lahore', title: 'Seerah & Business Seminar, Milaad and Plantation Drive', text: 'Sessions across departments, from HCBF to Space Science.' }
   ];
   (function renderHomeRecaps() {
     const rail = document.getElementById('home-recaps');
@@ -34,6 +34,7 @@
         '<img class="sp-fg" src="' + img + '" alt="Soban Attari at ' + r.uni + '" loading="lazy" /></span>' +
         '<span class="recap-body"><span class="recap-uni">' + r.uni + '</span>' +
         '<span class="recap-title">' + r.title + '</span>' +
+        '<span class="recap-text">' + r.text + '</span>' +
         '<span class="recap-more">Read recap ' + arrow + '</span></span></a>';
     }).join('') +
       '<a class="recap-card recap-card-all" role="listitem" href="/blog/"><span class="recap-all-inner">' +
