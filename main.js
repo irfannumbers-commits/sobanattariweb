@@ -15,6 +15,55 @@
     upcomingCount: 4
   };
 
+  // ---- Home page: horizontal rail of university session recaps ----
+  // Each entry links to /blog/<slug>/ and uses brand_assets/sessions/<slug>-1.jpg.
+  const HOME_RECAPS = [
+    { slug: 'uet-lahore', uni: 'UET Lahore', title: 'Seerat Seminar and Ilm-o-Iftar at UET Lahore' },
+    { slug: 'bahria-university-karachi', uni: 'Bahria University Karachi', title: 'International Seerah Conference and “Confusion to Clarity”' },
+    { slug: 'arid-university-gujrat', uni: 'Arid University Gujrat', title: 'Istiqbal-e-Ramadan Seminar at Arid University' },
+    { slug: 'punjab-university', uni: 'Punjab University · Lahore', title: 'Seerah & Business Seminar, Milaad and Plantation Drive' }
+  ];
+  (function renderHomeRecaps() {
+    const rail = document.getElementById('home-recaps');
+    if (!rail) return;
+    const arrow = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    rail.innerHTML = HOME_RECAPS.map(function (r) {
+      const img = '/brand_assets/sessions/' + r.slug + '-1.jpg';
+      return '<a class="recap-card" role="listitem" href="/blog/' + r.slug + '/">' +
+        '<span class="recap-media"><img class="sp-bg" src="' + img + '" alt="" aria-hidden="true" loading="lazy" />' +
+        '<img class="sp-fg" src="' + img + '" alt="Soban Attari at ' + r.uni + '" loading="lazy" /></span>' +
+        '<span class="recap-body"><span class="recap-uni">' + r.uni + '</span>' +
+        '<span class="recap-title">' + r.title + '</span>' +
+        '<span class="recap-more">Read recap ' + arrow + '</span></span></a>';
+    }).join('') +
+      '<a class="recap-card recap-card-all" role="listitem" href="/blog/"><span class="recap-all-inner">' +
+      '<span class="recap-title">Explore all university sessions</span>' +
+      '<span class="recap-more">View all ' + arrow + '</span></span></a>';
+
+    const wrap = rail.closest('.recap-rail-wrap');
+    const prev = wrap.querySelector('.recap-nav[data-dir="-1"]');
+    const next = wrap.querySelector('.recap-nav[data-dir="1"]');
+    function step() {
+      const card = rail.querySelector('.recap-card');
+      return card ? card.getBoundingClientRect().width + 20 : rail.clientWidth * 0.8;
+    }
+    function update() {
+      const max = rail.scrollWidth - rail.clientWidth - 2;
+      prev.disabled = rail.scrollLeft <= 2;
+      next.disabled = rail.scrollLeft >= max;
+      wrap.classList.toggle('at-start', rail.scrollLeft <= 2);
+      wrap.classList.toggle('at-end', rail.scrollLeft >= max);
+    }
+    [prev, next].forEach(function (b) {
+      b.addEventListener('click', function () {
+        rail.scrollBy({ left: step() * Number(b.dataset.dir), behavior: 'smooth' });
+      });
+    });
+    rail.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
   document.querySelectorAll('[data-upcoming-count]').forEach(function (el) {
     el.textContent = SITE_DATA.upcomingCount;
   });
