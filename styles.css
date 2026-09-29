@@ -1777,6 +1777,44 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
   .recap-card, .recap-media .sp-fg, .recap-nav { transition: none; }
 }
 
+/* ── Welfare drive pages: photos first, short readable text ── */
+.drive-section { padding: var(--space-xl) 0; }
+.drive-intro { max-width: 720px; margin: 0 auto var(--space-lg); text-align: center; }
+.drive-intro h2 { font-size: clamp(30px, 3.6vw, 46px); margin: 10px 0 14px; }
+.drive-intro p { font-size: 17px; line-height: 1.7; color: var(--text-body); margin: 0; }
+.drive-block {
+  display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px);
+  align-items: start; padding: var(--space-lg) 0; border-top: 1px solid var(--border-light);
+}
+.drive-intro + .drive-block { border-top: 0; padding-top: 0; }
+.drive-block .sd-gallery { margin: 0; }
+.drive-text { position: sticky; top: 100px; padding-top: 4px; }
+.drive-place { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent-dark); background: var(--accent-dim); padding: 5px 10px; border-radius: 4px; }
+.drive-text h3 { font-size: clamp(22px, 2.2vw, 28px); line-height: 1.2; margin: 14px 0 10px; }
+.drive-text p { font-size: 16px; line-height: 1.7; color: var(--text-body); margin: 0 0 16px; }
+.drive-credit { text-align: center; margin-top: 8px !important; }
+.drive-note { max-width: 640px; margin: var(--space-lg) auto 0; text-align: center; }
+.drive-note p { font-size: 16px; line-height: 1.7; color: var(--text-body); margin-bottom: 18px; }
+.drive-summary { max-width: 820px; margin: var(--space-xl) auto 0; padding: clamp(24px, 4vw, 40px); background: var(--bg-off-white); border: 1px solid var(--border-light); border-radius: 18px; }
+.drive-summary h3 { font-size: clamp(22px, 2.4vw, 28px); margin-bottom: 18px; }
+.drive-facts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.drive-facts li { background: var(--bg-light); border: 1px solid var(--border-light); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+.drive-facts li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.drive-facts strong { font-family: var(--font-display); font-size: 16px; color: var(--text-dark); }
+.drive-facts span { font-size: 14px; line-height: 1.55; color: var(--text-body); }
+.drive-summary .field-cite { margin: 18px 0 0; }
+.drive-section .field-videos { margin-bottom: 10px; }
+@media (max-width: 900px) {
+  .drive-block { grid-template-columns: 1fr; gap: 18px; }
+  .drive-text { position: static; }
+}
+@media (max-width: 600px) {
+  .drive-section { padding: 48px 0; }
+  .drive-intro { text-align: left; margin-bottom: 28px; }
+  .drive-intro p { font-size: 16px; }
+  .drive-facts { grid-template-columns: 1fr; }
+}
+
 /* ── Activity pages (plantation / blood / flood): field stories with galleries ── */
 .field-section { padding: var(--space-xl) 0; }
 .field-story { max-width: 760px; margin: 0 auto var(--space-lg); }
