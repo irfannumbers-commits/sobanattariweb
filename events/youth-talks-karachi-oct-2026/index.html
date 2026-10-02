@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C728R996GG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
+  // gtag.js (~170 KB) is fetched after load so it never competes with first paint;
+  // the queued calls below are replayed once it arrives.
+  window.addEventListener('load', function () {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C728R996GG';
+    document.head.appendChild(s);
+  });
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
@@ -24,11 +31,11 @@
   <meta property="og:title" content="Youth Talks — Karachi · Soban Attari" />
   <meta property="og:description" content="Youth Talks with Soban Attari in Karachi — an onsite Q&amp;A on well-being, career, and relationships. Saturday, 31 October 2026, 8:45 PM. Free entry." />
   <meta property="og:url" content="https://www.sobanattari.com/events/youth-talks-karachi-oct-2026/" />
-  <meta property="og:image" content="https://www.sobanattari.com/brand_assets/yt-karachi-banner.jpg" />
+  <meta property="og:image" content="https://www.sobanattari.com/brand_assets/yt-karachi-banner.webp" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Youth Talks — Karachi · Soban Attari" />
   <meta name="twitter:description" content="Youth Talks with Soban Attari in Karachi — an onsite Q&amp;A on well-being, career, and relationships. Saturday, 31 October 2026, 8:45 PM. Free entry." />
-  <meta name="twitter:image" content="https://www.sobanattari.com/brand_assets/yt-karachi-banner.jpg" />
+  <meta name="twitter:image" content="https://www.sobanattari.com/brand_assets/yt-karachi-banner.webp" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -44,7 +51,7 @@
       "name": "Sadabhar Banquet, Tibet House",
       "address": "227 Shaheed-e-Millat Service Road, Delhi Mercantile Society, Karachi"
     },
-    "image": ["https://www.sobanattari.com/brand_assets/yt-karachi-banner.jpg"],
+    "image": ["https://www.sobanattari.com/brand_assets/yt-karachi-banner.webp"],
     "organizer": { "@type": "Person", "name": "Soban Attari", "url": "https://www.sobanattari.com/" },
     "offers": {
       "@type": "Offer",
@@ -107,7 +114,7 @@
   <div class="container">
     <div class="event-hero-grid">
       <div class="event-poster">
-        <img src="/brand_assets/yt-karachi-banner.jpg" alt="Youth Talks Karachi — event poster" loading="eager" />
+        <img src="/brand_assets/yt-karachi-banner.webp" alt="Youth Talks Karachi — event poster" loading="eager" />
       </div>
       <div class="event-header">
         <span class="section-label">Upcoming Event</span>

@@ -16,7 +16,7 @@
   };
 
   // ---- Home page: horizontal rail of university session recaps ----
-  // Each entry links to /blog/<slug>/ and uses brand_assets/sessions/<slug>-1.jpg.
+  // Each entry links to /blog/<slug>/ and uses brand_assets/sessions/<slug>-1-opt.webp.
   const HOME_RECAPS = [
     { slug: 'uet-lahore', uni: 'UET Lahore', title: 'Seerat Seminar and Ilm-o-Iftar at UET Lahore', text: 'A packed main auditorium of professors and students.' },
     { slug: 'bahria-university-karachi', uni: 'Bahria University Karachi', title: 'International Seerah Conference and “Confusion to Clarity”', text: 'Finding your purpose in life, with future doctors and faculty.' },
@@ -28,7 +28,7 @@
     if (!rail) return;
     const arrow = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
     rail.innerHTML = HOME_RECAPS.map(function (r) {
-      const img = '/brand_assets/sessions/' + r.slug + '-1.jpg';
+      const img = '/brand_assets/sessions/' + r.slug + '-1-opt.webp';
       return '<a class="recap-card" role="listitem" href="/blog/' + r.slug + '/">' +
         '<span class="recap-media"><img class="sp-bg" src="' + img + '" alt="" aria-hidden="true" loading="lazy" />' +
         '<img class="sp-fg" src="' + img + '" alt="Soban Attari at ' + r.uni + '" loading="lazy" /></span>' +
@@ -663,5 +663,39 @@
       sync();
     });
     watch.forEach(function (el) { io.observe(el); });
+  })();
+
+  // ---- Hero video: attach the 4.4 MB source only after the page has loaded ----
+  // The poster paints first; the video never competes with CSS, fonts or
+  // images. Skipped on Save-Data, 2G, reduced motion, and on phones that
+  // aren't on 4G (effectiveType is a rough estimate, so desktops only bail on 2G).
+  (function lazyHeroVideo() {
+    const videos = document.querySelectorAll('video[data-src]');
+    if (!videos.length) return;
+    const conn = navigator.connection;
+    const type = (conn && conn.effectiveType) || '';
+    const isPhone = window.matchMedia('(max-width: 768px)').matches;
+    if (conn && (conn.saveData || /2g$/.test(type) || (isPhone && type === '3g'))) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    function attach() {
+      videos.forEach(function (video) {
+        const source = document.createElement('source');
+        source.src = video.dataset.src;
+        source.type = 'video/mp4';
+        video.appendChild(source);
+        video.removeAttribute('data-src');
+        video.preload = 'auto';
+        video.load();
+        const p = video.play();
+        if (p && p.catch) p.catch(function () {});
+      });
+    }
+    function schedule() {
+      if ('requestIdleCallback' in window) requestIdleCallback(attach, { timeout: 2000 });
+      else setTimeout(attach, 200);
+    }
+    if (document.readyState === 'complete') schedule();
+    else window.addEventListener('load', schedule, { once: true });
   })();
 })();

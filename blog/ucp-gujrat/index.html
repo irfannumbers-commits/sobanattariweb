@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C728R996GG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
+  // gtag.js (~170 KB) is fetched after load so it never competes with first paint;
+  // the queued calls below are replayed once it arrives.
+  window.addEventListener('load', function () {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C728R996GG';
+    document.head.appendChild(s);
+  });
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
@@ -129,8 +136,8 @@
     <article class="sd-article">
       <p class="sd-lead">Soban Attari delivered a youth development session in the main auditorium of UCP’s Gujrat campus, to a large audience of students, professors and teachers.</p>
       <section class="sd-gallery" aria-label="Event photos">
-      <a class="sd-lead-photo" href="/brand_assets/sessions/ucp-gujrat-1.jpg" target="_blank" rel="noopener"><img class="sp-bg" src="/brand_assets/sessions/ucp-gujrat-1.jpg" alt="" aria-hidden="true" /><img class="sp-fg" src="/brand_assets/sessions/ucp-gujrat-1.jpg" width="590" height="590" alt="Soban Attari at UCP Gujrat, photo 1 of 6" /></a>
-      <div class="sd-masonry"><a class="sd-photo" href="/brand_assets/sessions/ucp-gujrat-2.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/ucp-gujrat-2.jpg" width="590" height="590" alt="Soban Attari at UCP Gujrat, photo 2 of 6" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/ucp-gujrat-3.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/ucp-gujrat-3.jpg" width="590" height="590" alt="Soban Attari at UCP Gujrat, photo 3 of 6" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/ucp-gujrat-4.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/ucp-gujrat-4.jpg" width="590" height="447" alt="Soban Attari at UCP Gujrat, photo 4 of 6" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/ucp-gujrat-5.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/ucp-gujrat-5.jpg" width="590" height="590" alt="Soban Attari at UCP Gujrat, photo 5 of 6" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/ucp-gujrat-6.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/ucp-gujrat-6.jpg" width="586" height="565" alt="Soban Attari at UCP Gujrat, photo 6 of 6" loading="lazy" /></a></div>
+      <a class="sd-lead-photo" href="/brand_assets/sessions/ucp-gujrat-1-opt.webp" target="_blank" rel="noopener"><img class="sp-bg" src="/brand_assets/sessions/ucp-gujrat-1-opt.webp" alt="" aria-hidden="true" /><img class="sp-fg" src="/brand_assets/sessions/ucp-gujrat-1-opt.webp" width="590" height="590" alt="Soban Attari at UCP Gujrat, photo 1 of 6" /></a>
+      <div class="sd-masonry"><a class="sd-photo" href="/brand_assets/sessions/ucp-gujrat-2-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/ucp-gujrat-2-opt.webp" width="590" height="590" alt="Soban Attari at UCP Gujrat, photo 2 of 6" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/ucp-gujrat-3-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/ucp-gujrat-3-opt.webp" width="590" height="590" alt="Soban Attari at UCP Gujrat, photo 3 of 6" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/ucp-gujrat-4-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/ucp-gujrat-4-opt.webp" width="590" height="447" alt="Soban Attari at UCP Gujrat, photo 4 of 6" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/ucp-gujrat-5-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/ucp-gujrat-5-opt.webp" width="590" height="590" alt="Soban Attari at UCP Gujrat, photo 5 of 6" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/ucp-gujrat-6-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/ucp-gujrat-6-opt.webp" width="586" height="565" alt="Soban Attari at UCP Gujrat, photo 6 of 6" loading="lazy" /></a></div>
       <p class="sd-photo-credit">Photos: Soban Attari&rsquo;s official Facebook page &middot; tap a photo to view it full size</p>
     </section>
       <h2>About the Session</h2>
@@ -146,7 +153,7 @@
     </article>
     <aside class="sd-aside">
       <div class="sd-card">
-        <div class="sd-logo"><img src="/brand_assets/UCP_logo.png" alt="UCP Gujrat logo" /></div>
+        <div class="sd-logo"><img src="/brand_assets/UCP_logo-opt.webp" alt="UCP Gujrat logo" /></div>
         <dl class="sd-facts"><div><dt>Institution</dt><dd>University of Central Punjab, Gujrat Campus</dd></div><div><dt>City</dt><dd>Gujrat</dd></div><div><dt>Date</dt><dd>23 May 2023</dd></div><div><dt>Topic</dt><dd>Youth development and living by the Sunnah</dd></div><div><dt>Organised by</dt><dd>UCP Constituent Campus Gujrat</dd></div><div><dt>Venue</dt><dd>Main auditorium, UCP Gujrat Campus</dd></div></dl>
       </div>
       <div class="sd-invite">
@@ -166,7 +173,7 @@
     </div>
     <div class="session-grid">
       <a id="university-of-gujrat" href="/blog/university-of-gujrat/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/university-of-gujrat-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/university-of-gujrat-1.jpg" width="590" height="589" alt="Soban Attari at University of Gujrat" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/university-of-gujrat-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/university-of-gujrat-1-opt.webp" width="590" height="589" alt="Soban Attari at University of Gujrat" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">University of Gujrat · Gujrat</div>
           
@@ -176,7 +183,7 @@
         </div>
       </a>
       <a id="fast-lahore" href="/blog/fast-lahore/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/fast-lahore-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/fast-lahore-1.jpg" width="429" height="590" alt="Soban Attari at FAST-NUCES" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/fast-lahore-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/fast-lahore-1-opt.webp" width="429" height="590" alt="Soban Attari at FAST-NUCES" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">FAST-NUCES · Lahore and Chiniot-Faisalabad</div>
           
@@ -186,7 +193,7 @@
         </div>
       </a>
       <a id="lahore-garrison-university" href="/blog/lahore-garrison-university/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/lahore-garrison-university-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/lahore-garrison-university-1.jpg" width="589" height="315" alt="Soban Attari at Lahore Garrison University" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/lahore-garrison-university-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/lahore-garrison-university-1-opt.webp" width="589" height="315" alt="Soban Attari at Lahore Garrison University" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">Lahore Garrison University · Lahore</div>
           

@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C728R996GG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
+  // gtag.js (~170 KB) is fetched after load so it never competes with first paint;
+  // the queued calls below are replayed once it arrives.
+  window.addEventListener('load', function () {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C728R996GG';
+    document.head.appendChild(s);
+  });
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
@@ -79,7 +86,7 @@
   <div class="container">
     <div class="session-grid stagger">
       <a id="comsats-lahore" href="/blog/comsats-lahore/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/comsats-lahore-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/comsats-lahore-1.jpg" width="586" height="590" alt="Soban Attari at COMSATS Lahore" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/comsats-lahore-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/comsats-lahore-1-opt.webp" width="586" height="590" alt="Soban Attari at COMSATS Lahore" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">COMSATS Lahore · Lahore</div>
           <div class="session-year">18 February 2026</div>
@@ -89,7 +96,7 @@
         </div>
       </a>
       <a id="lums" href="/blog/lums/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/lums-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/lums-1.jpg" width="590" height="438" alt="Soban Attari at LUMS" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/lums-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/lums-1-opt.webp" width="590" height="438" alt="Soban Attari at LUMS" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">LUMS · Lahore</div>
           <div class="session-year">27 September 2023</div>
@@ -99,7 +106,7 @@
         </div>
       </a>
       <a id="kemu" href="/blog/kemu/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/kemu-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/kemu-1.jpg" width="590" height="581" alt="Soban Attari at King Edward Medical University" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/kemu-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/kemu-1-opt.webp" width="590" height="581" alt="Soban Attari at King Edward Medical University" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">King Edward Medical University · Lahore</div>
           
@@ -109,7 +116,7 @@
         </div>
       </a>
       <a id="bahria-university-karachi" href="/blog/bahria-university-karachi/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/bahria-university-karachi-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/bahria-university-karachi-1.jpg" width="600" height="610" alt="Soban Attari at Bahria University Karachi" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/bahria-university-karachi-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/bahria-university-karachi-1-opt.webp" width="600" height="610" alt="Soban Attari at Bahria University Karachi" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">Bahria University Karachi · Karachi</div>
           
@@ -119,7 +126,7 @@
         </div>
       </a>
       <a id="ucp" href="/blog/ucp/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/ucp-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/ucp-1.jpg" width="590" height="412" alt="Soban Attari at UCP Lahore" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/ucp-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/ucp-1-opt.webp" width="590" height="412" alt="Soban Attari at UCP Lahore" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">UCP Lahore · Lahore</div>
           
@@ -129,7 +136,7 @@
         </div>
       </a>
       <a id="uet-lahore" href="/blog/uet-lahore/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/uet-lahore-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/uet-lahore-1.jpg" width="590" height="551" alt="Soban Attari at UET Lahore" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/uet-lahore-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/uet-lahore-1-opt.webp" width="590" height="551" alt="Soban Attari at UET Lahore" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">UET Lahore · Lahore</div>
           
@@ -139,7 +146,7 @@
         </div>
       </a>
       <a id="punjab-university" href="/blog/punjab-university/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/punjab-university-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/punjab-university-1.jpg" width="584" height="590" alt="Soban Attari at Punjab University" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/punjab-university-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/punjab-university-1-opt.webp" width="584" height="590" alt="Soban Attari at Punjab University" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">Punjab University · Lahore</div>
           
@@ -149,7 +156,7 @@
         </div>
       </a>
       <a id="ucp-gujrat" href="/blog/ucp-gujrat/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/ucp-gujrat-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/ucp-gujrat-1.jpg" width="590" height="590" alt="Soban Attari at UCP Gujrat" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/ucp-gujrat-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/ucp-gujrat-1-opt.webp" width="590" height="590" alt="Soban Attari at UCP Gujrat" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">UCP Gujrat · Gujrat</div>
           <div class="session-year">23 May 2023</div>
@@ -159,7 +166,7 @@
         </div>
       </a>
       <a id="university-of-gujrat" href="/blog/university-of-gujrat/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/university-of-gujrat-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/university-of-gujrat-1.jpg" width="590" height="589" alt="Soban Attari at University of Gujrat" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/university-of-gujrat-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/university-of-gujrat-1-opt.webp" width="590" height="589" alt="Soban Attari at University of Gujrat" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">University of Gujrat · Gujrat</div>
           
@@ -169,7 +176,7 @@
         </div>
       </a>
       <a id="fast-lahore" href="/blog/fast-lahore/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/fast-lahore-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/fast-lahore-1.jpg" width="429" height="590" alt="Soban Attari at FAST-NUCES" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/fast-lahore-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/fast-lahore-1-opt.webp" width="429" height="590" alt="Soban Attari at FAST-NUCES" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">FAST-NUCES · Lahore and Chiniot-Faisalabad</div>
           
@@ -179,7 +186,7 @@
         </div>
       </a>
       <a id="lahore-garrison-university" href="/blog/lahore-garrison-university/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/lahore-garrison-university-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/lahore-garrison-university-1.jpg" width="589" height="315" alt="Soban Attari at Lahore Garrison University" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/lahore-garrison-university-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/lahore-garrison-university-1-opt.webp" width="589" height="315" alt="Soban Attari at Lahore Garrison University" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">Lahore Garrison University · Lahore</div>
           
@@ -189,7 +196,7 @@
         </div>
       </a>
       <a id="arid-university-gujrat" href="/blog/arid-university-gujrat/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/arid-university-gujrat-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/arid-university-gujrat-1.jpg" width="393" height="590" alt="Soban Attari at Arid University Gujrat" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/arid-university-gujrat-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/arid-university-gujrat-1-opt.webp" width="393" height="590" alt="Soban Attari at Arid University Gujrat" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">Arid University Gujrat · Gujrat</div>
           
@@ -199,7 +206,7 @@
         </div>
       </a>
       <a id="punjab-university-of-technology-mandi-bahauddin" href="/blog/punjab-university-of-technology-mandi-bahauddin/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/punjab-university-of-technology-mandi-bahauddin-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/punjab-university-of-technology-mandi-bahauddin-1.jpg" width="590" height="389" alt="Soban Attari at PUT Mandi Bahauddin" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/punjab-university-of-technology-mandi-bahauddin-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/punjab-university-of-technology-mandi-bahauddin-1-opt.webp" width="590" height="389" alt="Soban Attari at PUT Mandi Bahauddin" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">PUT Mandi Bahauddin · Mandi Bahauddin</div>
           <div class="session-year">2023</div>
@@ -209,7 +216,7 @@
         </div>
       </a>
       <a id="university-of-education" href="/blog/university-of-education/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/university-of-education-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/university-of-education-1.jpg" width="590" height="332" alt="Soban Attari at University of Education" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/university-of-education-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/university-of-education-1-opt.webp" width="590" height="332" alt="Soban Attari at University of Education" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">University of Education · Lahore</div>
           
@@ -219,7 +226,7 @@
         </div>
       </a>
       <a id="university-of-south-asia" href="/blog/university-of-south-asia/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/university-of-south-asia-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/university-of-south-asia-1.jpg" width="590" height="580" alt="Soban Attari at University of South Asia" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/university-of-south-asia-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/university-of-south-asia-1-opt.webp" width="590" height="580" alt="Soban Attari at University of South Asia" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">University of South Asia · Lahore</div>
           
@@ -229,7 +236,7 @@
         </div>
       </a>
       <a id="islamia-university-bahawalpur" href="/blog/islamia-university-bahawalpur/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/islamia-university-bahawalpur-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/islamia-university-bahawalpur-1.jpg" width="590" height="586" alt="Soban Attari at Islamia University Bahawalpur" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/islamia-university-bahawalpur-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/islamia-university-bahawalpur-1-opt.webp" width="590" height="586" alt="Soban Attari at Islamia University Bahawalpur" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">Islamia University Bahawalpur · Bahawalpur</div>
           

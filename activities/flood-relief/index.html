@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C728R996GG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
+  // gtag.js (~170 KB) is fetched after load so it never competes with first paint;
+  // the queued calls below are replayed once it arrives.
+  window.addEventListener('load', function () {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C728R996GG';
+    document.head.appendChild(s);
+  });
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
@@ -130,7 +137,7 @@
       <p>When floods submerged almost a third of Pakistan in 2022, Soban Attari went to the worst-hit areas to help with relief work.</p>
     </div>
     <div class="field-videos">
-      <a class="field-vcard" href="https://www.facebook.com/sobanattari/posts/pfbid02BFBXWVrcV2DPivrzErejSZ251NwV77AkUVq93Dwjs8XoH3xn2ht6gWXhh9JsaiWkl" target="_blank" rel="noopener"><span class="field-vthumb"><img src="/brand_assets/sessions/flood-video-1.jpg" width="500" height="261" alt="Villages washed away, people left homeless" /><span class="field-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></span><span class="field-vbody"><strong>Villages washed away, people left homeless</strong><span>Flood-hit villages in Punjab</span><em>Watch on Facebook &rarr;</em></span></a><a class="field-vcard" href="https://www.facebook.com/sobanattari/posts/pfbid02BDDY45umcTb319xwdt7kbph9HDfZHtzmvpb6FVGYqFyYqQzmdAmw7YA2VxJhHdyyl" target="_blank" rel="noopener"><span class="field-vthumb"><img src="/brand_assets/sessions/flood-video-2.jpg" width="526" height="275" alt="The devastation, seen first-hand" /><span class="field-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></span><span class="field-vbody"><strong>The devastation, seen first-hand</strong><span>Destroyed crops, relief work and field reports</span><em>Watch on Facebook &rarr;</em></span></a><a class="field-vcard" href="https://www.facebook.com/sobanattari/posts/pfbid0CKyk6FjBjFJqURHfeSRXcWvbk3pj5HMZrcowbTus2ppK3ZEYr24C6mAyEDaguV5dl" target="_blank" rel="noopener"><span class="field-vthumb"><img src="/brand_assets/sessions/flood-video-3.jpg" width="526" height="275" alt="Visit to flood-affected Rajanpur" /><span class="field-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></span><span class="field-vbody"><strong>Visit to flood-affected Rajanpur</strong><span>Iftar with families and handover of new homes</span><em>Watch on Facebook &rarr;</em></span></a>
+      <a class="field-vcard" href="https://www.facebook.com/sobanattari/posts/pfbid02BFBXWVrcV2DPivrzErejSZ251NwV77AkUVq93Dwjs8XoH3xn2ht6gWXhh9JsaiWkl" target="_blank" rel="noopener"><span class="field-vthumb"><img src="/brand_assets/sessions/flood-video-1-opt.webp" width="500" height="261" alt="Villages washed away, people left homeless" /><span class="field-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></span><span class="field-vbody"><strong>Villages washed away, people left homeless</strong><span>Flood-hit villages in Punjab</span><em>Watch on Facebook &rarr;</em></span></a><a class="field-vcard" href="https://www.facebook.com/sobanattari/posts/pfbid02BDDY45umcTb319xwdt7kbph9HDfZHtzmvpb6FVGYqFyYqQzmdAmw7YA2VxJhHdyyl" target="_blank" rel="noopener"><span class="field-vthumb"><img src="/brand_assets/sessions/flood-video-2-opt.webp" width="526" height="275" alt="The devastation, seen first-hand" /><span class="field-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></span><span class="field-vbody"><strong>The devastation, seen first-hand</strong><span>Destroyed crops, relief work and field reports</span><em>Watch on Facebook &rarr;</em></span></a><a class="field-vcard" href="https://www.facebook.com/sobanattari/posts/pfbid0CKyk6FjBjFJqURHfeSRXcWvbk3pj5HMZrcowbTus2ppK3ZEYr24C6mAyEDaguV5dl" target="_blank" rel="noopener"><span class="field-vthumb"><img src="/brand_assets/sessions/flood-video-3-opt.webp" width="526" height="275" alt="Visit to flood-affected Rajanpur" /><span class="field-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></span><span class="field-vbody"><strong>Visit to flood-affected Rajanpur</strong><span>Iftar with families and handover of new homes</span><em>Watch on Facebook &rarr;</em></span></a>
     </div>
     <p class="sd-photo-credit drive-credit">Videos from Soban Attari&rsquo;s official Facebook page. Also watch <a href="https://www.facebook.com/sobanattari/videos/1546925122943036/" target="_blank" rel="noopener">another flood relief video</a>.</p>
     <div class="drive-summary">

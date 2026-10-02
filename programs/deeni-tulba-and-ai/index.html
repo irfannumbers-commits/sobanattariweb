@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C728R996GG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
+  // gtag.js (~170 KB) is fetched after load so it never competes with first paint;
+  // the queued calls below are replayed once it arrives.
+  window.addEventListener('load', function () {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C728R996GG';
+    document.head.appendChild(s);
+  });
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 

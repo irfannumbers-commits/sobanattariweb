@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C728R996GG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
+  // gtag.js (~170 KB) is fetched after load so it never competes with first paint;
+  // the queued calls below are replayed once it arrives.
+  window.addEventListener('load', function () {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C728R996GG';
+    document.head.appendChild(s);
+  });
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
@@ -129,8 +136,8 @@
     <article class="sd-article">
       <p class="sd-lead">Soban Attari has spoken at Lahore Garrison University at a Milaad gathering in the main auditorium, attended by the Vice Chancellor, and in a training session on how to stop overthinking.</p>
       <section class="sd-gallery" aria-label="Event photos">
-      <a class="sd-lead-photo" href="/brand_assets/sessions/lahore-garrison-university-1.jpg" target="_blank" rel="noopener"><img class="sp-bg" src="/brand_assets/sessions/lahore-garrison-university-1.jpg" alt="" aria-hidden="true" /><img class="sp-fg" src="/brand_assets/sessions/lahore-garrison-university-1.jpg" width="589" height="315" alt="Soban Attari at Lahore Garrison University, photo 1 of 5" /></a>
-      <div class="sd-masonry"><a class="sd-photo" href="/brand_assets/sessions/lahore-garrison-university-2.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lahore-garrison-university-2.jpg" width="394" height="590" alt="Soban Attari at Lahore Garrison University, photo 2 of 5" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/lahore-garrison-university-3.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lahore-garrison-university-3.jpg" width="590" height="590" alt="Soban Attari at Lahore Garrison University, photo 3 of 5" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/lahore-garrison-university-4.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lahore-garrison-university-4.jpg" width="590" height="287" alt="Soban Attari at Lahore Garrison University, photo 4 of 5" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/lahore-garrison-university-5.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lahore-garrison-university-5.jpg" width="590" height="590" alt="Soban Attari at Lahore Garrison University, photo 5 of 5" loading="lazy" /></a></div>
+      <a class="sd-lead-photo" href="/brand_assets/sessions/lahore-garrison-university-1-opt.webp" target="_blank" rel="noopener"><img class="sp-bg" src="/brand_assets/sessions/lahore-garrison-university-1-opt.webp" alt="" aria-hidden="true" /><img class="sp-fg" src="/brand_assets/sessions/lahore-garrison-university-1-opt.webp" width="589" height="315" alt="Soban Attari at Lahore Garrison University, photo 1 of 5" /></a>
+      <div class="sd-masonry"><a class="sd-photo" href="/brand_assets/sessions/lahore-garrison-university-2-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lahore-garrison-university-2-opt.webp" width="394" height="590" alt="Soban Attari at Lahore Garrison University, photo 2 of 5" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/lahore-garrison-university-3-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lahore-garrison-university-3-opt.webp" width="590" height="590" alt="Soban Attari at Lahore Garrison University, photo 3 of 5" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/lahore-garrison-university-4-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lahore-garrison-university-4-opt.webp" width="590" height="287" alt="Soban Attari at Lahore Garrison University, photo 4 of 5" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/lahore-garrison-university-5-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lahore-garrison-university-5-opt.webp" width="590" height="590" alt="Soban Attari at Lahore Garrison University, photo 5 of 5" loading="lazy" /></a></div>
       <p class="sd-photo-credit">Photos: Soban Attari&rsquo;s official Facebook page &middot; tap a photo to view it full size</p>
     </section>
       <h2>About the Session</h2>
@@ -167,7 +174,7 @@
     </div>
     <div class="session-grid">
       <a id="arid-university-gujrat" href="/blog/arid-university-gujrat/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/arid-university-gujrat-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/arid-university-gujrat-1.jpg" width="393" height="590" alt="Soban Attari at Arid University Gujrat" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/arid-university-gujrat-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/arid-university-gujrat-1-opt.webp" width="393" height="590" alt="Soban Attari at Arid University Gujrat" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">Arid University Gujrat · Gujrat</div>
           
@@ -177,7 +184,7 @@
         </div>
       </a>
       <a id="punjab-university-of-technology-mandi-bahauddin" href="/blog/punjab-university-of-technology-mandi-bahauddin/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/punjab-university-of-technology-mandi-bahauddin-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/punjab-university-of-technology-mandi-bahauddin-1.jpg" width="590" height="389" alt="Soban Attari at PUT Mandi Bahauddin" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/punjab-university-of-technology-mandi-bahauddin-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/punjab-university-of-technology-mandi-bahauddin-1-opt.webp" width="590" height="389" alt="Soban Attari at PUT Mandi Bahauddin" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">PUT Mandi Bahauddin · Mandi Bahauddin</div>
           <div class="session-year">2023</div>
@@ -187,7 +194,7 @@
         </div>
       </a>
       <a id="university-of-education" href="/blog/university-of-education/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/university-of-education-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/university-of-education-1.jpg" width="590" height="332" alt="Soban Attari at University of Education" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/university-of-education-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/university-of-education-1-opt.webp" width="590" height="332" alt="Soban Attari at University of Education" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">University of Education · Lahore</div>
           

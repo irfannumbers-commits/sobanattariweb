@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C728R996GG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
+  // gtag.js (~170 KB) is fetched after load so it never competes with first paint;
+  // the queued calls below are replayed once it arrives.
+  window.addEventListener('load', function () {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C728R996GG';
+    document.head.appendChild(s);
+  });
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
@@ -129,8 +136,8 @@
     <article class="sd-article">
       <p class="sd-lead">Soban Attari has appeared at LUMS both as a reciter at the LUMS Religious Society’s Mehfil-e-Milaad and as a guest speaker at a Seerat and motivational seminar for students.</p>
       <section class="sd-gallery" aria-label="Event photos">
-      <a class="sd-lead-photo" href="/brand_assets/sessions/lums-1.jpg" target="_blank" rel="noopener"><img class="sp-bg" src="/brand_assets/sessions/lums-1.jpg" alt="" aria-hidden="true" /><img class="sp-fg" src="/brand_assets/sessions/lums-1.jpg" width="590" height="438" alt="Soban Attari at LUMS, photo 1 of 5" /></a>
-      <div class="sd-masonry"><a class="sd-photo" href="/brand_assets/sessions/lums-2.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lums-2.jpg" width="590" height="287" alt="Soban Attari at LUMS, photo 2 of 5" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/lums-3.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lums-3.jpg" width="590" height="344" alt="Soban Attari at LUMS, photo 3 of 5" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/lums-4.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lums-4.jpg" width="590" height="378" alt="Soban Attari at LUMS, photo 4 of 5" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/lums-5.jpg" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lums-5.jpg" width="590" height="302" alt="Soban Attari at LUMS, photo 5 of 5" loading="lazy" /></a></div>
+      <a class="sd-lead-photo" href="/brand_assets/sessions/lums-1-opt.webp" target="_blank" rel="noopener"><img class="sp-bg" src="/brand_assets/sessions/lums-1-opt.webp" alt="" aria-hidden="true" /><img class="sp-fg" src="/brand_assets/sessions/lums-1-opt.webp" width="590" height="438" alt="Soban Attari at LUMS, photo 1 of 5" /></a>
+      <div class="sd-masonry"><a class="sd-photo" href="/brand_assets/sessions/lums-2-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lums-2-opt.webp" width="590" height="287" alt="Soban Attari at LUMS, photo 2 of 5" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/lums-3-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lums-3-opt.webp" width="590" height="344" alt="Soban Attari at LUMS, photo 3 of 5" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/lums-4-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lums-4-opt.webp" width="590" height="378" alt="Soban Attari at LUMS, photo 4 of 5" loading="lazy" /></a><a class="sd-photo" href="/brand_assets/sessions/lums-5-opt.webp" target="_blank" rel="noopener"><img src="/brand_assets/sessions/lums-5-opt.webp" width="590" height="302" alt="Soban Attari at LUMS, photo 5 of 5" loading="lazy" /></a></div>
       <p class="sd-photo-credit">Photos: Soban Attari&rsquo;s official Facebook page &middot; tap a photo to view it full size</p>
     </section>
       <h2>About the Session</h2>
@@ -167,7 +174,7 @@
     </div>
     <div class="session-grid">
       <a id="kemu" href="/blog/kemu/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/kemu-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/kemu-1.jpg" width="590" height="581" alt="Soban Attari at King Edward Medical University" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/kemu-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/kemu-1-opt.webp" width="590" height="581" alt="Soban Attari at King Edward Medical University" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">King Edward Medical University · Lahore</div>
           
@@ -177,7 +184,7 @@
         </div>
       </a>
       <a id="bahria-university-karachi" href="/blog/bahria-university-karachi/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/bahria-university-karachi-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/bahria-university-karachi-1.jpg" width="600" height="610" alt="Soban Attari at Bahria University Karachi" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/bahria-university-karachi-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/bahria-university-karachi-1-opt.webp" width="600" height="610" alt="Soban Attari at Bahria University Karachi" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">Bahria University Karachi · Karachi</div>
           
@@ -187,7 +194,7 @@
         </div>
       </a>
       <a id="ucp" href="/blog/ucp/" class="session-card">
-        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/ucp-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/ucp-1.jpg" width="590" height="412" alt="Soban Attari at UCP Lahore" loading="lazy" /></div>
+        <div class="session-logo session-photo"><img class="sp-bg" src="/brand_assets/sessions/ucp-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/ucp-1-opt.webp" width="590" height="412" alt="Soban Attari at UCP Lahore" loading="lazy" /></div>
         <div class="session-body">
           <div class="uni-badge">UCP Lahore · Lahore</div>
           

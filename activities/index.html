@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C728R996GG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
+  // gtag.js (~170 KB) is fetched after load so it never competes with first paint;
+  // the queued calls below are replayed once it arrives.
+  window.addEventListener('load', function () {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C728R996GG';
+    document.head.appendChild(s);
+  });
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
@@ -81,7 +88,7 @@
       <div class="container">
         <div class="event-type-grid">
           <a href="/programs/youth-talks/" class="event-type-card event-type-card-gold">
-            <div class="event-type-card-image"><img src="/brand_assets/youth-talks-card.webp" alt="Youth Talks event" loading="lazy" /></div>
+            <div class="event-type-card-image"><img src="/brand_assets/youth-talks-card-opt.webp" alt="Youth Talks event" loading="lazy" /></div>
             <div>
               <h2>Youth Talks</h2>
               <p>An onsite Q&amp;A for university students and young professionals on well-being, career direction, identity, and discipline.</p>
@@ -90,7 +97,7 @@
           </a>
 
           <a href="/programs/female-session/" class="event-type-card event-type-card-forest">
-            <div class="event-type-card-image"><img src="/brand_assets/females-session-bg1.webp" alt="Females Session event" loading="lazy" /></div>
+            <div class="event-type-card-image"><img src="/brand_assets/females-session-bg1-opt.webp" alt="Females Session event" loading="lazy" /></div>
             <div>
               <h2>Females Session</h2>
               <p>An online session for women on mental wellness, relationships, and modern education, rooted in faith.</p>
@@ -99,7 +106,7 @@
           </a>
 
           <a href="/programs/youth-seminar/" class="event-type-card event-type-card-sand">
-            <div class="event-type-card-image"><img src="/brand_assets/youth-seminar-bg.webp" alt="Youth Seminar event" loading="lazy" /></div>
+            <div class="event-type-card-image"><img src="/brand_assets/youth-seminar-bg-opt.webp" alt="Youth Seminar event" loading="lazy" /></div>
             <div>
               <h2>Youth Seminar</h2>
               <p>Youth meeting corners held in masjids and community halls for students, professionals, and university students.</p>
@@ -108,7 +115,7 @@
           </a>
 
           <a href="/programs/fos/" class="event-type-card event-type-card-forest">
-            <div class="event-type-card-image"><img src="/brand_assets/fos-card.webp" alt="Friends of Soban Attari event" loading="lazy" /></div>
+            <div class="event-type-card-image"><img src="/brand_assets/fos-card-opt.webp" alt="Friends of Soban Attari event" loading="lazy" /></div>
             <div>
               <h2>FOS</h2>
               <p>Campus and institute chapters where students keep growing together through regular lectures and events.</p>
@@ -117,7 +124,7 @@
           </a>
 
           <a href="/programs/masjid-night/" class="event-type-card event-type-card-ivory">
-            <div class="event-type-card-image"><img src="/brand_assets/masjid-night-bg.webp" alt="Masjid Night event" loading="lazy" /></div>
+            <div class="event-type-card-image"><img src="/brand_assets/masjid-night-bg-opt.webp" alt="Masjid Night event" loading="lazy" /></div>
             <div>
               <h2>Masjid Night</h2>
               <p>A relaxed 3&ndash;4 hour evening at the mosque &mdash; talks, hands-on Faraiz training, activities, and dinner together.</p>
@@ -126,7 +133,7 @@
           </a>
 
           <a href="/programs/workers-convention/" class="event-type-card event-type-card-rose">
-            <div class="event-type-card-image"><img src="/brand_assets/workers-convention-bg.webp" alt="Workers Convention event" loading="lazy" /></div>
+            <div class="event-type-card-image"><img src="/brand_assets/workers-convention-bg-opt.webp" alt="Workers Convention event" loading="lazy" /></div>
             <div>
               <h2>Workers Convention</h2>
               <p>An internal meetup for the Friends of Soban Attari team &mdash; future plans, feedback, and training.</p>
@@ -144,7 +151,7 @@
           </a>
 
           <a href="/books/" class="event-type-card event-type-card-gold event-type-card-featured">
-            <div class="event-type-card-image"><img src="/brand_assets/books-card.webp" alt="Soban Attari books" loading="lazy" /></div>
+            <div class="event-type-card-image"><img src="/brand_assets/books-card-opt.webp" alt="Soban Attari books" loading="lazy" /></div>
             <div>
               <h2>Books</h2>
               <p>Soban Attari’s written work on faith, family, and character — six titles coming soon.</p>
@@ -153,7 +160,7 @@
           </a>
 
           <a href="/courses/" class="event-type-card event-type-card-blue event-type-card-featured">
-            <div class="event-type-card-image"><img src="/brand_assets/courses-card-1600.webp" alt="Soban Attari courses" loading="lazy" /></div>
+            <div class="event-type-card-image"><img src="/brand_assets/courses-card-1600-opt.webp" alt="Soban Attari courses" loading="lazy" /></div>
             <div>
               <h2>Courses</h2>
               <p>Upcoming courses on parenting, relationships, and soft skills &mdash; enrolment opening soon.</p>
@@ -162,7 +169,7 @@
           </a>
 
           <a href="/programs/overseas-session/" class="event-type-card event-type-card-violet event-type-card-featured">
-            <div class="event-type-card-image"><img src="/brand_assets/oversees-session.webp" alt="Overseas Youth Talks event" loading="lazy" /></div>
+            <div class="event-type-card-image"><img src="/brand_assets/oversees-session-opt.webp" alt="Overseas Youth Talks event" loading="lazy" /></div>
             <div>
               <h2>Overseas Youth Talks</h2>
               <p>Connect with us from abroad and explore ways to contribute.</p>
@@ -181,7 +188,7 @@
         </div>
         <div class="event-type-grid welfare-grid">
           <a href="/activities/blood-camp/" class="event-type-card">
-            <div class="event-type-card-image welfare-image"><img class="sp-bg" src="/brand_assets/sessions/blood-camp-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/blood-camp-1.jpg" alt="Soban Attari at a blood donation camp in Lahore" loading="lazy" /></div>
+            <div class="event-type-card-image welfare-image"><img class="sp-bg" src="/brand_assets/sessions/blood-camp-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/blood-camp-1-opt.webp" alt="Soban Attari at a blood donation camp in Lahore" loading="lazy" /></div>
             <div>
               <h3>Blood Donation</h3>
               <p>A Punjab-wide blood drive for thalassemia patients during COVID-19, collecting more than 10,000 blood bags.</p>
@@ -190,7 +197,7 @@
           </a>
 
           <a href="/activities/plantation/" class="event-type-card">
-            <div class="event-type-card-image welfare-image"><img class="sp-bg" src="/brand_assets/sessions/plantation-karachi-1.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/plantation-karachi-1.jpg" alt="Soban Attari planting a tree in Karachi" loading="lazy" /></div>
+            <div class="event-type-card-image welfare-image"><img class="sp-bg" src="/brand_assets/sessions/plantation-karachi-1-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/plantation-karachi-1-opt.webp" alt="Soban Attari planting a tree in Karachi" loading="lazy" /></div>
             <div>
               <h3>Plantation Drive</h3>
               <p>Tree plantation drives from Karachi to Punjab, at universities, councils and communities.</p>
@@ -199,7 +206,7 @@
           </a>
 
           <a href="/activities/flood-relief/" class="event-type-card">
-            <div class="event-type-card-image welfare-image"><img class="sp-bg" src="/brand_assets/sessions/flood-video-3.jpg" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/flood-video-3.jpg" alt="Soban Attari with flood-affected families in Rajanpur" loading="lazy" /></div>
+            <div class="event-type-card-image welfare-image"><img class="sp-bg" src="/brand_assets/sessions/flood-video-3-opt.webp" alt="" aria-hidden="true" loading="lazy" /><img class="sp-fg" src="/brand_assets/sessions/flood-video-3-opt.webp" alt="Soban Attari with flood-affected families in Rajanpur" loading="lazy" /></div>
             <div>
               <h3>Flood Relief</h3>
               <p>Medical camps, supplies and new homes for families hit by the 2022 floods in South Punjab.</p>

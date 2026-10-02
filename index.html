@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C728R996GG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
+  // gtag.js (~170 KB) is fetched after load so it never competes with first paint;
+  // the queued calls below are replayed once it arrives.
+  window.addEventListener('load', function () {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C728R996GG';
+    document.head.appendChild(s);
+  });
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
@@ -78,6 +85,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="/brand_assets/hero-poster.jpg" fetchpriority="high" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -121,13 +129,11 @@
 
 <!-- HERO -->
 <section id="hero" class="section-dark">
-  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="/brand_assets/hero-poster.jpg" aria-hidden="true">
-    <source src="/brand_assets/VideoHero.mp4" type="video/mp4">
-  </video>
+  <video class="hero-video" muted loop playsinline preload="none" poster="/brand_assets/hero-poster.jpg" data-src="/brand_assets/VideoHero.mp4" aria-hidden="true"></video>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <span class="hero-label hero-step">Motivational Speaker · Trainer · Educator</span>
-    <h1 class="hero-headline hero-step" aria-live="polite"><span class="hero-cycle-text" id="hero-cycle-text">Numbers That Speak.</span></h1>
+    <h1 class="hero-headline hero-step" aria-live="polite"><span class="hero-cycle-text visible" id="hero-cycle-text">Numbers That Speak.</span></h1>
     <p class="hero-subtext hero-step"><span class="hero-sub-long">Soban Attari is a Pakistani speaker and educator. He sits down with millions every week, walks through real questions about faith, family and modern life, and tries to leave people a little clearer than he found them.</span><span class="hero-sub-short">Pakistani speaker and educator helping millions find clarity on faith, family and modern life.</span></p>
     <div class="btn-group hero-actions hero-step">
       <a href="/updates/" class="btn btn-primary btn-live">
@@ -365,7 +371,7 @@
     <div class="books-grid animate-on-scroll">
       <div class="book-card">
         <div class="book-cover bc-cover-1">
-          <img class="book-cover-img" src="/brand_assets/seerat-e-mustafa-book-title.webp" alt="سیرت النبی ﷺ اور جدید سائنس — سوبان عطاری" loading="lazy">
+          <img class="book-cover-img" src="/brand_assets/seerat-e-mustafa-book-title-opt.webp" alt="سیرت النبی ﷺ اور جدید سائنس — سوبان عطاری" loading="lazy">
           <span class="book-cover-badge">Coming Soon</span>
         </div>
         <div class="book-card-body">
@@ -374,7 +380,7 @@
       </div>
       <div class="book-card">
         <div class="book-cover bc-cover-6">
-          <img class="book-cover-img" src="/brand_assets/soft-skills-book-title.webp" alt="اپنے آپ کو بہتر بناؤ — سوبان عطاری" loading="lazy">
+          <img class="book-cover-img" src="/brand_assets/soft-skills-book-title-opt.webp" alt="اپنے آپ کو بہتر بناؤ — سوبان عطاری" loading="lazy">
           <span class="book-cover-badge">Coming Soon</span>
         </div>
         <div class="book-card-body">
@@ -383,7 +389,7 @@
       </div>
       <div class="book-card">
         <div class="book-cover bc-cover-5">
-          <img class="book-cover-img" src="/brand_assets/youth-talks-book-title.webp" alt="یوتھ ٹاکس — سوبان عطاری" loading="lazy">
+          <img class="book-cover-img" src="/brand_assets/youth-talks-book-title-opt.webp" alt="یوتھ ٹاکس — سوبان عطاری" loading="lazy">
           <span class="book-cover-badge">Coming Soon</span>
         </div>
         <div class="book-card-body">
@@ -392,7 +398,7 @@
       </div>
       <div class="book-card">
         <div class="book-cover bc-cover-2">
-          <img class="book-cover-img" src="/brand_assets/relationships-book-title.webp" alt="تعلقات سنبھالنے کا ہنر — سوبان عطاری" loading="lazy">
+          <img class="book-cover-img" src="/brand_assets/relationships-book-title-opt.webp" alt="تعلقات سنبھالنے کا ہنر — سوبان عطاری" loading="lazy">
           <span class="book-cover-badge">Coming Soon</span>
         </div>
         <div class="book-card-body">
@@ -401,7 +407,7 @@
       </div>
       <div class="book-card">
         <div class="book-cover bc-cover-3">
-          <img class="book-cover-img" src="/brand_assets/foods-book-title.webp" alt="رسول اللہ ﷺ کی پسندیدہ غذائیں اور ماڈرن ریسرچ — سوبان عطاری" loading="lazy">
+          <img class="book-cover-img" src="/brand_assets/foods-book-title-opt.webp" alt="رسول اللہ ﷺ کی پسندیدہ غذائیں اور ماڈرن ریسرچ — سوبان عطاری" loading="lazy">
           <span class="book-cover-badge">Coming Soon</span>
         </div>
         <div class="book-card-body">
@@ -410,7 +416,7 @@
       </div>
       <div class="book-card">
         <div class="book-cover bc-cover-4">
-          <img class="book-cover-img" src="/brand_assets/aik-baat-book-title.webp" alt="ایک بات — سوبان عطاری" loading="lazy">
+          <img class="book-cover-img" src="/brand_assets/aik-baat-book-title-opt.webp" alt="ایک بات — سوبان عطاری" loading="lazy">
           <span class="book-cover-badge">Coming Soon</span>
         </div>
         <div class="book-card-body">
@@ -430,7 +436,7 @@
     <div class="courses-grid animate-on-scroll">
       <div class="course-card">
         <div class="course-card-image">
-          <img src="/brand_assets/parenting-course-title.webp" width="1600" height="800" alt="Parenting course — Soban Attari" loading="lazy">
+          <img src="/brand_assets/parenting-course-title-opt.webp" width="1600" height="800" alt="Parenting course — Soban Attari" loading="lazy">
         </div>
         <span class="course-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 20c0-3.3 2.5-5.6 5.5-5.6s5.5 2.3 5.5 5.6"/><circle cx="17.5" cy="10" r="2"/><path d="M15.2 20c0-2.3 1.2-4 3.3-4"/></svg></span>
         <span class="course-card-tag">For parents &amp; families</span>
@@ -440,7 +446,7 @@
       </div>
       <div class="course-card">
         <div class="course-card-image">
-          <img src="/brand_assets/relationships-course-title.webp" width="1600" height="800" alt="Relationships course — Soban Attari" loading="lazy">
+          <img src="/brand_assets/relationships-course-title-opt.webp" width="1600" height="800" alt="Relationships course — Soban Attari" loading="lazy">
         </div>
         <span class="course-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="5.25"/><circle cx="15" cy="12" r="5.25"/></svg></span>
         <span class="course-card-tag">For couples &amp; families</span>
@@ -677,7 +683,6 @@
     if (!el) return;
     let i = 0;
     const FADE_MS = 550, HOLD_MS = 2600;
-    setTimeout(() => el.classList.add('visible'), 850);
     setInterval(() => {
       el.classList.remove('visible');
       setTimeout(() => { i = (i + 1) % lines.length; el.textContent = lines[i]; el.classList.add('visible'); }, FADE_MS);

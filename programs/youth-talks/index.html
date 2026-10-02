@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C728R996GG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
+  // gtag.js (~170 KB) is fetched after load so it never competes with first paint;
+  // the queued calls below are replayed once it arrives.
+  window.addEventListener('load', function () {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C728R996GG';
+    document.head.appendChild(s);
+  });
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
@@ -77,9 +84,7 @@
 </nav>
 
 <section class="page-video-banner">
-  <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="/brand_assets/hero-poster.jpg" aria-hidden="true">
-    <source src="/brand_assets/VideoHero.mp4" type="video/mp4">
-  </video>
+  <video class="hero-video" muted loop playsinline preload="none" poster="/brand_assets/hero-poster.jpg" data-src="/brand_assets/VideoHero.mp4" aria-hidden="true"></video>
   <div class="pvb-overlay"></div>
   <div class="container pvb-inner">
     <h1 class="pvb-title">Youth Talks</h1>

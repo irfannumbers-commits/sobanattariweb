@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C728R996GG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
+  // gtag.js (~170 KB) is fetched after load so it never competes with first paint;
+  // the queued calls below are replayed once it arrives.
+  window.addEventListener('load', function () {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C728R996GG';
+    document.head.appendChild(s);
+  });
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
@@ -87,7 +94,7 @@
     <div class="courses-grid animate-on-scroll">
       <div class="course-card">
         <div class="course-card-image">
-          <img src="/brand_assets/parenting-course-title.webp" width="1600" height="800" alt="Parenting course — Soban Attari" loading="lazy">
+          <img src="/brand_assets/parenting-course-title-opt.webp" width="1600" height="800" alt="Parenting course — Soban Attari" loading="lazy">
         </div>
         <div class="course-card-number" aria-hidden="true">01</div>
         <span class="course-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 20c0-3.3 2.5-5.6 5.5-5.6s5.5 2.3 5.5 5.6"/><circle cx="17.5" cy="10" r="2"/><path d="M15.2 20c0-2.3 1.2-4 3.3-4"/></svg></span>
@@ -100,7 +107,7 @@
 
       <div class="course-card">
         <div class="course-card-image">
-          <img src="/brand_assets/relationships-course-title.webp" width="1600" height="800" alt="Relationships course — Soban Attari" loading="lazy">
+          <img src="/brand_assets/relationships-course-title-opt.webp" width="1600" height="800" alt="Relationships course — Soban Attari" loading="lazy">
         </div>
         <div class="course-card-number" aria-hidden="true">02</div>
         <span class="course-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="5.25"/><circle cx="15" cy="12" r="5.25"/></svg></span>

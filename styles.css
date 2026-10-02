@@ -660,7 +660,7 @@ body.menu-open { overflow: hidden; }
 /* staggered entrance — label, headline, text, chip, buttons */
 .hero-step { opacity: 0; transform: translateY(24px); animation: heroEntrance 0.9s cubic-bezier(.22, 1, .36, 1) forwards; }
 .hero-step:nth-child(1) { animation-delay: 0.25s; }
-.hero-step:nth-child(2) { animation-delay: 0.35s; }
+.hero-step:nth-child(2) { animation-delay: 0s; } /* headline is the LCP element — no hold-back */
 .hero-step:nth-child(3) { animation-delay: 0.45s; }
 .hero-step:nth-child(4) { animation-delay: 0.55s; }
 .hero-step:nth-child(5) { animation-delay: 0.65s; }
@@ -2624,14 +2624,14 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
    this stylesheet (repo root), so no "../".
    ========================================================= */
 
-/* Photo hero for the page header — single source (brand_assets/yt-large.webp,
+/* Photo hero for the page header — single source (brand_assets/yt-large-opt.webp,
    2400x1350). `cover` keeps it full-bleed at every width; the speaker sits
    left-of-centre and high, so the focal point is pulled up and slightly left
    and nudged back toward centre as the crop tightens on small screens. */
 .page-header.has-photo {
   background-image:
     linear-gradient(180deg, rgba(10,10,10,0.58) 0%, rgba(10,10,10,0.50) 45%, rgba(10,10,10,0.84) 100%),
-    url('brand_assets/yt-large.webp');
+    url('brand_assets/yt-large-opt.webp');
   background-size: cover;
   background-position: 42% 28%;
   background-repeat: no-repeat;
@@ -2644,7 +2644,7 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
     background-position: 50% 24%;
     background-image:
       linear-gradient(180deg, rgba(10,10,10,0.52) 0%, rgba(10,10,10,0.48) 45%, rgba(10,10,10,0.88) 100%),
-      url('brand_assets/yt-large.webp');
+      url('brand_assets/yt-large-opt.webp');
   }
 }
 
@@ -2726,7 +2726,7 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 .page-header.ys-hero {
   background-image:
     linear-gradient(180deg, rgba(10,10,10,0.60) 0%, rgba(10,10,10,0.52) 45%, rgba(10,10,10,0.85) 100%),
-    url('brand_assets/youth-seminar-hero.webp');
+    url('brand_assets/youth-seminar-hero-opt.webp');
   background-size: cover;
   background-position: center 64%;
   background-repeat: no-repeat;
@@ -2740,7 +2740,7 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 .page-header.fos-hero {
   background-image:
     linear-gradient(180deg, rgba(10,10,10,0.58) 0%, rgba(10,10,10,0.50) 45%, rgba(10,10,10,0.84) 100%),
-    url('brand_assets/fos-hero-bg.webp');
+    url('brand_assets/fos-hero-bg-opt.webp');
   background-size: cover;
   background-position: center 40%;
   background-repeat: no-repeat;
@@ -2752,7 +2752,7 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 .page-header.mn-hero {
   background-image:
     linear-gradient(180deg, rgba(10,10,10,0.58) 0%, rgba(10,10,10,0.50) 45%, rgba(10,10,10,0.84) 100%),
-    url('brand_assets/masjid-night-page-bg.webp');
+    url('brand_assets/masjid-night-page-bg-opt.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -2839,7 +2839,7 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
   z-index: 1;
   background-image:
     linear-gradient(180deg, rgba(17,17,17,0.93) 0%, rgba(17,17,17,0.95) 50%, rgba(17,17,17,0.97) 100%),
-    url('brand_assets/DSC_0618.webp');
+    url('brand_assets/DSC_0618-opt.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
