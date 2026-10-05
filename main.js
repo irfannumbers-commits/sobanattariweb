@@ -12,7 +12,7 @@
   // ---- Site data: update these when events change ----
   // upcomingCount feeds the Updates page "Live Updates" badge.
   const SITE_DATA = {
-    upcomingCount: 3
+    upcomingCount: 4
   };
 
   // ---- Home page: horizontal rail of university session recaps ----

@@ -39,6 +39,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <!-- Urdu font subset: only the glyphs used in the course card description -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@500&display=swap&text=%D8%8C%D8%A2%D8%A6%D8%A7%D8%A8%D8%AA%D8%AD%D8%AE%D8%AF%D8%B1%D8%B2%D8%B3%D8%B5%D8%B7%D8%B9%D9%82%D9%84%D9%85%D9%86%D9%88%D9%BE%DA%A9%DA%BA%DA%BE%DB%81%DB%8C%DB%92%DB%94%E2%80%94" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -90,9 +92,9 @@
     <section class="section-light updates-section">
       <div class="container">
         <div class="updates-section-heading">
-          <span class="updates-live-badge"><span class="updates-live-dot" aria-hidden="true"></span><span><span data-upcoming-count>3</span> Live Updates</span></span>
+          <span class="updates-live-badge"><span class="updates-live-dot" aria-hidden="true"></span><span><span data-upcoming-count>4</span> Live Updates</span></span>
         </div>
-        <div class="event-teasers">
+        <div class="event-teasers event-teasers-2up">
         <a href="/events/females-session-oct-2026/" class="event-teaser-link">
           <article class="event-teaser">
             <div class="event-teaser-image" style="background-image:url('/brand_assets/upcoming-session-females1.webp')">
@@ -124,6 +126,28 @@
             </div>
           </article>
         </a>
+
+        <div class="event-teaser-link is-disabled">
+          <article class="event-teaser course-teaser">
+            <div class="course-teaser-top">
+              <div class="course-teaser-badges">
+                <span class="course-teaser-chip">🎓 Online Course</span>
+                <span class="course-teaser-soon">Coming Soon</span>
+              </div>
+              <div class="course-teaser-emojis" aria-hidden="true"><span>🤖</span><span>📚</span><span>✨</span></div>
+              <h3>Deeni Students <span>&amp; AI</span></h3>
+            </div>
+            <div class="event-teaser-body">
+              <p class="course-teaser-urdu" lang="ur" dir="rtl">دینی طلبہ کے لیے خصوصی تین روزہ آن لائن کورس — AI کو درست انداز میں اپنی دینی تعلیم، تحقیق اور روزمرہ کاموں میں استعمال کرنا سیکھیں۔</p>
+              <ul class="course-teaser-facts">
+                <li><span aria-hidden="true">🗓️</span> 3 Days</li>
+                <li><span aria-hidden="true">🕘</span> Daily &middot; 9:00 PM</li>
+                <li><span aria-hidden="true">💻</span> On Zoom</li>
+              </ul>
+              <span class="course-enroll-soon" aria-disabled="true">Registration Opening Soon</span>
+            </div>
+          </article>
+        </div>
 
         <div class="event-teaser-link is-disabled">
           <article class="event-teaser">

@@ -50,6 +50,7 @@
   /* Typography */
   --font-display:    'Space Grotesk', sans-serif;
   --font-body:       'Inter', sans-serif;
+  --font-urdu:       'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', var(--font-body);
 
   /* Spacing tokens */
   --space-xs:   8px;
@@ -3453,8 +3454,110 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 .event-teaser-link:focus-visible .event-teaser-cta { color: var(--text-dark); background: var(--bg-off-white); }
 .event-teaser-link:hover .event-teaser-cta::after,
 .event-teaser-link:focus-visible .event-teaser-cta::after { transform: translateX(3px); background: var(--accent); color: #111; }
+/* Text-only "coming soon" course card (updates.html) — a dark gold-glow
+   panel stands in for the photo so it keeps the same shape as its neighbours */
+.course-teaser-top {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 10px;
+  padding: 18px 22px 20px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(245, 197, 24, 0.30) 0%, rgba(245, 197, 24, 0) 55%),
+    radial-gradient(80% 70% at 0% 100%, rgba(245, 197, 24, 0.14) 0%, rgba(245, 197, 24, 0) 60%),
+    linear-gradient(150deg, var(--bg-dark-3) 0%, var(--bg-dark) 70%);
+}
+.course-teaser-top::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 26px 26px;
+  -webkit-mask-image: linear-gradient(200deg, #000 0%, transparent 75%);
+          mask-image: linear-gradient(200deg, #000 0%, transparent 75%);
+}
+.course-teaser-top > * { position: relative; }
+.course-teaser-badges {
+  position: absolute; top: 16px; left: 18px; right: 18px;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.course-teaser-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 11px; border-radius: 100px;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--text-light);
+  font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+}
+.course-teaser-soon {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 12px; border-radius: 100px;
+  background: var(--accent); color: #111111;
+  font-size: 10px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase;
+  box-shadow: 0 8px 22px -8px rgba(245, 197, 24, 0.75);
+}
+.course-teaser-soon::before {
+  content: "";
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #111111;
+  animation: courseSoonPulse 1.6s ease-in-out infinite;
+}
+@keyframes courseSoonPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.35; transform: scale(0.6); }
+}
+.course-teaser-emojis { display: flex; gap: 8px; font-size: 24px; line-height: 1; }
+.course-teaser-emojis span {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 12px;
+  background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12);
+  animation: courseEmojiFloat 3.2s ease-in-out infinite;
+}
+.course-teaser-emojis span:nth-child(2) { animation-delay: 0.35s; }
+.course-teaser-emojis span:nth-child(3) { animation-delay: 0.7s; }
+@keyframes courseEmojiFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+.course-teaser-top h3 {
+  margin: 0;
+  font-size: clamp(22px, 2.4vw, 28px); line-height: 1.1;
+  color: var(--text-light);
+}
+.course-teaser-top h3 span { color: var(--accent); }
+.course-teaser-urdu {
+  margin: 0;
+  font-family: var(--font-urdu);
+  font-size: 15px; line-height: 2.1;
+  color: var(--text-body);
+  text-align: right;
+}
+.course-teaser-facts {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 2px 0 4px; padding: 0; list-style: none;
+}
+.course-teaser-facts li {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 100px;
+  background: var(--accent-dim); border: 1px solid rgba(245, 197, 24, 0.35);
+  color: var(--text-dark);
+  font-size: 12px; font-weight: 600;
+}
+.course-teaser .course-enroll-soon {
+  align-self: flex-start;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+}
+@media (prefers-reduced-motion: reduce) {
+  .course-teaser-soon::before,
+  .course-teaser-emojis span { animation: none; }
+}
 @media (max-width: 900px) {
   .event-teasers { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 780px; }
+}
+@media (max-width: 420px) {
+  .course-teaser-top { aspect-ratio: auto; min-height: 210px; padding-top: 64px; }
+  .course-teaser-emojis span { width: 38px; height: 38px; font-size: 20px; }
 }
 @media (max-width: 620px) {
   .event-teasers, .event-teasers.event-teasers-2up, .event-teasers.event-teasers-1up { grid-template-columns: 1fr; max-width: 440px; }
