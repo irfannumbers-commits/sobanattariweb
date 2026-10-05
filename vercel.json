@@ -50,9 +50,7 @@
     { "source": "/programs/masjid-night/", "destination": "/programs/youth-night/", "permanent": true },
     { "source": "/programs/youth-night.html", "destination": "/programs/youth-night/", "permanent": true },
     { "source": "/programs/fos.html", "destination": "/programs/fos/", "permanent": true },
-    { "source": "/programs/deeni-tulba-and-ai.html", "destination": "/activities/", "permanent": true },
-    { "source": "/programs/deeni-tulba-and-ai", "destination": "/activities/", "permanent": true },
-    { "source": "/programs/deeni-tulba-and-ai/", "destination": "/activities/", "permanent": true },
+    { "source": "/programs/deeni-tulba-and-ai.html", "destination": "/programs/deeni-tulba-and-ai/", "permanent": true },
     { "source": "/programs/overseas-session.html", "destination": "/programs/overseas-session/", "permanent": true },
     { "source": "/programs/workers-convention.html", "destination": "/programs/workers-convention/", "permanent": true },
 
@@ -63,12 +61,10 @@
     { "source": "/events/females-session-sep-2026.html", "destination": "/events/females-session-oct-2026/", "permanent": true },
     { "source": "/events/youth-talks-lahore-sep-2026.html", "destination": "/events/youth-talks-lahore-sep-2026/", "permanent": true },
     { "source": "/events/youth-talks-karachi-sep-2026.html", "destination": "/events/youth-talks-karachi-oct-2026/", "permanent": true },
-    { "source": "/events/deeni-tulba-ai-nov-2026.html", "destination": "/updates/", "permanent": true },
+    { "source": "/events/deeni-tulba-ai-nov-2026.html", "destination": "/events/deeni-tulba-ai-oct-2026/", "permanent": true },
 
     { "source": "/events/females-session-sep-2026/", "destination": "/events/females-session-oct-2026/", "permanent": true },
-    { "source": "/events/deeni-tulba-ai-nov-2026/", "destination": "/updates/", "permanent": true },
-    { "source": "/events/deeni-tulba-ai-oct-2026", "destination": "/updates/", "permanent": true },
-    { "source": "/events/deeni-tulba-ai-oct-2026/", "destination": "/updates/", "permanent": true },
+    { "source": "/events/deeni-tulba-ai-nov-2026/", "destination": "/events/deeni-tulba-ai-oct-2026/", "permanent": true },
     { "source": "/events/youth-talks-karachi-sep-2026/", "destination": "/events/youth-talks-karachi-oct-2026/", "permanent": true },
 
     { "source": "/lums", "destination": "/blog/lums/", "permanent": true },
