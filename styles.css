@@ -756,6 +756,75 @@ body.menu-open { overflow: hidden; }
 @keyframes scrollLine { 0% { transform: translateY(-100%); } 60%, 100% { transform: translateY(100%); } }
 .hero-scroll-indicator:hover, .hero-scroll-indicator:focus-visible { color: var(--accent); outline: none; }
 
+/* Video loader — shown over the poster until the first frame plays, and again
+   if playback stalls to buffer (built by main.js) */
+.video-loader {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  opacity: 0; transition: opacity 0.5s ease;
+}
+.video-loader.is-active { opacity: 1; }
+.video-loader-chip {
+  position: absolute; right: clamp(20px, 4vw, 48px); bottom: 36px;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 9px 16px 9px 12px; border-radius: 100px;
+  background: rgba(10, 10, 10, 0.45); border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-body); font-size: 10.5px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase;
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+}
+.video-loader-ring {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid rgba(245, 197, 24, 0.25); border-top-color: var(--accent);
+  animation: videoLoaderSpin 0.8s linear infinite;
+}
+@keyframes videoLoaderSpin { to { transform: rotate(360deg); } }
+/* slim indeterminate bar along the bottom edge of the hero */
+.video-loader-bar {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 3px; overflow: hidden;
+  background: rgba(245, 197, 24, 0.14);
+}
+.video-loader-bar::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 40%;
+  background: linear-gradient(90deg, transparent, var(--accent) 35%, #ffe27a 50%, var(--accent) 65%, transparent);
+  box-shadow: 0 0 12px rgba(245, 197, 24, 0.8);
+  transform: translateX(-100%);
+  animation: videoLoaderSlide 1.4s cubic-bezier(.65, 0, .35, 1) infinite;
+}
+@keyframes videoLoaderSlide { to { transform: translateX(250%); } }
+@media (max-width: 768px) {
+  /* copy is anchored to the bottom on phones — keep the chip up top, clear of it */
+  .video-loader-chip { top: 84px; bottom: auto; right: 16px; padding: 7px 13px 7px 10px; font-size: 9.5px; letter-spacing: 1.5px; }
+  .video-loader-ring { width: 12px; height: 12px; }
+}
+
+/* Image skeletons — shimmer in an image's box until it loads (main.js) */
+:where(.img-skeleton-host) { position: relative; }
+.img-skeleton {
+  position: absolute; inset: 0; z-index: 0; overflow: hidden;
+  border-radius: inherit; pointer-events: none;
+  background: #ececec;
+  transition: opacity 0.5s ease;
+}
+.img-skeleton::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.65) 50%, transparent 80%);
+  transform: translateX(-100%);
+  animation: imgShimmer 1.5s ease-in-out infinite;
+}
+.img-skeleton-dark { background: #1e1e1e; }
+.img-skeleton-dark::after { background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.07) 50%, transparent 80%); }
+.img-skeleton.is-done { opacity: 0; }
+@keyframes imgShimmer { to { transform: translateX(100%); } }
+/* fades from transparent to the image's own opacity, then lets go */
+.img-reveal { animation: imgReveal 0.55s ease backwards; }
+@keyframes imgReveal { from { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .video-loader-ring, .video-loader-bar::after, .img-skeleton::after { animation: none; }
+  .img-reveal { animation: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-step { animation: none; opacity: 1; transform: none; }
   .btn-live::after, .hero-scroll-line::after, .btn-live-dot::after { animation: none; }

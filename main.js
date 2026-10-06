@@ -665,21 +665,77 @@
     watch.forEach(function (el) { io.observe(el); });
   })();
 
-  // ---- Hero video: attach the 4.4 MB source only after the page has loaded ----
-  // The poster paints first; the video never competes with CSS, fonts or
-  // images. Skipped on Save-Data, 2G, reduced motion, and on phones that
-  // aren't on 4G (effectiveType is a rough estimate, so desktops only bail on 2G).
-  (function lazyHeroVideo() {
+  // ---- Hero video: always plays, with a loader while it buffers ----
+  // The poster (preloaded) paints instantly; the video starts streaming right
+  // away on every connection (the MP4 is faststart, so it plays while it
+  // downloads). A slim gold bar + "Loading video" chip sit over the poster
+  // until the first frame plays, and come back if playback stalls to buffer.
+  // Only skipped for people who turned on "reduce motion" in their OS.
+  (function heroVideo() {
     const videos = document.querySelectorAll('video[data-src]');
     if (!videos.length) return;
-    const conn = navigator.connection;
-    const type = (conn && conn.effectiveType) || '';
-    const isPhone = window.matchMedia('(max-width: 768px)').matches;
-    if (conn && (conn.saveData || /2g$/.test(type) || (isPhone && type === '3g'))) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    function attach() {
-      videos.forEach(function (video) {
+    videos.forEach(function (video) {
+      const host = video.parentElement;
+      const loader = document.createElement('div');
+      loader.className = 'video-loader';
+      loader.setAttribute('aria-hidden', 'true');
+      loader.innerHTML =
+        '<span class="video-loader-chip"><span class="video-loader-ring"></span>Loading video</span>' +
+        '<span class="video-loader-bar"></span>';
+      host.appendChild(loader);
+
+      // The loader only appears if the wait is long enough to notice — on a
+      // good connection the video starts first and the loader never flashes.
+      // Once shown it stays at least 700ms, so it never blinks on and off.
+      let showTimer = null;
+      let shownAt = 0;
+      function showLoaderSoon(delay) {
+        clearTimeout(showTimer);
+        showTimer = setTimeout(function () {
+          shownAt = Date.now();
+          loader.classList.add('is-active');
+        }, delay);
+      }
+      function hideLoader() {
+        clearTimeout(showTimer);
+        if (!loader.classList.contains('is-active')) return;
+        showTimer = setTimeout(function () {
+          loader.classList.remove('is-active');
+        }, Math.max(0, 700 - (Date.now() - shownAt)));
+      }
+
+      video.addEventListener('playing', function () {
+        hideLoader();
+        host.classList.add('video-ready');
+      });
+      // brief stalls are normal; only show the loader if one lasts
+      video.addEventListener('waiting', function () { showLoaderSoon(800); });
+      video.addEventListener('error', hideLoader, true);
+
+      let retryArmed = false;
+      function play() {
+        const p = video.play();
+        if (p && p.catch) {
+          p.catch(function () {
+            // autoplay refused (e.g. iOS Low Power Mode): keep the poster,
+            // drop the loader, and start on the visitor's first interaction
+            hideLoader();
+            if (retryArmed) return;
+            retryArmed = true;
+            const types = ['pointerdown', 'touchstart', 'keydown'];
+            function retry() {
+              types.forEach(function (t) { window.removeEventListener(t, retry); });
+              retryArmed = false;
+              play();
+            }
+            types.forEach(function (t) { window.addEventListener(t, retry, { passive: true }); });
+          });
+        }
+      }
+
+      function start() {
         const source = document.createElement('source');
         source.src = video.dataset.src;
         source.type = 'video/mp4';
@@ -687,15 +743,77 @@
         video.removeAttribute('data-src');
         video.preload = 'auto';
         video.load();
-        const p = video.play();
-        if (p && p.catch) p.catch(function () {});
-      });
+        showLoaderSoon(600);
+        play();
+      }
+      // Let the headline fonts land first (they're small) so the video never
+      // delays them on a slow line; capped so the video is never held back long.
+      let started = false;
+      function startOnce() { if (!started) { started = true; start(); } }
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(startOnce);
+      setTimeout(startOnce, 1200);
+
+      // pause while scrolled out of view — saves battery and data on phones
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          if (!started) return;
+          if (entries[0].isIntersecting) { if (video.paused) play(); }
+          else if (!video.paused) video.pause();
+        }).observe(host);
+      }
+    });
+  })();
+
+  // ---- Image loading: shimmer skeleton, then a soft fade-in ----
+  // Images that aren't loaded yet get a shimmering placeholder in their box
+  // (tinted for light or dark cards) instead of a flat empty block. Images
+  // already in the cache skip all of this, so nothing flickers on revisit.
+  (function imageSkeletons() {
+    function isDark(el) {
+      while (el && el !== document.documentElement) {
+        const m = getComputedStyle(el).backgroundColor.match(/[\d.]+/g);
+        if (m && (m[3] === undefined || +m[3] > 0.5)) return (+m[0] * 299 + +m[1] * 587 + +m[2] * 114) / 1000 < 128;
+        el = el.parentElement;
+      }
+      return false;
     }
-    function schedule() {
-      if ('requestIdleCallback' in window) requestIdleCallback(attach, { timeout: 2000 });
-      else setTimeout(attach, 200);
+    function addSkeleton(host) {
+      const sk = document.createElement('span');
+      sk.className = 'img-skeleton' + (isDark(host) ? ' img-skeleton-dark' : '');
+      sk.setAttribute('aria-hidden', 'true');
+      host.classList.add('img-skeleton-host');
+      host.insertBefore(sk, host.firstChild);
+      return sk;
     }
-    if (document.readyState === 'complete') schedule();
-    else window.addEventListener('load', schedule, { once: true });
+    function done(sk, img) {
+      if (img) img.classList.add('img-reveal');
+      sk.classList.add('is-done');
+      setTimeout(function () { sk.remove(); }, 600);
+    }
+
+    document.querySelectorAll('img').forEach(function (img) {
+      if (img.complete && img.naturalWidth) return;
+      if (img.closest('footer, nav, .navbar, .nav-mobile, [data-no-skeleton]')) return;
+      const host = img.parentElement;
+      // the blurred backdrop + sharp foreground pairs share one skeleton
+      if (host.querySelector(':scope > .img-skeleton')) {
+        img.addEventListener('load', function () { img.classList.add('img-reveal'); }, { once: true });
+        return;
+      }
+      const sk = addSkeleton(host);
+      img.addEventListener('load', function () { done(sk, img); }, { once: true });
+      img.addEventListener('error', function () { done(sk); }, { once: true });
+    });
+
+    // cards that paint their photo as an inline background-image
+    document.querySelectorAll('[style*="background-image"]').forEach(function (el) {
+      const m = el.style.backgroundImage.match(/url\(["']?([^"')]+)["']?\)/);
+      if (!m) return;
+      const probe = new Image();
+      probe.src = m[1];
+      if (probe.complete && probe.naturalWidth) return;
+      const sk = addSkeleton(el);
+      probe.onload = probe.onerror = function () { done(sk); };
+    });
   })();
 })();
