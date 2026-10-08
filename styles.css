@@ -3523,119 +3523,6 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 .event-teaser-link:focus-visible .event-teaser-cta { color: var(--text-dark); background: var(--bg-off-white); }
 .event-teaser-link:hover .event-teaser-cta::after,
 .event-teaser-link:focus-visible .event-teaser-cta::after { transform: translateX(3px); background: var(--accent); color: #111; }
-/* Text-only "coming soon" course card (updates.html) — a dark gold-glow
-   panel stands in for the photo so it keeps the same shape as its neighbours */
-.course-teaser-top {
-  position: relative;
-  aspect-ratio: 2 / 1;
-  display: flex; flex-direction: column; justify-content: flex-end; gap: 10px;
-  padding: 18px 22px 20px;
-  overflow: hidden;
-  background:
-    radial-gradient(120% 90% at 100% 0%, rgba(245, 197, 24, 0.30) 0%, rgba(245, 197, 24, 0) 55%),
-    radial-gradient(80% 70% at 0% 100%, rgba(245, 197, 24, 0.14) 0%, rgba(245, 197, 24, 0) 60%),
-    linear-gradient(150deg, var(--bg-dark-3) 0%, var(--bg-dark) 70%);
-}
-.course-teaser-top::before {
-  content: "";
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 26px 26px;
-  -webkit-mask-image: linear-gradient(200deg, #000 0%, transparent 75%);
-          mask-image: linear-gradient(200deg, #000 0%, transparent 75%);
-}
-.course-teaser-top > * { position: relative; }
-.course-teaser-badges {
-  position: absolute; top: 16px; left: 18px; right: 18px;
-  display: flex; align-items: center; justify-content: space-between; gap: 8px;
-}
-.course-teaser-chip {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 11px; border-radius: 100px;
-  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16);
-  color: var(--text-light);
-  font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
-}
-.course-teaser-soon {
-  position: relative;
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 6px 12px; border-radius: 100px;
-  background: var(--accent); color: #111111;
-  font-size: 10px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase;
-  box-shadow: 0 8px 22px -8px rgba(245, 197, 24, 0.75);
-}
-.course-teaser-soon::before {
-  content: "";
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #111111;
-  animation: courseSoonPulse 1.6s ease-in-out infinite;
-}
-@keyframes courseSoonPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.35; transform: scale(0.6); }
-}
-.course-teaser-emojis { display: flex; gap: 8px; font-size: 24px; line-height: 1; }
-.course-teaser-emojis span {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 44px; height: 44px; border-radius: 12px;
-  background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.12);
-  animation: courseEmojiFloat 3.2s ease-in-out infinite;
-}
-.course-teaser-emojis span:nth-child(2) { animation-delay: 0.35s; }
-.course-teaser-emojis span:nth-child(3) { animation-delay: 0.7s; }
-@keyframes courseEmojiFloat {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-4px); }
-}
-.course-teaser-top h3 {
-  margin: 0;
-  font-size: clamp(22px, 2.4vw, 28px); line-height: 1.1;
-  color: var(--text-light);
-}
-.course-teaser-top h3 span { color: var(--accent); }
-.course-teaser-title {
-  display: flex; align-items: center; justify-content: space-between; gap: 10px 14px;
-  flex-wrap: wrap;
-}
-.course-teaser-free {
-  flex-shrink: 0;
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 14px 7px 11px; border-radius: 100px;
-  background: var(--bg-light); color: var(--text-dark);
-  font-family: var(--font-display); font-size: 13px; font-weight: 700;
-  letter-spacing: 1.6px; text-transform: uppercase; line-height: 1;
-  box-shadow: 0 0 0 2px var(--accent), 0 0 0 6px rgba(245, 197, 24, 0.18), 0 12px 26px -10px rgba(245, 197, 24, 0.7);
-  transform: rotate(-3deg);
-}
-.course-teaser-free span { font-size: 15px; letter-spacing: 0; }
-.course-teaser-urdu {
-  margin: 0;
-  font-family: var(--font-urdu);
-  font-size: 15px; line-height: 2.1;
-  color: var(--text-body);
-  text-align: right;
-}
-.course-teaser-facts {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  margin: 2px 0 4px; padding: 0; list-style: none;
-}
-.course-teaser-facts li {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 12px; border-radius: 100px;
-  background: var(--accent-dim); border: 1px solid rgba(245, 197, 24, 0.35);
-  color: var(--text-dark);
-  font-size: 12px; font-weight: 600;
-}
-.course-teaser .course-enroll-soon {
-  align-self: flex-start;
-  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-}
-@media (prefers-reduced-motion: reduce) {
-  .course-teaser-soon::before,
-  .course-teaser-emojis span { animation: none; }
-}
 @media (max-width: 900px) {
   .event-teasers { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 780px; }
 }
@@ -3646,17 +3533,6 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 @media (max-width: 620px) {
   /* one card per row — no reason to stretch any card */
   .event-teasers { grid-auto-rows: auto; gap: 18px; }
-  .course-teaser-top { aspect-ratio: auto; min-height: 0; padding: 62px 18px 18px; gap: 12px; }
-  .course-teaser-badges { top: 14px; left: 14px; right: 14px; }
-  .course-teaser-emojis span { width: 38px; height: 38px; font-size: 20px; border-radius: 10px; }
-  .course-teaser .event-teaser-body { gap: 12px; padding: 18px 18px 20px; }
-  .course-teaser-urdu { font-size: 14.5px; line-height: 2; }
-  .course-teaser-facts { gap: 6px; margin: 0; }
-  .course-teaser-facts li { padding: 5px 10px; font-size: 11.5px; }
-  .course-teaser-free { font-size: 12px; padding: 6px 12px 6px 9px; }
-}
-@media (max-width: 360px) {
-  .course-teaser-chip, .course-teaser-soon { font-size: 9px; letter-spacing: 1px; padding: 5px 9px; }
 }
 @media (max-width: 620px) {
   .event-teasers, .event-teasers.event-teasers-2up, .event-teasers.event-teasers-1up { grid-template-columns: 1fr; max-width: 440px; }
@@ -4005,3 +3881,239 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 @media (prefers-reduced-motion: reduce) {
   .contact-fab-wrap, .contact-fab-btn, .contact-fab-panel, .contact-fab-hint { transition: none; }
 }
+
+/* =========================================================
+   COURSE SPOTLIGHT — featured "now enrolling" course card.
+   Shared by /updates/, /courses/ and the Deeni Students and AI
+   program page: the full course poster on top (never cropped —
+   it carries the dates), then a dark gold-glow panel with the
+   3-day strip, quick facts and Register / Details actions.
+   ========================================================= */
+.course-spotlight {
+  position: relative;
+  display: flex; flex-direction: column;
+  width: 100%; max-width: 980px; margin: 0 auto;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid var(--border-dark);
+  background:
+    radial-gradient(90% 120% at 100% 0%, rgba(245, 197, 24, 0.16) 0%, rgba(245, 197, 24, 0) 55%),
+    linear-gradient(160deg, var(--bg-dark-3) 0%, var(--bg-dark) 65%);
+  box-shadow: 0 34px 70px -34px rgba(17, 17, 17, 0.55), 0 10px 26px -14px rgba(245, 197, 24, 0.22);
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+.course-spotlight:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 40px 80px -34px rgba(17, 17, 17, 0.6), 0 16px 40px -16px rgba(245, 197, 24, 0.4);
+}
+/* Inside the Updates grid the spotlight is one card among the others:
+   same width as its neighbours, content stacked, no day strip. */
+.event-teasers > .course-spotlight { max-width: none; border-radius: 18px; }
+.event-teasers > .course-spotlight .course-spotlight-body { display: flex; flex-direction: column; flex: 1; padding: 20px 22px 22px; }
+.event-teasers > .course-spotlight .course-spotlight-main { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; flex: 1; }
+.event-teasers > .course-spotlight h3 { font-size: 24px; }
+.event-teasers > .course-spotlight p { font-size: 14px; line-height: 1.65; }
+.event-teasers > .course-spotlight .course-spotlight-main > .course-spotlight-actions { flex-direction: row; margin-top: auto; padding-top: 6px; }
+.event-teasers > .course-spotlight .course-spotlight-actions .btn { padding: 11px 18px; font-size: 12px; }
+.event-teasers > .course-spotlight .course-spotlight-side { display: none; }
+
+.course-spotlight-media { display: block; overflow: hidden; aspect-ratio: 2 / 1; background: #2a3bd0; }
+.course-spotlight-media img {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.course-spotlight:hover .course-spotlight-media img { transform: scale(1.03); }
+.course-spotlight-media:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+/* Wide screens: the poster is big enough to read its own dates, so the
+   panel is just badges + title + pitch, with the actions to the right.
+   Phones swap in the day strip and facts (.course-spotlight-side). */
+.course-spotlight-body { padding: 28px 34px 30px; }
+.course-spotlight-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 40px; row-gap: 12px;
+  align-items: center;
+}
+.course-spotlight-main > * { grid-column: 1; justify-self: start; }
+.course-spotlight-main > .course-spotlight-actions { grid-column: 2; grid-row: 1 / span 3; justify-self: end; flex-direction: column; margin-top: 0; }
+.course-spotlight-actions .btn { justify-content: center; }
+.course-spotlight-side { display: none; }
+.course-spotlight-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.course-spotlight-live {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 12px; border-radius: 100px;
+  background: var(--accent); color: #111111;
+  font-size: 10px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase;
+  box-shadow: 0 8px 22px -8px rgba(245, 197, 24, 0.75);
+}
+.course-spotlight-live::before {
+  content: "";
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #111111;
+  animation: courseSoonPulse 1.6s ease-in-out infinite;
+}
+@keyframes courseSoonPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.35; transform: scale(0.6); }
+}
+.course-spotlight-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 100px;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--text-light);
+  font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+}
+.course-spotlight h3 {
+  margin: 2px 0 0;
+  font-size: clamp(26px, 3.2vw, 36px); line-height: 1.05;
+  color: var(--text-light);
+}
+.course-spotlight h3 a { color: inherit; transition: color var(--transition); }
+.course-spotlight h3 a:hover { color: var(--accent); }
+.course-spotlight h3 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.course-spotlight h3 span { color: var(--accent); }
+.course-spotlight p { margin: 0; font-size: 15px; line-height: 1.7; color: var(--text-light-muted); }
+.course-spotlight-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.course-spotlight-actions .btn { padding: 13px 24px; }
+.course-spotlight .btn-primary:hover { opacity: 1; background: var(--accent-dark); }
+.course-spotlight .btn-primary:active,
+.course-spotlight .btn-outline:active { transform: translateY(0) scale(0.98); }
+
+
+/* 3-day strip — echoes the dotted timeline on the poster */
+.course-days {
+  position: relative;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  margin: 0; padding: 18px 10px 16px; list-style: none;
+  background: var(--bg-light); border-radius: 16px;
+  text-align: center;
+}
+.course-days::before {
+  content: "";
+  position: absolute; top: 25px; left: 16%; right: 16%;
+  border-top: 2px dashed rgba(245, 197, 24, 0.55);
+}
+.course-days li { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.course-days li::before {
+  content: "";
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent); border: 3px solid var(--text-dark);
+  margin-bottom: 8px;
+}
+.course-days .cd-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+.course-days .cd-date { display: flex; align-items: baseline; gap: 5px; }
+.course-days strong { font-family: var(--font-display); font-size: 32px; font-weight: 700; line-height: 1; color: var(--text-dark); }
+.course-days .cd-dow { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--accent-dark); }
+
+.course-facts {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;
+  margin: 0; padding: 0; list-style: none;
+}
+.course-facts li {
+  display: flex; align-items: center; gap: 9px; min-width: 0;
+  padding: 10px 11px; border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.course-facts .cf-icon {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 9px;
+  background: var(--accent); color: #111111;
+}
+.course-facts .cf-icon svg { width: 16px; height: 16px; display: block; }
+.course-facts .cf-text { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+.course-facts small { font-size: 9px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); }
+.course-facts b { font-size: 13.5px; font-weight: 700; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* /courses/ — spotlight sits above the coming-soon grid */
+.courses-spotlight-wrap { margin-bottom: var(--space-xl); }
+
+@media (prefers-reduced-motion: reduce) {
+  .course-spotlight-live::before { animation: none; }
+  .course-spotlight,
+  .course-spotlight-media img { transition: none; }
+  .course-spotlight:hover,
+  .course-spotlight:hover .course-spotlight-media img { transform: none; }
+}
+@media (max-width: 900px) {
+  .course-spotlight-body { padding: 24px 24px 26px; }
+}
+@media (max-width: 620px) {
+  .course-spotlight { border-radius: 18px; }
+  .course-spotlight-body { display: flex; flex-direction: column; padding: 22px 18px 22px; gap: 18px; }
+  .course-spotlight-main { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .course-spotlight-main > .course-spotlight-actions { margin-top: 6px; }
+  .course-spotlight-side { display: flex; flex-direction: column; gap: 12px; }
+  .course-spotlight h3 { font-size: 27px; }
+  .course-spotlight p { font-size: 14.5px; }
+  .course-spotlight-actions { display: grid; grid-template-columns: 1fr; width: 100%; }
+  .course-spotlight-actions .btn { justify-content: center; }
+  .course-days { padding: 16px 4px 14px; }
+  .course-days strong { font-size: 27px; }
+  .course-facts { grid-template-columns: 1fr; }
+  .courses-spotlight-wrap { margin-bottom: var(--space-lg); }
+}
+
+/* =========================================================
+   COURSE DETAIL PAGE — /courses/deeni-students-and-ai/
+   Reuses the event-page poster + header pattern, with the
+   wide poster on top and the details centred underneath.
+   ========================================================= */
+.course-detail .event-poster { max-width: 720px; margin: 0 auto; }
+.course-detail .event-header { max-width: 820px; text-align: center; }
+.course-detail .event-meta-bar,
+.course-detail .event-header .event-detail-topics,
+.course-detail .event-hero-actions { justify-content: center; }
+.course-detail .event-hero-actions .btn-primary:hover { opacity: 1; background: var(--accent-dark); }
+.course-urdu {
+  margin: 16px 0 0;
+  font-family: var(--font-urdu);
+  font-size: 17px; line-height: 2.2;
+  color: var(--text-dark);
+}
+.course-schedule { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-md); max-width: 980px; margin: 0 auto; }
+.course-day-card {
+  position: relative;
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 26px 24px 24px;
+  background: var(--bg-light); border: 1px solid var(--border-light); border-radius: 18px;
+  overflow: hidden;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+.course-day-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent); }
+.course-day-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 26px 55px -26px rgba(245, 197, 24, 0.35); }
+.course-day-card .cd-label { font-size: 11px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent-dark); }
+.course-day-card .cd-date { display: flex; align-items: baseline; gap: 8px; }
+.course-day-card .cd-date strong { font-family: var(--font-display); font-size: 52px; font-weight: 700; line-height: 1; color: var(--text-dark); }
+.course-day-card .cd-dow { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+.course-day-card .ysk-schedule-row { font-size: 13.5px; }
+.course-speaker {
+  max-width: 980px; margin: var(--space-md) auto 0;
+  text-align: center; font-size: 14px; color: var(--text-body);
+}
+.course-speaker strong { color: var(--text-dark); }
+.course-cta { text-align: center; }
+.course-cta .container { display: flex; flex-direction: column; align-items: center; }
+.course-cta h2 { max-width: 760px; margin-bottom: var(--space-sm); }
+.course-cta p { max-width: 560px; margin: 0 auto var(--space-md); }
+.course-cta .btn-group { justify-content: center; }
+.course-cta .btn-primary:hover { opacity: 1; background: var(--accent-dark); }
+@media (prefers-reduced-motion: reduce) {
+  .course-day-card { transition: none; }
+  .course-day-card:hover { transform: none; }
+}
+@media (max-width: 768px) {
+  .course-schedule { grid-template-columns: 1fr; gap: 12px; max-width: 440px; }
+  .course-day-card { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 14px; padding: 20px 18px 18px; }
+  .course-day-card .cd-label { width: 100%; }
+  .course-day-card .cd-date strong { font-size: 40px; }
+  .course-day-card .ysk-schedule-row { margin-left: auto; }
+  .course-urdu { font-size: 15.5px; line-height: 2.1; }
+  .course-cta .btn-group { display: grid; grid-template-columns: 1fr; width: 100%; max-width: 360px; }
+  .course-cta .btn-group .btn { justify-content: center; }
+}
+
+/* Updates page — shown by main.js when every upcoming event has ended */
+.updates-empty { text-align: center; color: var(--text-muted); font-size: 15px; padding: var(--space-lg) 0; }

@@ -9,10 +9,15 @@
   const videos = '/videos/';
   const books = '/books/';
 
-  // ---- Site data: update these when events change ----
-  // upcomingCount feeds the Updates page "Live Updates" badge.
-  const SITE_DATA = {
-    upcomingCount: 4
+  // ---- Upcoming events: when each one ENDS (Pakistan time, +05:00) ----
+  // Once that moment passes, every card linking to the event (Updates page,
+  // "More Upcoming Events" strips, course spotlights) is removed on page
+  // load and the remaining cards close up. Add a line here for every new
+  // event; events without an entry (e.g. dates not announced yet) never expire.
+  const EVENT_ENDS = {
+    '/events/females-session-oct-2026/':    '2026-10-10T22:00:00+05:00',
+    '/courses/deeni-students-and-ai/':      '2026-10-25T23:00:00+05:00',
+    '/events/youth-talks-karachi-oct-2026/': '2026-10-31T22:45:00+05:00'
   };
 
   // ---- Home page: horizontal rail of university session recaps ----
@@ -65,9 +70,53 @@
     update();
   })();
 
-  document.querySelectorAll('[data-upcoming-count]').forEach(function (el) {
-    el.textContent = SITE_DATA.upcomingCount;
-  });
+  (function removeEndedEvents() {
+    const now = Date.now();
+    const ended = Object.keys(EVENT_ENDS).filter(function (path) {
+      return Date.parse(EVENT_ENDS[path]) <= now;
+    });
+    const grids = new Set();
+
+    ended.forEach(function (path) {
+      // Plain event cards are the link itself; a course spotlight holds the
+      // link inside it, and may sit in a wrapper that only exists for it.
+      document.querySelectorAll('a.event-teaser-link[href="' + path + '"]').forEach(function (card) {
+        if (card.parentElement) grids.add(card.parentElement);
+        card.remove();
+      });
+      document.querySelectorAll('.course-spotlight-media[href="' + path + '"]').forEach(function (link) {
+        const card = link.closest('.course-spotlight');
+        const wrap = card.closest('[data-event-wrap]');
+        if (card.parentElement) grids.add(card.parentElement);
+        (wrap || card).remove();
+      });
+    });
+
+    // Close up the grids that lost cards
+    grids.forEach(function (grid) {
+      if (!grid.classList.contains('event-teasers') || !document.contains(grid)) return;
+      const left = grid.children.length;
+      if (left === 0) {
+        if (grid.closest('.updates-section')) {
+          grid.outerHTML = '<p class="updates-empty">No upcoming events right now &mdash; check back soon.</p>';
+        } else {
+          // "More Upcoming Events" strip with nothing left to show
+          const section = grid.closest('section');
+          if (section) section.remove();
+        }
+      } else if (left === 1) {
+        grid.classList.remove('event-teasers-2up');
+        grid.classList.add('event-teasers-1up');
+      } else if (left === 2 && !grid.classList.contains('event-teasers-1up')) {
+        grid.classList.add('event-teasers-2up');
+      }
+    });
+
+    const remaining = document.querySelectorAll('.updates-section .event-teasers > *').length;
+    document.querySelectorAll('[data-upcoming-count]').forEach(function (el) {
+      el.textContent = remaining;
+    });
+  })();
 
 
   // Small pulsing live-dot next to "Updates" — desktop nav, every page,
@@ -521,8 +570,8 @@
   // opening the hamburger menu first. This stays pinned bottom-right on
   // every page so Email is always one tap away.
   (function setupContactFab() {
-    // Event detail pages keep the screen for their sticky Register / Directions bar
-    if (location.pathname.indexOf('/events/') === 0) return;
+    // Event and course detail pages keep the screen for their sticky Register / Directions bar
+    if (location.pathname.indexOf('/events/') === 0 || document.querySelector('.event-hero-actions')) return;
     const EMAIL = 'team@sobanattari.com';
     const HINT_KEY = 'sa-email-hint-seen';
     const MAIL_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>';
