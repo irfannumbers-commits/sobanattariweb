@@ -3937,34 +3937,9 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
   align-items: center;
 }
 .course-spotlight-main > * { grid-column: 1; justify-self: start; }
-.course-spotlight-main > .course-spotlight-actions { grid-column: 2; grid-row: 1 / span 3; justify-self: end; flex-direction: column; margin-top: 0; }
+.course-spotlight-main > .course-spotlight-actions { grid-column: 2; grid-row: 1 / span 2; justify-self: end; flex-direction: column; margin-top: 0; }
 .course-spotlight-actions .btn { justify-content: center; }
 .course-spotlight-side { display: none; }
-.course-spotlight-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.course-spotlight-live {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 6px 12px; border-radius: 100px;
-  background: var(--accent); color: #111111;
-  font-size: 10px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase;
-  box-shadow: 0 8px 22px -8px rgba(245, 197, 24, 0.75);
-}
-.course-spotlight-live::before {
-  content: "";
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #111111;
-  animation: courseSoonPulse 1.6s ease-in-out infinite;
-}
-@keyframes courseSoonPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.35; transform: scale(0.6); }
-}
-.course-spotlight-chip {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 12px; border-radius: 100px;
-  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16);
-  color: var(--text-light);
-  font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
-}
 .course-spotlight h3 {
   margin: 2px 0 0;
   font-size: clamp(26px, 3.2vw, 36px); line-height: 1.05;
@@ -4031,7 +4006,6 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 .courses-spotlight-wrap { margin-bottom: var(--space-xl); }
 
 @media (prefers-reduced-motion: reduce) {
-  .course-spotlight-live::before { animation: none; }
   .course-spotlight,
   .course-spotlight-media img { transition: none; }
   .course-spotlight:hover,
