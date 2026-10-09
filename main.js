@@ -520,6 +520,9 @@
     }
 
     function stopYtVideo(iframe) {
+      // A video that was still loading also has its spinner thumbnail on top
+      const loading = iframe.parentElement && iframe.parentElement.querySelector('.yt-facade.is-loading');
+      if (loading) loading.remove();
       iframe.replaceWith(buildYtFacade(iframe.dataset.ytId, iframe.dataset.ytTitle));
     }
 
@@ -540,7 +543,16 @@
       });
     }
 
+    // The thumbnail stays on top with a spinner while the player loads
+    // underneath (on a slow network that's otherwise a blank black box), and
+    // fades away once YouTube reports the video is playing. If autoplay is
+    // blocked it never reports "playing", so the player is revealed shortly
+    // after it has loaded and the visitor can press its own play button.
+    const YT_ORIGIN = 'https://www.youtube.com';
+    const YT_REVEAL_FALLBACK_MS = 2500;
+
     function playYtFacade(facade) {
+      if (facade.classList.contains('is-loading')) return;
       warmYtConnections();
       document.querySelectorAll('.yt-facade-iframe').forEach(stopYtVideo);
       const id = facade.dataset.ytId;
@@ -549,12 +561,43 @@
       iframe.className = 'yt-facade-iframe';
       iframe.dataset.ytId = id;
       iframe.dataset.ytTitle = title;
-      iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.src = `${YT_ORIGIN}/embed/${id}?autoplay=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`;
       iframe.title = title;
       iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
       iframe.allowFullscreen = true;
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-      facade.replaceWith(iframe);
+
+      facade.classList.add('is-loading');
+      facade.setAttribute('aria-busy', 'true');
+      facade.setAttribute('aria-label', 'Loading video: ' + title);
+      facade.insertAdjacentHTML('beforeend', '<span class="yt-facade-spinner" aria-hidden="true"></span>');
+      facade.before(iframe);
+
+      let revealed = false;
+      let fallbackTimer = null;
+      function reveal() {
+        if (revealed) return;
+        revealed = true;
+        clearTimeout(fallbackTimer);
+        window.removeEventListener('message', onMessage);
+        if (!facade.isConnected) return;
+        facade.classList.add('is-revealing');
+        facade.addEventListener('transitionend', function () { facade.remove(); }, { once: true });
+        setTimeout(function () { facade.remove(); }, 600); // in case transitions are off
+      }
+      function onMessage(e) {
+        if (e.origin !== YT_ORIGIN || e.source !== iframe.contentWindow) return;
+        let data;
+        try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (err) { return; }
+        const state = data && (data.event === 'onStateChange' ? data.info : data.info && data.info.playerState);
+        if (state === 1) reveal(); // 1 = playing
+      }
+      window.addEventListener('message', onMessage);
+      iframe.addEventListener('load', function () {
+        // Ask the player to post its state changes back to this page
+        iframe.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: id }), YT_ORIGIN);
+        fallbackTimer = setTimeout(reveal, YT_REVEAL_FALLBACK_MS);
+      }, { once: true });
     }
 
     ytFacades.forEach(function (facade) {

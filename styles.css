@@ -1692,6 +1692,26 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 .yt-facade:hover .yt-facade-play svg, .yt-facade:hover .yt-facade-play svg path,
 .yt-facade:focus-visible .yt-facade-play svg, .yt-facade:focus-visible .yt-facade-play svg path { fill: #111; }
 .yt-facade:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* Clicked: thumbnail stays up with a gold spinner until the video plays */
+.yt-facade { transition: opacity 0.35s ease; }
+.yt-facade.is-loading { cursor: progress; }
+.yt-facade.is-loading .yt-facade-thumb { opacity: 0.7; }
+.yt-facade.is-loading .yt-facade-play { opacity: 0; }
+.yt-facade.is-revealing { opacity: 0; pointer-events: none; }
+.yt-facade-spinner {
+  position: absolute; top: 50%; left: 50%; z-index: 2;
+  width: 56px; height: 56px; margin: -28px 0 0 -28px;
+  border-radius: 50%;
+  background: rgba(17, 17, 17, 0.82);
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--accent);
+  box-shadow: 0 0 0 6px rgba(17, 17, 17, 0.35), 0 10px 30px rgba(0, 0, 0, 0.45);
+  animation: ytSpin 0.8s linear infinite;
+}
+@keyframes ytSpin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .yt-facade-spinner { animation-duration: 2s; }
+}
 .short-content h3 { font-size: 12.5px; font-weight: 700; line-height: 1.35; margin: 0; color: var(--text-dark); }
 @media (max-width: 1024px) {
   .shorts-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
