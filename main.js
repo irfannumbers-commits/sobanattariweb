@@ -15,7 +15,7 @@
   // load and the remaining cards close up. Add a line here for every new
   // event; events without an entry (e.g. dates not announced yet) never expire.
   const EVENT_ENDS = {
-    '/events/females-session-oct-2026/':    '2026-10-10T22:00:00+05:00',
+    '/events/females-session-oct-2026/':    '2026-11-06T23:00:00+05:00',
     '/courses/deeni-students-and-ai/':      '2026-10-25T23:00:00+05:00',
     'https://forms.gle/Vp3K99RhSAoMdHGQ8':   '2026-10-21T23:00:00+05:00',
     '/events/youth-talks-karachi-oct-2026/': '2026-10-31T22:45:00+05:00'
