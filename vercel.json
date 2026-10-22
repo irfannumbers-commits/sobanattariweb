@@ -17,6 +17,9 @@
     { "source": "/brand_assets/deeni-tulba-and-ai-bg(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }] }
   ],
   "redirects": [
+    { "source": "/courses/deeni-students-and-ai", "destination": "/courses/", "permanent": false },
+    { "source": "/courses/deeni-students-and-ai/", "destination": "/courses/", "permanent": false },
+    { "source": "/courses/deeni-students-and-ai/index.html", "destination": "/courses/", "permanent": false },
     { "source": "/contact", "destination": "/#contact", "permanent": true },
     { "source": "/contact/", "destination": "/#contact", "permanent": true },
 
