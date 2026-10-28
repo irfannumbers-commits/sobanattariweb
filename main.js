@@ -77,6 +77,13 @@
     });
     const grids = new Set();
 
+    document.querySelectorAll('[data-event-end]').forEach(function (card) {
+      if (Date.parse(card.dataset.eventEnd) <= now) {
+        if (card.parentElement) grids.add(card.parentElement);
+        card.remove();
+      }
+    });
+
     ended.forEach(function (path) {
       // Plain event cards are the link itself; a course spotlight holds the
       // link inside it, and may sit in a wrapper that only exists for it.
