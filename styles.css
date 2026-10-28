@@ -4174,3 +4174,254 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 
 /* Updates page — shown by main.js when every upcoming event has ended */
 .updates-empty { text-align: center; color: var(--text-muted); font-size: 15px; padding: var(--space-lg) 0; }
+
+
+/* =========================================================
+   Floating event cards — home page (built by main.js)
+   Each event is a ticket: a coloured stub (icon + date), a
+   perforated tear line with half-moon notches, then details.
+   Stacked vertically — bottom of the screen on phones,
+   bottom-left on desktop. No photos: colour + icons only.
+   ========================================================= */
+
+/* ---- Floating event cards — themes ----
+   Add a theme by copying a block and using its name in
+   FLOAT_EVENTS (theme: 'name'). */
+.evf-item[data-theme="gold"] {
+  --t-stub: linear-gradient(165deg, #FFD95A 0%, #F5C518 45%, #E0A800 100%);
+  --t-stub-ink: #1a1400;
+  --t-month: #5c4300;
+  --t-body: #FFFBEC;
+  --t-title: #1a1a1a;
+  --t-fact: #6b5200;
+  --t-chip-bg: #1a1a1a;
+  --t-chip-ink: #F5C518;
+  --t-btn-bg: #1a1a1a;
+  --t-btn-ink: #F5C518;
+  --t-btn-hover: #000000;
+  --t-link: #1a1a1a;
+  --t-link-line: #E0A800;
+  --t-perf: rgba(140, 100, 0, 0.30);
+  --t-close-bg: rgba(140, 100, 0, 0.10);
+  --t-glow: rgba(160, 115, 0, 0.30);
+}
+.evf-item[data-theme="rose"] {
+  --t-stub: linear-gradient(165deg, #F48FB8 0%, #E3558F 50%, #C2185B 100%);
+  --t-stub-ink: #ffffff;
+  --t-month: #FFE3EE;
+  --t-body: #FFF3F8;
+  --t-title: #5A0F2E;
+  --t-fact: #A3164F;
+  --t-chip-bg: #C2185B;
+  --t-chip-ink: #ffffff;
+  --t-btn-bg: #C2185B;
+  --t-btn-ink: #ffffff;
+  --t-btn-hover: #A3134C;
+  --t-link: #5A0F2E;
+  --t-link-line: #F48FB8;
+  --t-perf: rgba(194, 24, 91, 0.30);
+  --t-close-bg: rgba(194, 24, 91, 0.10);
+  --t-glow: rgba(194, 24, 91, 0.30);
+}
+
+.evf-dock {
+  --evf-stub: 76px;
+  --evf-notch: 8px;
+  position: fixed; left: 12px; right: 12px; z-index: 860;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  display: flex; flex-direction: column; gap: 10px;
+}
+.evf-dock[hidden] { display: none; }
+
+/* .evf-item carries the shadow (it follows the notched shape);
+   .evf-ticket is the shape itself, cut with a mask */
+.evf-item {
+  touch-action: pan-y;
+  cursor: pointer;
+  filter: drop-shadow(0 12px 20px var(--t-glow)) drop-shadow(0 2px 5px rgba(0, 0, 0, 0.16));
+  opacity: 0;
+  transform: translateY(40px) scale(0.96);
+  transition: transform 0.5s cubic-bezier(.2, .9, .25, 1.15), opacity 0.35s ease;
+}
+.evf-item:nth-child(2) { transition-delay: 0.14s; }
+.evf-dock.is-in .evf-item { opacity: 1; transform: none; }
+.evf-item.is-dragging { transition: none; }
+.evf-dock.is-in .evf-item.is-leaving { opacity: 0; transition: transform 0.3s ease-in, opacity 0.3s ease-in; transition-delay: 0s; }
+.evf-dock.is-in .evf-item.is-leaving.to-right { transform: translateX(110%) rotate(6deg); }
+.evf-dock.is-in .evf-item.is-leaving.to-left { transform: translateX(-110%) rotate(-6deg); }
+
+.evf-ticket {
+  position: relative;
+  display: flex;
+  background: var(--t-body);
+  border-radius: 16px;
+  overflow: hidden;
+  -webkit-mask:
+    radial-gradient(circle var(--evf-notch) at var(--evf-stub) 0, #0000 calc(var(--evf-notch) - 0.5px), #000 var(--evf-notch)) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--evf-notch) at var(--evf-stub) 100%, #0000 calc(var(--evf-notch) - 0.5px), #000 var(--evf-notch)) bottom / 100% 51% no-repeat;
+          mask:
+    radial-gradient(circle var(--evf-notch) at var(--evf-stub) 0, #0000 calc(var(--evf-notch) - 0.5px), #000 var(--evf-notch)) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--evf-notch) at var(--evf-stub) 100%, #0000 calc(var(--evf-notch) - 0.5px), #000 var(--evf-notch)) bottom / 100% 51% no-repeat;
+}
+.evf-ticket::after {   /* the perforation */
+  content: ''; position: absolute;
+  left: calc(var(--evf-stub) - 1px);
+  top: calc(var(--evf-notch) + 5px); bottom: calc(var(--evf-notch) + 5px);
+  border-left: 2px dashed var(--t-perf);
+  pointer-events: none;
+}
+
+.evf-stub {
+  position: relative; flex: 0 0 var(--evf-stub);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 10px 4px;
+  background: var(--t-stub); color: var(--t-stub-ink);
+  overflow: hidden;
+}
+/* soft ring behind the icon */
+.evf-stub-icon {
+  display: grid; place-items: center;
+  width: 40px; height: 40px; margin-bottom: 6px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.45);
+}
+/* emoji icon (e.g. 🧕): bigger, on a solid white circle so its colours pop */
+.evf-stub-icon.is-emoji {
+  width: 48px; height: 48px;
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18), inset 0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+.evf-emoji {
+  font-size: 29px; line-height: 1;
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+}
+.evf-day { font-family: var(--font-display); font-weight: 700; font-size: 24px; line-height: 1; letter-spacing: -0.03em; }
+.evf-month { margin-top: 2px; font-family: var(--font-body); font-weight: 700; font-size: 11px; line-height: 1.2; color: var(--t-month); }
+
+.evf-body {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column;
+  padding: 10px 10px 11px 15px;
+}
+.evf-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.evf-title {
+  margin: 3px 0 0;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 16px; line-height: 1.2; letter-spacing: -0.01em;
+  color: var(--t-title);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.evf-close {
+  position: relative; flex-shrink: 0;
+  display: grid; place-items: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 0; background: var(--t-close-bg); color: var(--t-title);
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition);
+}
+.evf-close::before { content: ''; position: absolute; inset: -8px; }  /* 44px tap area */
+.evf-close:hover { background: var(--t-perf); }
+.evf-close:active { transform: scale(0.9); }
+.evf-close:focus-visible { outline: 2px solid var(--t-title); outline-offset: 2px; }
+
+.evf-meta {
+  display: flex; align-items: center; gap: 4px 10px; flex-wrap: nowrap;
+  margin: 6px 0 0; min-width: 0;
+  font-size: 12.5px; line-height: 1.3; font-weight: 600; color: var(--t-fact);
+  white-space: nowrap; overflow: hidden;
+}
+.evf-chip {
+  flex-shrink: 0;
+  padding: 2px 7px; border-radius: 4px;
+  font-size: 11px; font-weight: 700; line-height: 1.45;
+  color: var(--t-chip-ink); background: var(--t-chip-bg);
+}
+.evf-fact { display: inline-flex; align-items: center; gap: 4px; min-width: 0; }
+.evf-fact > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.evf-fact-keep { flex-shrink: 0; }   /* the time never shortens */
+@media (max-width: 380px) {
+  .evf-meta { gap: 4px 7px; font-size: 12px; }
+  .evf-chip { padding: 2px 6px; }
+  .evf-body { padding-left: 13px; }
+}
+.evf-fact svg { flex-shrink: 0; }
+.evf-note { display: none; margin: 6px 0 0; font-size: 12.5px; line-height: 1.45; color: var(--text-body); }
+
+.evf-actions { display: flex; align-items: center; gap: 14px; margin-top: 9px; }
+.evf-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 34px; padding: 7px 14px; border-radius: 6px;
+  font-family: var(--font-body); font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; white-space: nowrap;
+  color: var(--t-btn-ink); background: var(--t-btn-bg); text-decoration: none;
+  transition: background-color var(--transition), transform var(--transition);
+}
+.evf-btn:hover { background: var(--t-btn-hover); }
+.evf-btn:active { transform: scale(0.97); }
+.evf-btn:focus-visible { outline: 2px solid var(--t-title); outline-offset: 2px; }
+.evf-link {
+  font-size: 13px; font-weight: 600; white-space: nowrap; color: var(--t-link);
+  text-decoration: underline; text-decoration-color: var(--t-link-line);
+  text-decoration-thickness: 2px; text-underline-offset: 4px;
+  transition: text-decoration-color var(--transition);
+}
+.evf-link:hover { text-decoration-color: var(--t-link); }
+.evf-link:focus-visible { outline: 2px solid var(--t-title); outline-offset: 3px; border-radius: 2px; }
+
+.evf-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* Round button that brings hidden cards back */
+.evf-launcher {
+  position: fixed; left: 16px; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 845;
+  display: grid; place-items: center;
+  width: 52px; height: 52px; border-radius: 50%;
+  color: #1a1400; background: var(--accent);
+  border: 0; cursor: pointer;
+  box-shadow: 0 14px 30px -12px rgba(160, 115, 0, 0.7);
+  animation: evfPop 0.4s ease both;
+  transition: transform var(--transition), opacity var(--transition), visibility var(--transition);
+}
+.evf-launcher[hidden] { display: none; }
+.evf-launcher.is-tucked { opacity: 0; visibility: hidden; transform: translateY(12px); pointer-events: none; }
+.evf-launcher:hover { transform: translateY(-2px); }
+.evf-launcher:active { transform: scale(0.95); }
+.evf-launcher:focus-visible { outline: 2px solid var(--text-dark); outline-offset: 3px; }
+.evf-badge {
+  position: absolute; top: -3px; right: -3px;
+  min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px;
+  display: grid; place-items: center;
+  font-family: var(--font-body); font-size: 11px; font-weight: 800; line-height: 1;
+  color: #ffffff; background: #C2185B;
+  border: 2px solid #ffffff;
+}
+@keyframes evfPop { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: none; } }
+
+/* Phones: while cards are up, the contact button steps aside */
+@media (max-width: 640px) {
+  html.evf-active .contact-fab-wrap { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
+/* Tablet / desktop: roomier cards at the bottom-left */
+@media (min-width: 641px) {
+  .evf-dock { --evf-stub: 96px; --evf-notch: 9px; right: auto; left: 20px; bottom: 20px; width: 380px; gap: 14px; }
+  .evf-stub-icon { width: 48px; height: 48px; margin-bottom: 8px; }
+  .evf-stub-icon svg { width: 28px; height: 28px; }
+  .evf-stub-icon.is-emoji { width: 56px; height: 56px; }
+  .evf-emoji { font-size: 34px; }
+  .evf-day { font-size: 30px; }
+  .evf-month { font-size: 12px; }
+  .evf-body { padding: 13px 13px 14px 18px; }
+  .evf-title { font-size: 18px; }
+  .evf-note { display: block; }
+  .evf-actions { margin-top: 12px; }
+  .evf-dock.is-in .evf-item:not(.is-leaving):hover { transform: translateY(-3px); }
+  .evf-launcher { left: 20px; bottom: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evf-item, .evf-dock.is-in .evf-item.is-leaving, .evf-launcher { transition: none; animation: none; }
+  .evf-item, .evf-item:hover { transform: none; }
+}

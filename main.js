@@ -915,4 +915,271 @@
       probe.onload = probe.onerror = function () { done(sk); };
     });
   })();
+  // ---- Home page: floating event cards ----
+  // Each event below floats as its own ticket-shaped card on the home page,
+  // SHOW_DELAY_MS after the page opens, stacked at the bottom-left (desktop)
+  // or bottom of the screen (phones). You decide exactly when each one shows:
+  //   showFrom  → first moment it may appear   (Pakistan time, +05:00)
+  //   showUntil → it disappears from this moment on
+  // Outside that window the card is simply not shown. Remove an entry (or
+  // set showUntil in the past) to stop showing it.
+  //   start → the event's own start time; drives the date on the card and
+  //           the "In 3 days" / "Tomorrow" / "Today" chip, which is worked
+  //           out live from the visitor's current date (Pakistan calendar
+  //           days) up to the event date.
+  //   theme → colour scheme: 'gold' or 'rose' (add more in styles.css,
+  //           see "Floating event cards — themes").
+  //   icon  → big stub icon: 'mic', 'woman', 'laptop', 'users' — or any
+  //           emoji (e.g. '🧕'), shown in full colour on a white circle
+  //   meta  → short facts with icons ('clock', 'pin', 'laptop', 'users', 'ticket')
+  //   href  → where tapping the card itself goes
+  // The cards appear on every visit to the home page (after the delay).
+  // Visitors hide a card with ✕, Esc, or by swiping it sideways — for that
+  // page view only. Once all are hidden, a small round button (bottom-left)
+  // brings them back.
+  // Testing: add ?events-preview to the URL to ignore the time windows and
+  // the delay.
+  const FLOAT_EVENTS = [
+    {
+      id: 'youth-talks-karachi-oct-2026',
+      showFrom:  '2026-10-27T00:00:00+05:00',
+      showUntil: '2026-10-31T21:00:00+05:00',
+      start:     '2026-10-31T20:45:00+05:00',
+      theme: 'gold',
+      icon: 'mic',
+      title: 'Youth Talks Karachi',
+      meta: [{ icon: 'clock', text: 'Sat 8:45 PM' }, { icon: 'pin', text: 'Karachi' }],
+      note: 'Sadabahar Banquet · For young men · Free entry',
+      href: '/events/youth-talks-karachi-oct-2026/',
+      primary: { label: 'See details', href: '/events/youth-talks-karachi-oct-2026/' },
+      secondary: { label: 'Directions', href: 'https://www.google.com/maps?q=Sadabhar+Banquet,+Tibet+House,+227+Shaheed-e-Millat+Service+Road,+Delhi+Mercantile+Society,+Karachi', external: true }
+    },
+    {
+      id: 'females-session-nov-2026',
+      showFrom:  '2026-10-27T00:00:00+05:00',
+      showUntil: '2026-11-06T21:00:00+05:00',
+      start:     '2026-11-06T21:00:00+05:00',
+      theme: 'rose',
+      icon: '🧕',
+      title: 'Online Females Session',
+      meta: [{ icon: 'clock', text: 'Fri 9:00 PM' }, { icon: 'laptop', text: 'Online' }],
+      note: 'For women · Join from home · Free',
+      href: '/events/females-session-oct-2026/',
+      primary: { label: 'Register', href: 'https://forms.gle/DYNALWJ3yo8Tnk9N9', external: true },
+      secondary: { label: 'Details', href: '/events/females-session-oct-2026/' }
+    }
+  ];
+  const SHOW_DELAY_MS = 4000;
+
+  (function setupFloatingEvents() {
+    const path = location.pathname;
+    if (path !== '/' && path !== '/index.html') return;
+
+    const preview = /[?&]events-preview\b/.test(location.search);
+    const now = Date.now();
+    const eligible = FLOAT_EVENTS.filter(function (ev) {
+      return preview || (Date.parse(ev.showFrom) <= now && now < Date.parse(ev.showUntil));
+    });
+    if (!eligible.length) return;
+
+    // ---- icons (stroke, 24×24) ----
+    const ICONS = {
+      mic: '<rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/>',
+      woman: '<circle cx="12" cy="5" r="2.6"/><path d="M9.3 9.6h5.4l3.1 7.6H6.2z"/><path d="M10.4 17.2v4M13.6 17.2v4"/>',
+      laptop: '<rect x="4" y="5" width="16" height="11" rx="1.6"/><path d="M2.5 19h19"/>',
+      users: '<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.5c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="16.8" cy="9" r="2.5"/><path d="M15.8 14.6c2.3.2 4 1.8 4.6 4.4"/>',
+      clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+      pin: '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/>',
+      ticket: '<path d="M3.5 8V6.5h17V8a2.5 2.5 0 0 0 0 5v1.5h-17V13a2.5 2.5 0 0 0 0-5z"/>',
+      close: '<path d="M6 6l12 12M18 6L6 18"/>'
+    };
+    function icon(name, size, cls) {
+      return '<svg class="' + (cls || '') + '" viewBox="0 0 24 24" width="' + size + '" height="' + size + '" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[name] || '') + '</svg>';
+    }
+
+    // ---- small helpers ----
+    function pkPart(iso, opts) {
+      return new Intl.DateTimeFormat('en-GB', Object.assign({ timeZone: 'Asia/Karachi' }, opts)).format(new Date(iso));
+    }
+    function countdown(startIso) {
+      const pkDay = function (t) { return Math.floor((t + 5 * 3600000) / 86400000); };
+      const start = Date.parse(startIso);
+      const diff = pkDay(start) - pkDay(Date.now());
+      if (start <= Date.now()) return 'Now';
+      if (diff <= 0) return 'Today';
+      if (diff === 1) return 'Tomorrow';
+      return 'In ' + diff + ' days';
+    }
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; });
+    }
+    function link(a, cls) {
+      const ext = a.external ? ' target="_blank" rel="noopener"' : '';
+      return '<a class="' + cls + '" href="' + esc(a.href) + '"' + ext + '>' + esc(a.label) +
+        (a.external ? '<span class="evf-sr"> (opens in a new tab)</span>' : '') + '</a>';
+    }
+
+    function cardHtml(ev) {
+      const tid = 'evf-t-' + ev.id;
+      const meta = (ev.meta || []).map(function (m, i) {
+        return '<span class="evf-fact' + (i === 0 ? ' evf-fact-keep' : '') + '">' + icon(m.icon, 14) + '<span>' + esc(m.text) + '</span></span>';
+      }).join('');
+      return '<article class="evf-item" data-id="' + esc(ev.id) + '" data-theme="' + esc(ev.theme || 'gold') + '"' +
+          (ev.href ? ' data-href="' + esc(ev.href) + '"' : '') + ' aria-labelledby="' + tid + '">' +
+        '<div class="evf-ticket">' +
+          '<div class="evf-stub" aria-hidden="true">' +
+            (ICONS[ev.icon || 'ticket']
+              ? '<span class="evf-stub-icon">' + icon(ev.icon || 'ticket', 26) + '</span>'
+              : '<span class="evf-stub-icon is-emoji"><span class="evf-emoji">' + esc(ev.icon) + '</span></span>') +
+            '<span class="evf-day">' + pkPart(ev.start, { day: 'numeric' }) + '</span>' +
+            '<span class="evf-month">' + pkPart(ev.start, { month: 'short' }) + '</span>' +
+          '</div>' +
+          '<div class="evf-body">' +
+            '<div class="evf-head">' +
+              '<h3 class="evf-title" id="' + tid + '">' + esc(ev.title) + '</h3>' +
+              '<button type="button" class="evf-close" aria-label="Hide ' + esc(ev.title) + '">' + icon('close', 15) + '</button>' +
+            '</div>' +
+            '<p class="evf-meta"><span class="evf-chip" data-start="' + esc(ev.start) + '">' + countdown(ev.start) + '</span>' +
+              '<span class="evf-sr">' + pkPart(ev.start, { weekday: 'long', day: 'numeric', month: 'long' }) + ', </span>' + meta + '</p>' +
+            (ev.note ? '<p class="evf-note">' + esc(ev.note) + '</p>' : '') +
+            '<div class="evf-actions">' + link(ev.primary, 'evf-btn') + (ev.secondary ? link(ev.secondary, 'evf-link') : '') + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</article>';
+    }
+
+    // ---- DOM: dock (stack of cards) and the launcher button ----
+    const dock = document.createElement('aside');
+    dock.className = 'evf-dock';
+    dock.setAttribute('aria-label', 'Upcoming events');
+    dock.hidden = true;
+
+    const launcher = document.createElement('button');
+    launcher.type = 'button';
+    launcher.className = 'evf-launcher';
+    launcher.hidden = true;
+    launcher.setAttribute('aria-label', 'Show upcoming events (' + eligible.length + ')');
+    launcher.innerHTML = icon('ticket', 22) + '<span class="evf-badge" aria-hidden="true">' + eligible.length + '</span>';
+
+    document.body.appendChild(dock);
+    document.body.appendChild(launcher);
+
+    // Launcher stays tucked away while the hero (which has its own events
+    // button) fills the screen — same rule as the contact button.
+    const heroEl = document.getElementById('hero');
+    if (heroEl && 'IntersectionObserver' in window) {
+      launcher.classList.add('is-tucked');
+      new IntersectionObserver(function (entries) {
+        launcher.classList.toggle('is-tucked', entries[0].intersectionRatio >= 0.35);
+      }, { threshold: [0, 0.35] }).observe(heroEl);
+    }
+
+    // ---- show / hide ----
+    function showCards(list) {
+      if (!list.length) { launcher.hidden = false; return; }
+      dock.innerHTML = list.map(cardHtml).join('');
+      launcher.hidden = true;
+      dock.hidden = false;
+      document.documentElement.classList.add('evf-active');
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { dock.classList.add('is-in'); });
+      });
+    }
+
+    // Keep the "In 3 days" chips right if the page stays open past midnight
+    setInterval(function () {
+      dock.querySelectorAll('.evf-chip[data-start]').forEach(function (chip) {
+        chip.textContent = countdown(chip.dataset.start);
+      });
+    }, 60000);
+
+    function dismiss(item, dir) {
+      if (!item || item.classList.contains('is-leaving')) return;
+      const hadFocus = item.contains(document.activeElement);
+      item.style.transform = '';
+      item.style.opacity = '';
+      item.classList.add('is-leaving', dir === 'left' ? 'to-left' : 'to-right');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setTimeout(function () {
+        const next = item.nextElementSibling || item.previousElementSibling;
+        item.remove();
+        if (!dock.children.length) {
+          dock.classList.remove('is-in');
+          dock.hidden = true;
+          document.documentElement.classList.remove('evf-active');
+          launcher.hidden = false;
+          return;
+        }
+        const btn = next && next.querySelector('.evf-close');
+        if (hadFocus && btn) btn.focus({ preventScroll: true });
+      }, reduce ? 0 : 300);
+    }
+
+    // Tap ✕ to hide; tap anywhere else on the card (not a link) to open it.
+    dock.addEventListener('click', function (e) {
+      const item = e.target.closest('.evf-item');
+      if (!item) return;
+      if (e.target.closest('.evf-close')) { dismiss(item); return; }
+      if (e.target.closest('a')) return;
+      if (item.dataset.href && !item.dataset.swiped) location.href = item.dataset.href;
+    });
+    dock.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') dismiss(e.target.closest('.evf-item'));
+    });
+
+    // Swipe a card sideways to hide it (like dismissing a notification).
+    let sw = null;
+    dock.addEventListener('touchstart', function (e) {
+      const item = e.target.closest('.evf-item');
+      if (!item || e.touches.length !== 1) return;
+      delete item.dataset.swiped;
+      sw = { item: item, x: e.touches[0].clientX, y: e.touches[0].clientY, dx: 0, horizontal: null };
+    }, { passive: true });
+    dock.addEventListener('touchmove', function (e) {
+      if (!sw) return;
+      const dx = e.touches[0].clientX - sw.x;
+      const dy = e.touches[0].clientY - sw.y;
+      if (sw.horizontal === null && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) sw.horizontal = Math.abs(dx) > Math.abs(dy);
+      if (!sw.horizontal) return;
+      e.preventDefault();
+      sw.dx = dx;
+      sw.item.dataset.swiped = '1';
+      sw.item.classList.add('is-dragging');
+      sw.item.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx / 40) + 'deg)';
+      sw.item.style.opacity = String(Math.max(0.3, 1 - Math.abs(dx) / 260));
+    }, { passive: false });
+    dock.addEventListener('touchend', function () {
+      if (!sw) return;
+      const s = sw; sw = null;
+      s.item.classList.remove('is-dragging');
+      if (!s.horizontal) return;
+      if (Math.abs(s.dx) > 70) { dismiss(s.item, s.dx < 0 ? 'left' : 'right'); return; }
+      s.item.style.transform = '';
+      s.item.style.opacity = '';
+      setTimeout(function () { delete s.item.dataset.swiped; }, 50);
+    });
+
+    launcher.addEventListener('click', function () {
+      showCards(eligible);
+      const first = dock.querySelector('.evf-close');
+      if (first) first.focus({ preventScroll: true });
+    });
+
+    // Wait SHOW_DELAY_MS of the page actually being on screen, then float in.
+    // Never on top of the Terms dialog.
+    function whenReady() {
+      if (document.hidden) {
+        document.addEventListener('visibilitychange', function again() {
+          if (document.hidden) return;
+          document.removeEventListener('visibilitychange', again);
+          setTimeout(whenReady, 1500);
+        });
+        return;
+      }
+      if (document.querySelector('.terms-modal-overlay')) { setTimeout(whenReady, 4000); return; }
+      showCards(eligible);
+    }
+    setTimeout(whenReady, preview ? 600 : SHOW_DELAY_MS);
+  })();
+
 })();
