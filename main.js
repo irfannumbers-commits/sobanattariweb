@@ -929,7 +929,7 @@
   //           days) up to the event date.
   //   theme → colour scheme: 'gold' or 'rose' (add more in styles.css,
   //           see "Floating event cards — themes").
-  //   icon  → big stub icon: 'mic', 'woman', 'laptop', 'users' — or any
+  //   icon  → big stub icon: 'mic', 'woman', 'hijab', 'laptop', 'users' — or any
   //           emoji (e.g. '🧕'), shown in full colour on a white circle
   //   meta  → short facts with icons ('clock', 'pin', 'laptop', 'users', 'ticket')
   //   href  → where tapping the card itself goes
@@ -942,7 +942,7 @@
   const FLOAT_EVENTS = [
     {
       id: 'youth-talks-karachi-oct-2026',
-      showFrom:  '2026-10-27T00:00:00+05:00',
+      showFrom:  '2026-10-31T00:00:00+02:00',
       showUntil: '2026-10-31T21:00:00+05:00',
       start:     '2026-10-31T20:45:00+05:00',
       theme: 'gold',
@@ -956,11 +956,11 @@
     },
     {
       id: 'females-session-nov-2026',
-      showFrom:  '2026-10-27T00:00:00+05:00',
+      showFrom:  '2026-11-1T00:00:00+05:00',
       showUntil: '2026-11-06T21:00:00+05:00',
       start:     '2026-11-06T21:00:00+05:00',
       theme: 'rose',
-      icon: '🧕',
+      icon: 'hijab',
       title: 'Online Females Session',
       meta: [{ icon: 'clock', text: 'Fri 9:00 PM' }, { icon: 'laptop', text: 'Online' }],
       note: 'For women · Join from home · Free',
@@ -993,6 +993,28 @@
       ticket: '<path d="M3.5 8V6.5h17V8a2.5 2.5 0 0 0 0 5v1.5h-17V13a2.5 2.5 0 0 0 0-5z"/>',
       close: '<path d="M6 6l12 12M18 6L6 18"/>'
     };
+    // Filled icons (whole SVGs, coloured with currentColor). The hijab's
+    // face and folds are cut out with a mask, so the stub colour shows through.
+    let hijabMaskN = 0;
+    const FILLED_ICONS = {
+      hijab: function (size) {
+        const id = 'evf-hijab-cut-' + (++hijabMaskN);
+        return '<svg viewBox="40 20 620 670" width="' + size + '" height="' + size + '" aria-hidden="true">' +
+          '<defs><mask id="' + id + '" maskUnits="userSpaceOnUse" x="40" y="20" width="620" height="670">' +
+            '<path fill="#fff" d="M232 150 C 245 70 300 36 365 36 C 432 36 488 72 505 150 L 628 535 C 634 552 626 562 610 566 L 330 664 C 300 674 280 670 258 660 L 78 562 C 62 552 60 540 68 528 Z"/>' +
+            '<g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round">' +
+              '<path stroke-width="23" d="M247 272 C 247 196 282 152 322 141 Q 360 124 398 141 C 440 152 476 196 476 272 C 476 360 424 410 361 410 C 298 410 247 360 247 272 Z"/>' +
+              '<path stroke-width="20" d="M210 345 C 216 430 270 482 352 486 C 420 488 470 448 492 345"/>' +
+              '<path stroke-width="20" d="M214 410 C 238 500 300 540 362 543 C 410 545 448 528 474 508"/>' +
+              '<path stroke-width="13" d="M404 492 L 516 456"/>' +
+              '<path stroke-width="17" d="M196 512 C 204 572 222 622 240 652"/>' +
+            '</g>' +
+          '</mask></defs>' +
+          '<rect x="40" y="20" width="620" height="670" fill="currentColor" mask="url(#' + id + ')"/>' +
+        '</svg>';
+      }
+    };
+
     function icon(name, size, cls) {
       return '<svg class="' + (cls || '') + '" viewBox="0 0 24 24" width="' + size + '" height="' + size + '" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[name] || '') + '</svg>';
     }
@@ -1028,7 +1050,9 @@
           (ev.href ? ' data-href="' + esc(ev.href) + '"' : '') + ' aria-labelledby="' + tid + '">' +
         '<div class="evf-ticket">' +
           '<div class="evf-stub" aria-hidden="true">' +
-            (ICONS[ev.icon || 'ticket']
+            (FILLED_ICONS[ev.icon]
+              ? '<span class="evf-stub-icon">' + FILLED_ICONS[ev.icon](30) + '</span>'
+              : ICONS[ev.icon || 'ticket']
               ? '<span class="evf-stub-icon">' + icon(ev.icon || 'ticket', 26) + '</span>'
               : '<span class="evf-stub-icon is-emoji"><span class="evf-emoji">' + esc(ev.icon) + '</span></span>') +
             '<span class="evf-day">' + pkPart(ev.start, { day: 'numeric' }) + '</span>' +
