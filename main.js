@@ -957,7 +957,7 @@
   //           the "In 3 days" / "Tomorrow" / "Today" chip, which is worked
   //           out live from the visitor's current date (Pakistan calendar
   //           days) up to the event date.
-  //   theme → colour scheme: 'gold', 'rose' or 'maroon' (add more in styles.css,
+  //   theme → colour scheme: 'gold', 'rose' or 'emerald' (add more in styles.css,
   //           see "Floating event cards — themes").
   //   icon  → big stub icon: 'mic', 'woman', 'hijab', 'robot', 'laptop', 'users' — or any
   //           emoji (e.g. '🧕'), shown in full colour on a white circle
@@ -989,7 +989,7 @@
       showFrom:  '2026-10-31T00:00:00+05:00',
       showUntil: '2026-11-22T21:00:00+05:00',
       start:     '2026-11-22T21:00:00+05:00',
-      theme: 'maroon',
+      theme: 'emerald',
       icon: 'robot',
       title: 'Online Mega Session',
       meta: [{ icon: 'clock', text: 'Sun 9:00 PM' }, { icon: 'laptop', text: 'Online' }],
