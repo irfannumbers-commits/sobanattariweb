@@ -804,10 +804,6 @@
     const videos = document.querySelectorAll('video[data-src]');
     if (!videos.length) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    // Data Saver / very slow connections: keep the still poster only
-    const conn = navigator.connection;
-    if (conn && (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || ''))) return;
-    const isPhone = window.matchMedia('(max-width: 768px)').matches;
 
     videos.forEach(function (video) {
       const host = video.parentElement;
@@ -870,8 +866,7 @@
 
       function start() {
         const source = document.createElement('source');
-        // phones get a lighter 540p clip (~1.1 MB instead of ~4.4 MB)
-        source.src = isPhone ? video.dataset.src.replace(/\.mp4$/, '-mobile.mp4') : video.dataset.src;
+        source.src = video.dataset.src;
         source.type = 'video/mp4';
         video.appendChild(source);
         video.removeAttribute('data-src');
@@ -884,15 +879,8 @@
       // delays them on a slow line; capped so the video is never held back long.
       let started = false;
       function startOnce() { if (!started) { started = true; start(); } }
-      if (isPhone) {
-        // On phones the page text and poster come first: the clip only starts
-        // once the page has finished loading, so it never slows the first view.
-        if (document.readyState === 'complete') setTimeout(startOnce, 300);
-        else window.addEventListener('load', function () { setTimeout(startOnce, 300); });
-      } else {
-        if (document.fonts && document.fonts.ready) document.fonts.ready.then(startOnce);
-        setTimeout(startOnce, 1200);
-      }
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(startOnce);
+      setTimeout(startOnce, 1200);
 
       // pause while scrolled out of view — saves battery and data on phones
       if ('IntersectionObserver' in window) {
