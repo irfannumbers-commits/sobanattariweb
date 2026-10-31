@@ -16,8 +16,7 @@
   // event; events without an entry (e.g. dates not announced yet) never expire.
   const EVENT_ENDS = {
     '/events/females-session-oct-2026/':    '2026-11-06T23:00:00+05:00',
-    'https://forms.gle/Vp3K99RhSAoMdHGQ8':   '2026-10-21T23:00:00+05:00',
-    '/events/youth-talks-karachi-oct-2026/': '2026-10-31T22:45:00+05:00'
+    'https://forms.gle/Vp3K99RhSAoMdHGQ8':   '2026-10-21T23:00:00+05:00'
   };
 
   // ---- Home page: horizontal rail of university session recaps ----
@@ -119,9 +118,15 @@
       }
     });
 
-    const remaining = document.querySelectorAll('.updates-section .event-teasers > *').length;
+    // e.g. "1 upcoming · 9 coming soon" — cards with no date yet are "coming soon"
+    const cards = document.querySelectorAll('.updates-section .event-teasers > *');
+    const soon = document.querySelectorAll('.updates-section .event-teasers > .is-disabled, .updates-section .event-teasers > .is-soon').length;
+    const upcoming = cards.length - soon;
+    const parts = [];
+    if (upcoming) parts.push(upcoming + ' upcoming');
+    if (soon) parts.push(soon + ' coming soon');
     document.querySelectorAll('[data-upcoming-count]').forEach(function (el) {
-      el.textContent = remaining;
+      el.textContent = parts.join(' \u00b7 ') || 'No upcoming events';
     });
   })();
 
@@ -412,6 +417,9 @@
       e.preventDefault();
       openModal();
     });
+
+    // A shared link to /#book-session opens the popup straight away
+    if (location.hash === '#book-session') openModal();
   })();
 
   /* ---- Combined platform cards (homepage) — a single tile shows a
@@ -444,7 +452,7 @@
             ${cfg.channels.map(function (c) { return `
             <a class="channels-row" href="${c.href}" target="_blank" rel="noopener">
               <span class="channels-icon">${c.icon || cfg.icon}</span>
-              <span class="channels-info"><b>${c.name}</b><small>${c.count} followers</small></span>
+              <span class="channels-info"><b>${c.name}</b><small>${c.count} ${cfg.unit || 'followers'}</small></span>
               <span class="channels-arrow" aria-hidden="true">&rarr;</span>
             </a>`; }).join('')}
           </div>
@@ -479,6 +487,7 @@
   const YT_ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>';
   setupChannelsPopup({
     triggerId: 'yt-combined-card',
+    unit: 'subscribers',
     modalId: 'yt-modal',
     badge: 'YouTube',
     title: 'Our YouTube Channels',
@@ -696,14 +705,34 @@
 
     // Home page: stay out of the way while the hero (and the purpose strip
     // right under it) fills the screen; appear once the hero scrolls away.
+    // Every page: also step aside at the footer, so it never covers the
+    // footer's own links or the last lines of text on a phone.
     const hero = document.getElementById('hero');
-    if (hero && 'IntersectionObserver' in window) {
-      wrap.classList.add('is-hidden');
-      new IntersectionObserver(function (entries) {
-        const heroVisible = entries[0].intersectionRatio >= 0.35;
-        wrap.classList.toggle('is-hidden', heroVisible);
-        if (heroVisible) { close(); hideHint(); } else scheduleHint();
-      }, { threshold: [0, 0.35] }).observe(hero);
+    const footer = document.getElementById('footer');
+    let heroVisible = false;
+    let footerVisible = false;
+    function syncHidden() {
+      const hidden = heroVisible || footerVisible;
+      wrap.classList.toggle('is-hidden', hidden);
+      if (hidden) { close(); hideHint(); } else scheduleHint();
+    }
+    if ('IntersectionObserver' in window) {
+      if (hero) {
+        heroVisible = true;
+        wrap.classList.add('is-hidden');
+        new IntersectionObserver(function (entries) {
+          heroVisible = entries[0].intersectionRatio >= 0.35;
+          syncHidden();
+        }, { threshold: [0, 0.35] }).observe(hero);
+      } else {
+        scheduleHint();
+      }
+      if (footer) {
+        new IntersectionObserver(function (entries) {
+          footerVisible = entries[0].isIntersecting;
+          syncHidden();
+        }).observe(footer);
+      }
     } else {
       scheduleHint();
     }
@@ -941,22 +970,8 @@
   // the delay.
   const FLOAT_EVENTS = [
     {
-      id: 'youth-talks-karachi-oct-2026',
-      showFrom:  '2026-10-31T00:00:00+02:00',
-      showUntil: '2026-10-31T21:00:00+05:00',
-      start:     '2026-10-31T20:45:00+05:00',
-      theme: 'gold',
-      icon: 'mic',
-      title: 'Youth Talks Karachi',
-      meta: [{ icon: 'clock', text: 'Sat 8:45 PM' }, { icon: 'pin', text: 'Karachi' }],
-      note: 'Sadabahar Banquet · For young men · Free entry',
-      href: '/events/youth-talks-karachi-oct-2026/',
-      primary: { label: 'See details', href: '/events/youth-talks-karachi-oct-2026/' },
-      secondary: { label: 'Directions', href: 'https://www.google.com/maps?q=Sadabhar+Banquet,+Tibet+House,+227+Shaheed-e-Millat+Service+Road,+Delhi+Mercantile+Society,+Karachi', external: true }
-    },
-    {
       id: 'females-session-nov-2026',
-      showFrom:  '2026-11-1T00:00:00+05:00',
+      showFrom:  '2026-11-01T00:00:00+05:00',
       showUntil: '2026-11-06T21:00:00+05:00',
       start:     '2026-11-06T21:00:00+05:00',
       theme: 'rose',
