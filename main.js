@@ -16,8 +16,7 @@
   // event; events without an entry (e.g. dates not announced yet) never expire.
   const EVENT_ENDS = {
     '/events/females-session-oct-2026/':    '2026-11-06T23:00:00+05:00',
-    'https://forms.gle/Vp3K99RhSAoMdHGQ8':   '2026-10-21T23:00:00+05:00',
-    '/events/youth-talks-karachi-oct-2026/': '2026-10-31T22:45:00+05:00'
+    'https://forms.gle/Vp3K99RhSAoMdHGQ8':   '2026-10-21T23:00:00+05:00'
   };
 
   // ---- Home page: horizontal rail of university session recaps ----
@@ -119,9 +118,9 @@
       }
     });
 
-    // e.g. "2 upcoming · 8 coming soon" — cards without a page are "coming soon"
+    // e.g. "1 upcoming · 9 coming soon" — cards with no date yet are "coming soon"
     const cards = document.querySelectorAll('.updates-section .event-teasers > *');
-    const soon = document.querySelectorAll('.updates-section .event-teasers > .is-disabled').length;
+    const soon = document.querySelectorAll('.updates-section .event-teasers > .is-disabled, .updates-section .event-teasers > .is-soon').length;
     const upcoming = cards.length - soon;
     const parts = [];
     if (upcoming) parts.push(upcoming + ' upcoming');
@@ -970,20 +969,6 @@
   // Testing: add ?events-preview to the URL to ignore the time windows and
   // the delay.
   const FLOAT_EVENTS = [
-    {
-      id: 'youth-talks-karachi-oct-2026',
-      showFrom:  '2026-10-31T00:00:00+02:00',
-      showUntil: '2026-10-31T21:00:00+05:00',
-      start:     '2026-10-31T20:45:00+05:00',
-      theme: 'gold',
-      icon: 'mic',
-      title: 'Youth Talks Karachi',
-      meta: [{ icon: 'clock', text: 'Sat 8:45 PM' }, { icon: 'pin', text: 'Karachi' }],
-      note: 'Sadabahar Banquet · For young men · Free entry',
-      href: '/events/youth-talks-karachi-oct-2026/',
-      primary: { label: 'See details', href: '/events/youth-talks-karachi-oct-2026/' },
-      secondary: { label: 'Directions', href: 'https://www.google.com/maps?q=Sadabahar+Banquet,+Tibet+House,+227+Shaheed-e-Millat+Service+Road,+Delhi+Mercantile+Society,+Karachi', external: true }
-    },
     {
       id: 'females-session-nov-2026',
       showFrom:  '2026-11-01T00:00:00+05:00',
