@@ -957,9 +957,9 @@
   //           the "In 3 days" / "Tomorrow" / "Today" chip, which is worked
   //           out live from the visitor's current date (Pakistan calendar
   //           days) up to the event date.
-  //   theme → colour scheme: 'gold' or 'rose' (add more in styles.css,
+  //   theme → colour scheme: 'gold', 'rose' or 'maroon' (add more in styles.css,
   //           see "Floating event cards — themes").
-  //   icon  → big stub icon: 'mic', 'woman', 'hijab', 'laptop', 'users' — or any
+  //   icon  → big stub icon: 'mic', 'woman', 'hijab', 'robot', 'laptop', 'users' — or any
   //           emoji (e.g. '🧕'), shown in full colour on a white circle
   //   meta  → short facts with icons ('clock', 'pin', 'laptop', 'users', 'ticket')
   //   href  → where tapping the card itself goes
@@ -983,6 +983,20 @@
       href: '/events/females-session-oct-2026/',
       primary: { label: 'Register', href: 'https://forms.gle/DYNALWJ3yo8Tnk9N9', external: true },
       secondary: { label: 'Details', href: '/events/females-session-oct-2026/' }
+    },
+    {
+      id: 'deeni-tulba-mega-session-nov-2026',
+      showFrom:  '2026-10-31T00:00:00+05:00',
+      showUntil: '2026-11-22T21:00:00+05:00',
+      start:     '2026-11-22T21:00:00+05:00',
+      theme: 'maroon',
+      icon: 'robot',
+      title: 'Online Mega Session',
+      meta: [{ icon: 'clock', text: 'Sun 9:00 PM' }, { icon: 'laptop', text: 'Online' }],
+      note: 'For Deeni Tulba · Join from home',
+      href: '/events/deeni-tulba-mega-session-nov-2026/',
+      primary: { label: 'Register', href: 'https://docs.google.com/forms/d/e/1FAIpQLSdGsUt8vsPwrVl6uFmQhm7GDfiMFyKCdMdp1UXng80QPRhijw/viewform', external: true },
+      secondary: { label: 'Details', href: '/events/deeni-tulba-mega-session-nov-2026/' }
     }
   ];
   const SHOW_DELAY_MS = 4000;
@@ -1007,6 +1021,7 @@
       clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
       pin: '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/>',
       ticket: '<path d="M3.5 8V6.5h17V8a2.5 2.5 0 0 0 0 5v1.5h-17V13a2.5 2.5 0 0 0 0-5z"/>',
+      robot: '<rect x="4.5" y="8" width="15" height="11" rx="3"/><path d="M12 8V4.8"/><circle cx="12" cy="3.6" r="1.2"/><circle cx="9.2" cy="12.8" r="1.3"/><circle cx="14.8" cy="12.8" r="1.3"/><path d="M9.6 16.2h4.8M2.5 12.2v3.2M21.5 12.2v3.2"/>',
       close: '<path d="M6 6l12 12M18 6L6 18"/>'
     };
     // Filled icons (whole SVGs, coloured with currentColor). The hijab's

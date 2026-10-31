@@ -4224,6 +4224,24 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
   --t-close-bg: rgba(194, 24, 91, 0.10);
   --t-glow: rgba(194, 24, 91, 0.30);
 }
+.evf-item[data-theme="maroon"] {
+  --t-stub: linear-gradient(165deg, #A8325E 0%, #7D1A3C 50%, #4A0B22 100%);
+  --t-stub-ink: #ffffff;
+  --t-month: #F5C518;
+  --t-body: #FFF8EE;
+  --t-title: #4A0B22;
+  --t-fact: #7D1A3C;
+  --t-chip-bg: #7D1A3C;
+  --t-chip-ink: #ffffff;
+  --t-btn-bg: #7D1A3C;
+  --t-btn-ink: #ffffff;
+  --t-btn-hover: #5C0F2B;
+  --t-link: #4A0B22;
+  --t-link-line: #F5C518;
+  --t-perf: rgba(125, 26, 60, 0.30);
+  --t-close-bg: rgba(125, 26, 60, 0.10);
+  --t-glow: rgba(125, 26, 60, 0.30);
+}
 
 .evf-dock {
   --evf-stub: 76px;
