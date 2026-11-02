@@ -17,6 +17,7 @@
   const EVENT_ENDS = {
     '/events/females-session-oct-2026/':    '2026-11-06T23:00:00+05:00',
     '/events/deeni-tulba-mega-session-nov-2026/': '2026-11-22T23:00:00+05:00',
+    '/events/youth-talks-faisalabad-nov-2026/': '2026-11-27T22:00:00+05:00',
     'https://forms.gle/Vp3K99RhSAoMdHGQ8':   '2026-10-21T23:00:00+05:00'
   };
 
