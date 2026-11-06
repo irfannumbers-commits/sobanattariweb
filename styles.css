@@ -4553,3 +4553,7 @@ h1[lang="ur"], h4[lang="ur"], .bdp-title { font-weight: 700; line-height: 1.5; }
 .event-meta-pill.is-soon { background: var(--accent-dim); border-color: rgba(245, 197, 24, 0.45); color: var(--text-dark); }
 .event-meta-pill.is-soon svg { stroke: var(--accent-text); }
 .event-map.event-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Book "Register to Purchase" buttons point forward, not down */
+.bc-register::after { content: "\2192"; }
+.bc-register:hover::after, .bc-register:focus-visible::after { transform: translateX(3px); }
