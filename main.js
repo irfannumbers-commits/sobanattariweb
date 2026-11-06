@@ -1307,8 +1307,8 @@
   // card, stays a few seconds, then folds back into the button. Tapping the
   // button opens it again; it folds back by itself after a while. The card
   // has a clear ✕. It waits while the visitor is hovering or touching it.
+  // It opens by itself on every Home page load.
   const BOOK_BUBBLE = {
-    seenKey: 'book-bubble-seerat-seen',
     cover: '/brand_assets/seerat-e-mustafa-book-title-opt.webp',
     title: 'Seerat & Modern Science',
     urdu: 'سیرت النبی ﷺ اور جدید سائنس',
@@ -1402,11 +1402,7 @@
     setTimeout(function () {
       document.body.appendChild(root);
       requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('is-in'); }); });
-      // open by itself once per visit; later visits in the same session just show the button
-      let seen = false;
-      try { seen = sessionStorage.getItem(BOOK_BUBBLE.seenKey) === '1'; } catch (e) { /* show anyway */ }
-      if (seen && !/[?&]book-bubble\b/.test(location.search)) return;
-      try { sessionStorage.setItem(BOOK_BUBBLE.seenKey, '1'); } catch (e) { /* ignore */ }
+      // opens by itself every time the Home page loads, then folds back
       setTimeout(open, BOOK_BUBBLE.autoOpenMs - BOOK_BUBBLE.appearMs);
     }, BOOK_BUBBLE.appearMs);
   })();
