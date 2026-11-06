@@ -979,6 +979,7 @@
   const FLOAT_EVENTS = [
     {
       id: 'seerat-science-book',
+      off: true,   // shown by the book chat bubble below instead
       showFrom:  '2026-11-01T00:00:00+05:00',
       showUntil: '2027-12-31T23:59:00+05:00',
       theme: 'book',
@@ -1297,6 +1298,117 @@
       showCards(eligible);
     }
     setTimeout(whenReady, preview ? 600 : SHOW_DELAY_MS);
+  })();
+
+
+  // ---- Home page: book chat bubble ----
+  // A round book button sits in the bottom-left corner. Shortly after the
+  // page opens it grows diagonally (up and to the right) into a chat-style
+  // card, stays a few seconds, then folds back into the button. Tapping the
+  // button opens it again; it folds back by itself after a while. The card
+  // has a clear ✕. It waits while the visitor is hovering or touching it.
+  const BOOK_BUBBLE = {
+    seenKey: 'book-bubble-seerat-seen',
+    cover: '/brand_assets/seerat-e-mustafa-book-title-opt.webp',
+    title: 'Seerat & Modern Science',
+    urdu: 'سیرت النبی ﷺ اور جدید سائنس',
+    text: 'Our new book is here. Registrations are open, price will be announced later.',
+    register: 'https://forms.gle/jwZgS352GqtLy6Gr8',
+    details: '/seerat-mustafa-modern-science/',
+    appearMs: 1200,      // button pops in
+    autoOpenMs: 2200,    // first opening
+    stayMs: 7000         // how long it stays open each time
+  };
+  (function bookBubble() {
+    const path = location.pathname;
+    if (path !== '/' && path !== '/index.html') return;
+
+    const root = document.createElement('div');
+    root.className = 'bkb';
+    root.innerHTML =
+      '<section class="bkb-panel" id="bkb-panel" role="dialog" aria-label="New book: ' + BOOK_BUBBLE.title + '" aria-hidden="true">' +
+        '<button type="button" class="bkb-close" aria-label="Close">' +
+          '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+        '<div class="bkb-top">' +
+          '<img class="bkb-cover" src="' + BOOK_BUBBLE.cover + '" alt="" width="72" height="108" draggable="false" />' +
+          '<div class="bkb-copy">' +
+            '<span class="bkb-from"><i aria-hidden="true"></i>New book</span>' +
+            '<strong class="bkb-title">' + BOOK_BUBBLE.title + '</strong>' +
+            '<span class="bkb-urdu" lang="ur" dir="rtl">' + BOOK_BUBBLE.urdu + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<p class="bkb-text">' + BOOK_BUBBLE.text + '</p>' +
+        '<div class="bkb-actions">' +
+          '<a class="bkb-btn" href="' + BOOK_BUBBLE.register + '" target="_blank" rel="noopener">Register now<span class="evf-sr"> (opens in a new tab)</span></a>' +
+          '<a class="bkb-link" href="' + BOOK_BUBBLE.details + '">Details</a>' +
+        '</div>' +
+        '<span class="bkb-timer" aria-hidden="true"></span>' +
+      '</section>' +
+      '<button type="button" class="bkb-fab" aria-expanded="false" aria-controls="bkb-panel" aria-label="New book: ' + BOOK_BUBBLE.title + '">' +
+        '<img src="' + BOOK_BUBBLE.cover + '" alt="" width="40" height="60" draggable="false" />' +
+        '<span class="bkb-badge" aria-hidden="true">NEW</span>' +
+      '</button>';
+
+    const panel = root.querySelector('.bkb-panel');
+    const fab = root.querySelector('.bkb-fab');
+    const timer = root.querySelector('.bkb-timer');
+    let closeTimer = null, paused = false, remaining = 0, startedAt = 0;
+
+    function scheduleClose(ms) {
+      clearTimeout(closeTimer);
+      remaining = ms; startedAt = Date.now();
+      timer.style.animation = 'none'; void timer.offsetWidth;
+      timer.style.animation = 'bkbTimer ' + ms + 'ms linear forwards';
+      closeTimer = setTimeout(close, ms);
+    }
+    function open() {
+      root.classList.add('is-open');
+      fab.setAttribute('aria-expanded', 'true');
+      panel.setAttribute('aria-hidden', 'false');
+      scheduleClose(BOOK_BUBBLE.stayMs);
+    }
+    function close() {
+      clearTimeout(closeTimer);
+      root.classList.remove('is-open');
+      fab.setAttribute('aria-expanded', 'false');
+      panel.setAttribute('aria-hidden', 'true');
+    }
+    function pause() {
+      if (!root.classList.contains('is-open') || paused) return;
+      paused = true; clearTimeout(closeTimer);
+      remaining = Math.max(1500, remaining - (Date.now() - startedAt));
+      timer.style.animationPlayState = 'paused';
+    }
+    function resume() {
+      if (!paused) return;
+      paused = false;
+      if (!root.classList.contains('is-open')) return;
+      startedAt = Date.now();
+      timer.style.animationPlayState = 'running';
+      closeTimer = setTimeout(close, remaining);
+    }
+
+    fab.addEventListener('click', function () {
+      if (root.classList.contains('is-open')) close(); else open();
+    });
+    root.querySelector('.bkb-close').addEventListener('click', function () { close(); fab.focus({ preventScroll: true }); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('is-open')) close(); });
+    panel.addEventListener('mouseenter', pause);
+    panel.addEventListener('mouseleave', resume);
+    panel.addEventListener('focusin', pause);
+    panel.addEventListener('focusout', resume);
+    panel.addEventListener('touchstart', function () { pause(); setTimeout(resume, 2500); }, { passive: true });
+
+    setTimeout(function () {
+      document.body.appendChild(root);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('is-in'); }); });
+      // open by itself once per visit; later visits in the same session just show the button
+      let seen = false;
+      try { seen = sessionStorage.getItem(BOOK_BUBBLE.seenKey) === '1'; } catch (e) { /* show anyway */ }
+      if (seen && !/[?&]book-bubble\b/.test(location.search)) return;
+      try { sessionStorage.setItem(BOOK_BUBBLE.seenKey, '1'); } catch (e) { /* ignore */ }
+      setTimeout(open, BOOK_BUBBLE.autoOpenMs - BOOK_BUBBLE.appearMs);
+    }, BOOK_BUBBLE.appearMs);
   })();
 
 })();
