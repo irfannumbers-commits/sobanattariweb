@@ -979,6 +979,7 @@
   const FLOAT_EVENTS = [
     {
       id: 'seerat-science-book',
+      off: true,   // replaced by the centred book announcement below
       showFrom:  '2026-11-01T00:00:00+05:00',
       showUntil: '2027-12-31T23:59:00+05:00',
       theme: 'book',
@@ -1270,6 +1271,101 @@
       showCards(eligible);
     }
     setTimeout(whenReady, preview ? 600 : SHOW_DELAY_MS);
+  })();
+
+
+  // ---- Home page: centred book announcement ----
+  // Floats into the middle of the screen 2s after the page opens. Close it
+  // with ✕, Esc, or by swiping / dragging it sideways. Once closed it stays
+  // closed for the rest of the visit (sessionStorage).
+  const BOOK_ALERT = {
+    key: 'book-alert-seerat-science-closed',
+    cover: '/brand_assets/seerat-e-mustafa-book-title-opt.webp',
+    title: 'Seerat & Modern Science',
+    urdu: 'سیرت النبی ﷺ اور جدید سائنس',
+    text: 'Registrations are open. Price will be announced later.',
+    register: 'https://forms.gle/jwZgS352GqtLy6Gr8',
+    details: '/seerat-mustafa-modern-science/',
+    delay: 2000
+  };
+  (function bookAlert() {
+    const path = location.pathname;
+    if (path !== '/' && path !== '/index.html') return;
+    const preview = /[?&]book-alert\b/.test(location.search);
+    try { if (!preview && sessionStorage.getItem(BOOK_ALERT.key) === '1') return; } catch (e) { /* storage blocked: still show */ }
+
+    const el = document.createElement('div');
+    el.className = 'bka';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-label', 'New book: ' + BOOK_ALERT.title);
+    el.innerHTML =
+      '<div class="bka-card">' +
+        '<button type="button" class="bka-close" aria-label="Close">' +
+          '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+        '<div class="bka-row">' +
+          '<img class="bka-cover" src="' + BOOK_ALERT.cover + '" alt="" width="64" height="96" draggable="false" />' +
+          '<div class="bka-copy">' +
+            '<span class="bka-from"><i aria-hidden="true"></i>Soban Attari &middot; New book</span>' +
+            '<strong class="bka-title">' + BOOK_ALERT.title + '</strong>' +
+            '<span class="bka-urdu" lang="ur" dir="rtl">' + BOOK_ALERT.urdu + '</span>' +
+            '<span class="bka-text">' + BOOK_ALERT.text + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="bka-actions">' +
+          '<a class="bka-btn" href="' + BOOK_ALERT.register + '" target="_blank" rel="noopener">Register now<span class="evf-sr"> (opens in a new tab)</span></a>' +
+          '<a class="bka-link" href="' + BOOK_ALERT.details + '">Details</a>' +
+        '</div>' +
+        '<p class="bka-hint" aria-hidden="true"><span class="bka-arrow">&larr;</span> Swipe to close <span class="bka-arrow">&rarr;</span></p>' +
+      '</div>';
+
+    let closed = false;
+    function close(dir) {
+      if (closed) return; closed = true;
+      try { sessionStorage.setItem(BOOK_ALERT.key, '1'); } catch (e) { /* ignore */ }
+      el.classList.add(dir === 'left' ? 'is-out-left' : dir === 'right' ? 'is-out-right' : 'is-out');
+      document.removeEventListener('keydown', onKey);
+      setTimeout(function () { el.remove(); }, 450);
+    }
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    el.querySelector('.bka-close').addEventListener('click', function () { close(); });
+    document.addEventListener('keydown', onKey);
+
+    // drag / swipe sideways to dismiss (touch, mouse or pen)
+    const card = el.querySelector('.bka-card');
+    let drag = null;
+    card.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('a, button')) return;
+      if (e.pointerType === 'mouse') e.preventDefault();   // no text/image drag
+      drag = { x: e.clientX, y: e.clientY, dx: 0, horiz: null, id: e.pointerId };
+    });
+    card.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (drag.horiz === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+        drag.horiz = Math.abs(dx) > Math.abs(dy);
+        if (drag.horiz) { card.setPointerCapture(drag.id); el.classList.add('is-dragging'); }
+      }
+      if (!drag.horiz) return;
+      drag.dx = dx;
+      card.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx / 24) + 'deg)';
+      card.style.opacity = String(Math.max(0.25, 1 - Math.abs(dx) / 320));
+    });
+    function endDrag() {
+      if (!drag) return;
+      const d = drag; drag = null;
+      el.classList.remove('is-dragging');
+      if (d.horiz && Math.abs(d.dx) > 80) { close(d.dx < 0 ? 'left' : 'right'); return; }
+      card.style.transform = ''; card.style.opacity = '';
+    }
+    card.addEventListener('pointerup', endDrag);
+    card.addEventListener('pointercancel', endDrag);
+
+    function show() {
+      if (closed) return;
+      document.body.appendChild(el);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { el.classList.add('is-in'); }); });
+    }
+    setTimeout(show, preview ? 300 : BOOK_ALERT.delay);
   })();
 
 })();
