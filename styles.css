@@ -4629,3 +4629,9 @@ h1[lang="ur"], h4[lang="ur"], .bdp-title { font-weight: 700; line-height: 1.5; }
 @media (prefers-reduced-motion: reduce) {
   .evf-dock.is-in .evf-item[data-theme="book"] .evf-body::after { animation: none; }
 }
+
+/* Event page: list of organisers under the venue */
+.event-org-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 14.5px; line-height: 1.6; color: var(--text-body); }
+.event-org-list li { position: relative; padding-left: 16px; }
+.event-org-list li::before { content: ""; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.event-org-list strong { color: var(--text-dark); }
