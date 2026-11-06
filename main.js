@@ -1312,7 +1312,7 @@
     cover: '/brand_assets/seerat-e-mustafa-book-title-opt.webp',
     title: 'Seerat & Modern Science',
     urdu: 'سیرت النبی ﷺ اور جدید سائنس',
-    text: 'Our new book is here. Registrations are open, price will be announced later.',
+    text: 'Want to buy the book? Register below. Price will be announced later.',
     register: 'https://forms.gle/jwZgS352GqtLy6Gr8',
     details: '/seerat-mustafa-modern-science/',
     appearMs: 1200,      // button pops in
@@ -1330,7 +1330,7 @@
         '<button type="button" class="bkb-close" aria-label="Close">' +
           '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
         '<div class="bkb-top">' +
-          '<img class="bkb-cover" src="' + BOOK_BUBBLE.cover + '" alt="" width="72" height="108" draggable="false" />' +
+          '<img class="bkb-cover" src="' + BOOK_BUBBLE.cover + '" alt="" width="52" height="78" draggable="false" />' +
           '<div class="bkb-copy">' +
             '<span class="bkb-from"><i aria-hidden="true"></i>New book</span>' +
             '<strong class="bkb-title">' + BOOK_BUBBLE.title + '</strong>' +
@@ -1339,7 +1339,7 @@
         '</div>' +
         '<p class="bkb-text">' + BOOK_BUBBLE.text + '</p>' +
         '<div class="bkb-actions">' +
-          '<a class="bkb-btn" href="' + BOOK_BUBBLE.register + '" target="_blank" rel="noopener">Register now<span class="evf-sr"> (opens in a new tab)</span></a>' +
+          '<a class="bkb-btn" href="' + BOOK_BUBBLE.register + '" target="_blank" rel="noopener">Register to Purchase<span class="evf-sr"> (opens in a new tab)</span></a>' +
           '<a class="bkb-link" href="' + BOOK_BUBBLE.details + '">Details</a>' +
         '</div>' +
         '<span class="bkb-timer" aria-hidden="true"></span>' +
