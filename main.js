@@ -24,6 +24,7 @@
   // ---- Home page: horizontal rail of university session recaps ----
   // Each entry links to /blog/<slug>/ and uses brand_assets/sessions/<slug>-1-opt.webp.
   const HOME_RECAPS = [
+    { slug: 'youth-talks-karachi', uni: 'Youth Talks · Karachi', title: 'Youth Talks Karachi with 800+ Students and Professionals', text: 'A full hall at Sadabahar Banquet for an evening on motivation, career and character.' },
     { slug: 'uet-lahore', uni: 'UET Lahore', title: 'Seerat Seminar and Ilm-o-Iftar at UET Lahore', text: 'A packed main auditorium of professors and students.' },
     { slug: 'bahria-university-karachi', uni: 'Bahria University Karachi', title: 'International Seerah Conference and “Confusion to Clarity”', text: 'Finding your purpose in life, with future doctors and faculty.' },
     { slug: 'arid-university-gujrat', uni: 'Arid University Gujrat', title: 'Istiqbal-e-Ramadan Seminar at Arid University', text: 'Welcoming the holy month with professors and students.' },
