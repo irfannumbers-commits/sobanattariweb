@@ -979,16 +979,15 @@
       id: 'seerat-science-book',
       showFrom:  '2026-11-01T00:00:00+05:00',
       showUntil: '2027-12-31T23:59:00+05:00',
-      theme: 'gold',
-      icon: 'book',
-      stubTop: 'New',
-      stubBottom: 'Book',
-      chip: 'Book',
+      theme: 'book',
+      cover: '/brand_assets/seerat-e-mustafa-book-title-opt.webp',
+      stubBottom: 'New Book',
+      chip: 'New Book',
       title: 'Seerat & Modern Science',
-      meta: [{ icon: 'book', text: 'Urdu · 154 pages' }],
-      note: 'New book by Soban Attari · Register to purchase',
+      meta: [{ icon: 'ticket', text: 'Price announced later' }],
+      note: 'By Soban Attari. Registrations are open — register now to reserve your copy.',
       href: '/seerat-mustafa-modern-science/',
-      primary: { label: 'Register', href: 'https://forms.gle/jwZgS352GqtLy6Gr8', external: true },
+      primary: { label: 'Register Now', href: 'https://forms.gle/jwZgS352GqtLy6Gr8', external: true },
       secondary: { label: 'Details', href: '/seerat-mustafa-modern-science/' }
     },
     {
@@ -1022,7 +1021,7 @@
       secondary: { label: 'Details', href: '/events/deeni-tulba-mega-session-nov-2026/' }
     }
   ];
-  const SHOW_DELAY_MS = 4000;
+  const SHOW_DELAY_MS = 2500;
 
   (function setupFloatingEvents() {
     const path = location.pathname;
@@ -1106,7 +1105,9 @@
           (ev.href ? ' data-href="' + esc(ev.href) + '"' : '') + ' aria-labelledby="' + tid + '">' +
         '<div class="evf-ticket">' +
           '<div class="evf-stub" aria-hidden="true">' +
-            (FILLED_ICONS[ev.icon]
+            (ev.cover
+              ? '<img class="evf-cover" src="' + esc(ev.cover) + '" alt="" width="60" height="90">'
+              : FILLED_ICONS[ev.icon]
               ? '<span class="evf-stub-icon">' + FILLED_ICONS[ev.icon](30) + '</span>'
               : ICONS[ev.icon || 'ticket']
               ? '<span class="evf-stub-icon">' + icon(ev.icon || 'ticket', 26) + '</span>'
@@ -1120,7 +1121,7 @@
           '<div class="evf-body">' +
             '<div class="evf-head">' +
               '<h3 class="evf-title" id="' + tid + '">' + esc(ev.title) + '</h3>' +
-              '<button type="button" class="evf-close" aria-label="Hide ' + esc(ev.title) + '">' + icon('close', 15) + '</button>' +
+              '<button type="button" class="evf-close" aria-label="Close" title="Close">' + icon('close', ev.cover ? 18 : 15) + '</button>' +
             '</div>' +
             '<p class="evf-meta">' +
               (ev.start

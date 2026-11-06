@@ -4557,3 +4557,75 @@ h1[lang="ur"], h4[lang="ur"], .bdp-title { font-weight: 700; line-height: 1.5; }
 /* Book "Register to Purchase" buttons point forward, not down */
 .bc-register::after { content: "\2192"; }
 .bc-register:hover::after, .bc-register:focus-visible::after { transform: translateX(3px); }
+
+/* Book: "Price will be announced later" notes */
+.bc-price-note {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin: 6px 0 10px; font-size: 12.5px; font-weight: 600; line-height: 1.4;
+  color: var(--text-body);
+}
+.bc-price-note::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.bdp-price-note {
+  flex-basis: 100%; margin: 6px 0 0; font-size: 14px; line-height: 1.6; color: var(--text-body); text-align: left;
+}
+.bdp-price-note b { color: var(--text-dark); }
+
+/* ---- Floating card: "book" theme (Seerat & Science) ----
+   Dark green + gold so it stands out on the white page, with the book
+   cover in the stub, a gentle one-time shine, and a large, clear close. */
+.evf-item[data-theme="book"] {
+  --t-stub: linear-gradient(165deg, #FFD95A 0%, #F5C518 50%, #E0A800 100%);
+  --t-stub-ink: #0a2e1a;
+  --t-month: #0a2e1a;
+  --t-body: linear-gradient(135deg, #0F5A36 0%, #0A4127 60%, #072E1B 100%);
+  --t-title: #ffffff;
+  --t-fact: #FFE48A;
+  --t-chip-bg: #F5C518;
+  --t-chip-ink: #0a2e1a;
+  --t-btn-bg: #F5C518;
+  --t-btn-ink: #0a2e1a;
+  --t-btn-hover: #FFD95A;
+  --t-link: #ffffff;
+  --t-link-line: #F5C518;
+  --t-perf: rgba(10, 46, 26, 0.35);
+  --t-close-bg: #ffffff;
+  --t-glow: rgba(7, 46, 27, 0.55);
+}
+.evf-item[data-theme="book"] .evf-ticket { box-shadow: inset 0 0 0 1.5px rgba(245, 197, 24, 0.55); border-radius: 16px; }
+.evf-item[data-theme="book"] .evf-note { color: rgba(255, 255, 255, 0.82); }
+.evf-item[data-theme="book"] .evf-day-word:empty { display: none; }
+.evf-item[data-theme="book"] .evf-month { margin-top: 6px; font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+.evf-cover {
+  display: block; width: 46px; height: auto; border-radius: 3px;
+  transform: rotate(-5deg);
+  box-shadow: 0 6px 14px rgba(10, 46, 26, 0.45), 0 0 0 2px #ffffff;
+}
+/* close: solid white circle with a dark ✕ — easy to see and tap */
+.evf-item[data-theme="book"] .evf-close {
+  width: 32px; height: 32px; color: #0a2e1a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.evf-item[data-theme="book"] .evf-close:hover { background: #F5C518; }
+.evf-item[data-theme="book"] .evf-close:focus-visible { outline-color: #F5C518; }
+.evf-item[data-theme="book"] .evf-close svg { stroke-width: 2.6; }
+.evf-item[data-theme="book"] .evf-btn { box-shadow: 0 6px 16px -6px rgba(245, 197, 24, 0.7); }
+/* one gentle shine across the card when it appears */
+.evf-item[data-theme="book"] .evf-body { position: relative; overflow: hidden; }
+.evf-item[data-theme="book"] .evf-body::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+  transform: skewX(-18deg); opacity: 0; pointer-events: none;
+}
+.evf-dock.is-in .evf-item[data-theme="book"] .evf-body::after { animation: evfShine 1.4s ease 0.7s 2; }
+@keyframes evfShine {
+  0%   { left: -60%; opacity: 1; }
+  100% { left: 130%; opacity: 1; }
+}
+@media (min-width: 641px) {
+  .evf-dock:has(.evf-item[data-theme="book"]) { width: 400px; }
+  .evf-cover { width: 58px; }
+  .evf-item[data-theme="book"] .evf-close { width: 34px; height: 34px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .evf-dock.is-in .evf-item[data-theme="book"] .evf-body::after { animation: none; }
+}
