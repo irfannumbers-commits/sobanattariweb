@@ -1023,7 +1023,7 @@
       secondary: { label: 'Details', href: '/events/deeni-tulba-mega-session-nov-2026/' }
     }
   ];
-  const SHOW_DELAY_MS = 2500;
+  const SHOW_DELAY_MS = 2000;
 
   (function setupFloatingEvents() {
     const path = location.pathname;
@@ -1171,9 +1171,34 @@
       launcher.hidden = true;
       dock.hidden = false;
       document.documentElement.classList.add('evf-active');
+      if (!introDone) startIntro();
       requestAnimationFrame(function () {
         requestAnimationFrame(function () { dock.classList.add('is-in'); });
       });
+    }
+
+    // First appearance: the card floats in at the middle of the screen,
+    // stays there a few seconds, then glides down to its corner. On phones
+    // it then shrinks to just the small book stub (tap it to open again).
+    let introDone = false;
+    const INTRO_MS = 4500;
+    const isPhone = function () { return window.matchMedia('(max-width: 640px)').matches; };
+    function startIntro() {
+      introDone = true;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { if (isPhone()) dock.classList.add('is-mini'); return; }
+      const r = dock.getBoundingClientRect();
+      const dx = window.innerWidth / 2 - (r.left + r.width / 2);
+      const dy = window.innerHeight / 2 - (r.top + r.height / 2);
+      dock.classList.add('is-intro');
+      dock.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + (isPhone() ? 1 : 1.12) + ')';
+      setTimeout(function () {
+        if (dock.hidden) return;
+        dock.classList.add('is-docking');
+        dock.classList.remove('is-intro');
+        dock.style.transform = '';
+        if (isPhone()) setTimeout(function () { dock.classList.add('is-mini'); }, 650);
+        setTimeout(function () { dock.classList.remove('is-docking'); }, 1000);
+      }, INTRO_MS);
     }
 
     // Keep the "In 3 days" chips right if the page stays open past midnight
@@ -1209,6 +1234,8 @@
     dock.addEventListener('click', function (e) {
       const item = e.target.closest('.evf-item');
       if (!item) return;
+      // the shrunk phone stub opens back up when tapped
+      if (dock.classList.contains('is-mini')) { e.preventDefault(); dock.classList.remove('is-mini'); return; }
       if (e.target.closest('.evf-close')) { dismiss(item); return; }
       if (e.target.closest('a')) return;
       if (item.dataset.href && !item.dataset.swiped) location.href = item.dataset.href;

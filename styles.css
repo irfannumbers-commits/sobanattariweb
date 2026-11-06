@@ -4635,3 +4635,28 @@ h1[lang="ur"], h4[lang="ur"], .bdp-title { font-weight: 700; line-height: 1.5; }
 .event-org-list li { position: relative; padding-left: 16px; }
 .event-org-list li::before { content: ""; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 .event-org-list strong { color: var(--text-dark); }
+
+/* ---- Floating card: first appearance in the middle, then it docks ----
+   main.js moves the dock to the screen centre (inline transform), then
+   clears it so the card glides to its corner; on phones it then shrinks
+   to the book stub only. */
+.evf-dock.is-intro .evf-ticket { animation: evfFloat 3.2s ease-in-out 0.8s infinite; }
+@keyframes evfFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.evf-dock.is-intro .evf-item { filter: drop-shadow(0 30px 40px rgba(7, 46, 27, 0.45)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2)); }
+.evf-dock.is-docking { transition: transform 0.9s cubic-bezier(.3, .8, .25, 1); }
+
+/* phones: shrunk to the book stub */
+.evf-dock.is-mini { right: auto; }
+.evf-dock.is-mini .evf-item:not(.is-leaving) { cursor: pointer; }
+.evf-dock.is-mini .evf-body { display: none; }
+.evf-dock.is-mini .evf-ticket::after { display: none; }
+.evf-dock.is-mini .evf-ticket { border-radius: 14px; -webkit-mask: none; mask: none; animation: evfNudge 4s ease-in-out 1s infinite; }
+.evf-dock.is-mini .evf-stub { padding: 10px 8px; }
+@keyframes evfNudge { 0%, 86%, 100% { transform: none; } 90% { transform: rotate(-6deg); } 94% { transform: rotate(5deg); } 97% { transform: rotate(-2deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .evf-dock.is-intro .evf-ticket, .evf-dock.is-mini .evf-ticket { animation: none; }
+}
+.evf-dock.is-mini { --evf-stub: 60px; }
+.evf-dock.is-mini .evf-stub { padding: 7px 6px; }
+.evf-dock.is-mini .evf-cover { width: 36px; }
+.evf-dock.is-mini .evf-month { font-size: 9px; margin-top: 4px; }
