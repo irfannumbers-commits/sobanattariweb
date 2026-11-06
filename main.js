@@ -121,7 +121,7 @@
     });
 
     // e.g. "1 upcoming · 9 coming soon" — cards with no date yet are "coming soon"
-    const cards = document.querySelectorAll('.updates-section .event-teasers > *');
+    const cards = document.querySelectorAll('.updates-section .event-teasers > :not(.is-book)');
     const soon = document.querySelectorAll('.updates-section .event-teasers > .is-disabled, .updates-section .event-teasers > .is-soon').length;
     const upcoming = cards.length - soon;
     const parts = [];
@@ -958,6 +958,10 @@
   //           the "In 3 days" / "Tomorrow" / "Today" chip, which is worked
   //           out live from the visitor's current date (Pakistan calendar
   //           days) up to the event date.
+  //   off   → true hides an entry without deleting it
+  //   start → (events) drives the date and "In 3 days" chip; for a non-event
+  //           card (e.g. a book) leave it out and set stubTop / stubBottom
+  //           (stub text) and chip (static label) instead
   //   theme → colour scheme: 'gold', 'rose' or 'emerald' (add more in styles.css,
   //           see "Floating event cards — themes").
   //   icon  → big stub icon: 'mic', 'woman', 'hijab', 'robot', 'laptop', 'users' — or any
@@ -972,7 +976,24 @@
   // the delay.
   const FLOAT_EVENTS = [
     {
+      id: 'seerat-science-book',
+      showFrom:  '2026-11-01T00:00:00+05:00',
+      showUntil: '2027-12-31T23:59:00+05:00',
+      theme: 'gold',
+      icon: 'book',
+      stubTop: 'New',
+      stubBottom: 'Book',
+      chip: 'Book',
+      title: 'Seerat & Modern Science',
+      meta: [{ icon: 'book', text: 'Urdu · 154 pages' }],
+      note: 'New book by Soban Attari · Register to purchase',
+      href: '/seerat-mustafa-modern-science/',
+      primary: { label: 'Register', href: 'https://forms.gle/jwZgS352GqtLy6Gr8', external: true },
+      secondary: { label: 'Details', href: '/seerat-mustafa-modern-science/' }
+    },
+    {
       id: 'females-session-nov-2026',
+      off: true,   // only the book popup shows on the home page for now
       showFrom:  '2026-11-01T00:00:00+05:00',
       showUntil: '2026-11-06T21:00:00+05:00',
       start:     '2026-11-06T21:00:00+05:00',
@@ -987,6 +1008,7 @@
     },
     {
       id: 'deeni-tulba-mega-session-nov-2026',
+      off: true,   // only the book popup shows on the home page for now
       showFrom:  '2026-10-31T00:00:00+05:00',
       showUntil: '2026-11-22T21:00:00+05:00',
       start:     '2026-11-22T21:00:00+05:00',
@@ -1009,6 +1031,7 @@
     const preview = /[?&]events-preview\b/.test(location.search);
     const now = Date.now();
     const eligible = FLOAT_EVENTS.filter(function (ev) {
+      if (ev.off) return false;
       return preview || (Date.parse(ev.showFrom) <= now && now < Date.parse(ev.showUntil));
     });
     if (!eligible.length) return;
@@ -1022,6 +1045,7 @@
       clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
       pin: '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/>',
       ticket: '<path d="M3.5 8V6.5h17V8a2.5 2.5 0 0 0 0 5v1.5h-17V13a2.5 2.5 0 0 0 0-5z"/>',
+      book: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M9 7.5h7M9 11h5"/>',
       robot: '<rect x="4.5" y="8" width="15" height="11" rx="3"/><path d="M12 8V4.8"/><circle cx="12" cy="3.6" r="1.2"/><circle cx="9.2" cy="12.8" r="1.3"/><circle cx="14.8" cy="12.8" r="1.3"/><path d="M9.6 16.2h4.8M2.5 12.2v3.2M21.5 12.2v3.2"/>',
       close: '<path d="M6 6l12 12M18 6L6 18"/>'
     };
@@ -1087,16 +1111,23 @@
               : ICONS[ev.icon || 'ticket']
               ? '<span class="evf-stub-icon">' + icon(ev.icon || 'ticket', 26) + '</span>'
               : '<span class="evf-stub-icon is-emoji"><span class="evf-emoji">' + esc(ev.icon) + '</span></span>') +
-            '<span class="evf-day">' + pkPart(ev.start, { day: 'numeric' }) + '</span>' +
-            '<span class="evf-month">' + pkPart(ev.start, { month: 'short' }) + '</span>' +
+            (ev.start
+              ? '<span class="evf-day">' + pkPart(ev.start, { day: 'numeric' }) + '</span>' +
+                '<span class="evf-month">' + pkPart(ev.start, { month: 'short' }) + '</span>'
+              : '<span class="evf-day evf-day-word">' + esc(ev.stubTop || '') + '</span>' +
+                '<span class="evf-month">' + esc(ev.stubBottom || '') + '</span>') +
           '</div>' +
           '<div class="evf-body">' +
             '<div class="evf-head">' +
               '<h3 class="evf-title" id="' + tid + '">' + esc(ev.title) + '</h3>' +
               '<button type="button" class="evf-close" aria-label="Hide ' + esc(ev.title) + '">' + icon('close', 15) + '</button>' +
             '</div>' +
-            '<p class="evf-meta"><span class="evf-chip" data-start="' + esc(ev.start) + '">' + countdown(ev.start) + '</span>' +
-              '<span class="evf-sr">' + pkPart(ev.start, { weekday: 'long', day: 'numeric', month: 'long' }) + ', </span>' + meta + '</p>' +
+            '<p class="evf-meta">' +
+              (ev.start
+                ? '<span class="evf-chip" data-start="' + esc(ev.start) + '">' + countdown(ev.start) + '</span>' +
+                  '<span class="evf-sr">' + pkPart(ev.start, { weekday: 'long', day: 'numeric', month: 'long' }) + ', </span>'
+                : (ev.chip ? '<span class="evf-chip">' + esc(ev.chip) + '</span>' : '')) +
+              meta + '</p>' +
             (ev.note ? '<p class="evf-note">' + esc(ev.note) + '</p>' : '') +
             '<div class="evf-actions">' + link(ev.primary, 'evf-btn') + (ev.secondary ? link(ev.secondary, 'evf-link') : '') + '</div>' +
           '</div>' +
