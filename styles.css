@@ -4794,3 +4794,19 @@ h1[lang="ur"], h4[lang="ur"], .bdp-title { font-weight: 700; line-height: 1.5; }
 @media (min-width: 641px) {
   .bkb-panel { width: 320px; bottom: 80px; }
 }
+
+/* Event page: multi-session schedule list (Karachi schedule) */
+.ks-list { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; }
+.ks-row { display: grid; grid-template-columns: 64px 1fr auto auto; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border-light); }
+.ks-row:first-child { border-top: 0; }
+.ks-date { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px 0; border-radius: 10px; background: var(--accent-dim); font-size: 11px; font-weight: 700; color: var(--text-body); text-transform: uppercase; letter-spacing: 0.06em; }
+.ks-date b { font-family: var(--font-display); font-size: 15px; color: var(--text-dark); letter-spacing: 0; text-transform: none; }
+.ks-what { display: flex; flex-direction: column; min-width: 0; }
+.ks-what strong { font-size: 15px; color: var(--text-dark); }
+.ks-what small { font-size: 12.5px; color: var(--text-muted); }
+.ks-time { font-size: 14px; font-weight: 700; color: var(--text-dark); white-space: nowrap; }
+.ks-link { font-size: 13px; font-weight: 700; color: var(--accent-text); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 560px) {
+  .ks-row { grid-template-columns: 58px 1fr auto; }
+  .ks-link { grid-column: 2 / -1; justify-self: start; }
+}
