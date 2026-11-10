@@ -19,8 +19,8 @@
     '/events/deeni-tulba-mega-session-nov-2026/': '2026-11-22T23:00:00+05:00',
     '/events/youth-talks-faisalabad-nov-2026/': '2026-11-27T22:00:00+05:00',
     '/events/khatri-youth-seminar-nov-2026/': '2026-11-13T23:00:00+05:00',
-    '/events/karachi-schedule-nov-2026/': '2026-11-16T18:00:00+05:00',
-    '/events/suzuki-seerat-conference-nov-2026/': '2026-11-16T17:00:00+05:00',
+    '/events/karachi-schedule-nov-2026/': '2026-11-16T17:00:00+05:00',
+    '/events/suzuki-seerat-conference-nov-2026/': '2026-11-16T16:00:00+05:00',
     '/events/khawateen-session-5-dec-2026/': '2026-12-04T23:00:00+05:00',
     'https://forms.gle/Vp3K99RhSAoMdHGQ8':   '2026-10-21T23:00:00+05:00'
   };
