@@ -22,6 +22,9 @@
     '/events/karachi-schedule-nov-2026/': '2026-11-16T17:00:00+05:00',
     '/events/suzuki-seerat-conference-nov-2026/': '2026-11-16T16:00:00+05:00',
     '/events/khawateen-session-5-dec-2026/': '2026-12-04T23:00:00+05:00',
+    '/events/baldia-youth-seminar-nov-2026/': '2026-11-15T00:00:00+05:00',
+    '/events/ilma-university-genz-session-nov-2026/': '2026-11-15T15:00:00+05:00',
+    '/events/dhoraji-youth-seminar-nov-2026/': '2026-11-15T22:45:00+05:00',
     'https://forms.gle/Vp3K99RhSAoMdHGQ8':   '2026-10-21T23:00:00+05:00'
   };
 
