@@ -25,6 +25,8 @@
     '/events/baldia-youth-seminar-nov-2026/': '2026-11-15T00:00:00+05:00',
     '/events/ilma-university-genz-session-nov-2026/': '2026-11-15T15:00:00+05:00',
     '/events/dhoraji-youth-seminar-nov-2026/': '2026-11-15T22:45:00+05:00',
+    '/events/gulshan-professionals-meetup-nov-2026/': '2026-11-14T23:00:00+05:00',
+    '/events/fos-meetup-karachi-nov-2026/': '2026-11-15T21:00:00+05:00',
     'https://forms.gle/Vp3K99RhSAoMdHGQ8':   '2026-10-21T23:00:00+05:00'
   };
 
