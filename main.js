@@ -1326,6 +1326,7 @@
     stayMs: 7000         // how long it stays open each time
   };
   (function bookBubble() {
+    return;   // replaced by the two small Home notifications below
     const path = location.pathname;
     if (path !== '/' && path !== '/index.html') return;
 
@@ -1411,6 +1412,112 @@
       // opens by itself every time the Home page loads, then folds back
       setTimeout(open, BOOK_BUBBLE.autoOpenMs - BOOK_BUBBLE.appearMs);
     }, BOOK_BUBBLE.appearMs);
+  })();
+
+
+  // ---- Home page: two small notifications (Karachi schedule + book) ----
+  // Slide in one after the other, then fold into one small round button
+  // after 10s (tap it to open again). Each has ✕ and can be swiped away.
+  // Once both are closed they stay closed for the visit.
+  const HOME_NOTES = [
+    {
+      id: 'karachi-nov-2026',
+      until: '2026-11-16T17:00:00+05:00',
+      img: '/brand_assets/IMG_9756-fullsize-opt.webp', round: true,
+      title: 'Soban Attari in Karachi',
+      sub: '13–16 Nov · 7 sessions',
+      href: '/events/karachi-schedule-nov-2026/'
+    },
+    {
+      id: 'seerat-science-book',
+      img: '/brand_assets/seerat-e-mustafa-book-title-opt.webp', round: false,
+      title: 'New Book: Seerat & Science',
+      sub: 'Register to purchase',
+      href: 'https://forms.gle/jwZgS352GqtLy6Gr8', external: true
+    }
+  ];
+  (function homeNotes() {
+    const path = location.pathname;
+    if (path !== '/' && path !== '/index.html') return;
+    const KEY = 'home-notes-closed';
+    let closed = [];
+    try { closed = JSON.parse(sessionStorage.getItem(KEY) || '[]'); } catch (e) { closed = []; }
+    const now = Date.now();
+    const notes = HOME_NOTES.filter(function (n) {
+      return closed.indexOf(n.id) === -1 && (!n.until || now < Date.parse(n.until));
+    });
+    if (!notes.length) return;
+
+    const esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+    const wrap = document.createElement('aside');
+    wrap.className = 'hn';
+    wrap.setAttribute('aria-label', 'Announcements');
+    wrap.innerHTML =
+      '<div class="hn-list">' + notes.map(function (n) {
+        return '<div class="hn-item" data-id="' + n.id + '">' +
+          '<a class="hn-link" href="' + n.href + '"' + (n.external ? ' target="_blank" rel="noopener"' : '') + '>' +
+            '<img class="hn-img' + (n.round ? ' is-round' : '') + '" src="' + n.img + '" alt="" width="44" height="44" draggable="false" />' +
+            '<span class="hn-text"><strong>' + esc(n.title) + '</strong><span>' + esc(n.sub) + ' <b aria-hidden="true">&rarr;</b></span></span>' +
+            (n.external ? '<span class="evf-sr"> (opens in a new tab)</span>' : '') +
+          '</a>' +
+          '<button type="button" class="hn-close" aria-label="Close: ' + esc(n.title) + '">' +
+            '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+        '</div>';
+      }).join('') + '</div>' +
+      '<button type="button" class="hn-fab" aria-label="Show announcements" aria-expanded="true">' +
+        '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>' +
+        '<span class="hn-badge">' + notes.length + '</span></button>';
+
+    const fab = wrap.querySelector('.hn-fab');
+    const badge = wrap.querySelector('.hn-badge');
+    let foldTimer = null;
+    function remaining() { return wrap.querySelectorAll('.hn-item:not(.is-gone)').length; }
+    function fold() { if (remaining()) { wrap.classList.add('is-folded'); fab.setAttribute('aria-expanded', 'false'); } }
+    function unfold() { wrap.classList.remove('is-folded'); fab.setAttribute('aria-expanded', 'true'); clearTimeout(foldTimer); foldTimer = setTimeout(fold, 10000); }
+    function dismiss(item, dir) {
+      if (item.classList.contains('is-gone')) return;
+      item.classList.add('is-gone', dir === 'left' ? 'to-left' : 'to-right');
+      closed.push(item.dataset.id);
+      try { sessionStorage.setItem(KEY, JSON.stringify(closed)); } catch (e) { /* ignore */ }
+      badge.textContent = remaining();
+      setTimeout(function () { item.remove(); if (!remaining()) wrap.remove(); }, 350);
+    }
+    wrap.addEventListener('click', function (e) {
+      const btn = e.target.closest('.hn-close');
+      if (btn) { dismiss(btn.closest('.hn-item')); }
+    });
+    fab.addEventListener('click', function () { if (wrap.classList.contains('is-folded')) unfold(); else { clearTimeout(foldTimer); fold(); } });
+    wrap.addEventListener('mouseenter', function () { clearTimeout(foldTimer); });
+    wrap.addEventListener('mouseleave', function () { if (!wrap.classList.contains('is-folded')) { clearTimeout(foldTimer); foldTimer = setTimeout(fold, 6000); } });
+
+    // swipe sideways to close (touch / pen / mouse)
+    let sw = null;
+    wrap.addEventListener('pointerdown', function (e) {
+      const item = e.target.closest('.hn-item'); if (!item || e.target.closest('.hn-close')) return;
+      sw = { item: item, x: e.clientX, y: e.clientY, dx: 0, h: null, id: e.pointerId };
+    });
+    wrap.addEventListener('pointermove', function (e) {
+      if (!sw || e.pointerId !== sw.id) return;
+      const dx = e.clientX - sw.x, dy = e.clientY - sw.y;
+      if (sw.h === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) { sw.h = Math.abs(dx) > Math.abs(dy); if (sw.h) sw.item.setPointerCapture(sw.id); }
+      if (!sw.h) return;
+      sw.dx = dx; sw.item.classList.add('is-drag');
+      sw.item.style.transform = 'translateX(' + dx + 'px)'; sw.item.style.opacity = String(Math.max(0.2, 1 - Math.abs(dx) / 260));
+    });
+    function endSwipe() {
+      if (!sw) return; const s = sw; sw = null; s.item.classList.remove('is-drag');
+      if (s.h && Math.abs(s.dx) > 70) { s.item.style.transform = ''; s.item.style.opacity = ''; dismiss(s.item, s.dx < 0 ? 'left' : 'right'); return; }
+      s.item.style.transform = ''; s.item.style.opacity = '';
+    }
+    wrap.addEventListener('pointerup', endSwipe);
+    wrap.addEventListener('pointercancel', endSwipe);
+    wrap.addEventListener('click', function (e) { const a = e.target.closest('.hn-link'); if (a && a.closest('.hn-item').classList.contains('is-drag')) e.preventDefault(); }, true);
+
+    setTimeout(function () {
+      document.body.appendChild(wrap);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { wrap.classList.add('is-in'); }); });
+      foldTimer = setTimeout(fold, 10600);   // 10s after the second one appears
+    }, 2000);
   })();
 
 })();
