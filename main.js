@@ -1019,18 +1019,31 @@
     },
     {
       id: 'deeni-tulba-mega-session-nov-2026',
-      off: true,   // only the book popup shows on the home page for now
       showFrom:  '2026-10-31T00:00:00+05:00',
       showUntil: '2026-11-22T21:00:00+05:00',
       start:     '2026-11-22T21:00:00+05:00',
       theme: 'emerald',
       icon: 'robot',
       title: 'Online Mega Session',
-      meta: [{ icon: 'clock', text: 'Sun 9:00 PM' }, { icon: 'laptop', text: 'Online' }],
-      note: 'For Deeni Tulba · Join from home',
+      meta: [{ icon: 'clock', text: 'Sun 22 Nov · 9:00 PM' }, { icon: 'laptop', text: 'Online' }],
+      note: 'For Deeni Tulba · Join from home · Registration required',
       href: '/events/deeni-tulba-mega-session-nov-2026/',
-      primary: { label: 'Register', href: 'https://docs.google.com/forms/d/e/1FAIpQLSdGsUt8vsPwrVl6uFmQhm7GDfiMFyKCdMdp1UXng80QPRhijw/viewform', external: true },
+      primary: { label: 'Register Now', href: 'https://docs.google.com/forms/d/e/1FAIpQLSdGsUt8vsPwrVl6uFmQhm7GDfiMFyKCdMdp1UXng80QPRhijw/viewform', external: true },
       secondary: { label: 'Details', href: '/events/deeni-tulba-mega-session-nov-2026/' }
+    },
+    {
+      id: 'khawateen-session-5-dec-2026',
+      showFrom:  '2026-11-17T00:00:00+05:00',
+      showUntil: '2026-12-04T21:00:00+05:00',
+      start:     '2026-12-04T21:00:00+05:00',
+      theme: 'rose',
+      icon: 'hijab',
+      title: 'Khawateen Session Part 5',
+      meta: [{ icon: 'clock', text: 'Fri 4 Dec · 9:00 PM' }, { icon: 'laptop', text: 'Online' }],
+      note: 'For women · Registration required · Join from home',
+      href: '/events/khawateen-session-5-dec-2026/',
+      primary: { label: 'Register Now', href: 'https://forms.gle/ig3CTybRmLhkQSV8A', external: true },
+      secondary: { label: 'Details', href: '/events/khawateen-session-5-dec-2026/' }
     }
   ];
   const SHOW_DELAY_MS = 2000;
@@ -1418,19 +1431,10 @@
   })();
 
 
-  // ---- Home page: two small notifications (Karachi schedule + book) ----
-  // Slide in one after the other, then fold into one small round button
-  // after 10s (tap it to open again). Each has ✕ and can be swiped away.
-  // Once both are closed they stay closed for the visit.
+  // ---- Home page: small notification (book) ----
+  // Slides in, then folds into a small round button after 10s.
+  // Has ✕ and can be swiped away. Stays closed for the visit.
   const HOME_NOTES = [
-    {
-      id: 'karachi-nov-2026',
-      until: '2026-11-16T17:00:00+05:00',
-      img: '/brand_assets/IMG_9756-fullsize-opt.webp', round: true,
-      title: 'Soban Attari in Karachi',
-      sub: '13–16 Nov · 7 sessions',
-      href: '/events/karachi-schedule-nov-2026/'
-    },
     {
       id: 'seerat-science-book',
       img: '/brand_assets/seerat-e-mustafa-book-title-opt.webp', round: false,
