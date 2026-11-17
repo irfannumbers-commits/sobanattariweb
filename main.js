@@ -1019,12 +1019,13 @@
     },
     {
       id: 'deeni-tulba-mega-session-nov-2026',
+      off: true,
       showFrom:  '2026-10-31T00:00:00+05:00',
       showUntil: '2026-11-22T21:00:00+05:00',
       start:     '2026-11-22T21:00:00+05:00',
       theme: 'emerald',
       icon: 'robot',
-      title: 'Online Mega Session',
+      title: 'Deeni Students Online Mega Session',
       meta: [{ icon: 'clock', text: 'Sun 22 Nov · 9:00 PM' }, { icon: 'laptop', text: 'Online' }],
       note: 'For Deeni Tulba · Join from home · Registration required',
       href: '/events/deeni-tulba-mega-session-nov-2026/',
@@ -1033,6 +1034,7 @@
     },
     {
       id: 'khawateen-session-5-dec-2026',
+      off: true,
       showFrom:  '2026-11-17T00:00:00+05:00',
       showUntil: '2026-12-04T21:00:00+05:00',
       start:     '2026-12-04T21:00:00+05:00',
@@ -1431,16 +1433,25 @@
   })();
 
 
-  // ---- Home page: small notification (book) ----
-  // Slides in, then folds into a small round button after 10s.
-  // Has ✕ and can be swiped away. Stays closed for the visit.
+  // ---- Home page: compact event notifications (bottom-left) ----
+  // Slide in, then fold into a small round button after 10s.
+  // Each has ✕ and can be swiped away. Stays closed for the visit.
   const HOME_NOTES = [
     {
-      id: 'seerat-science-book',
-      img: '/brand_assets/seerat-e-mustafa-book-title-opt.webp', round: false,
-      title: 'New Book: Seerat & Science',
-      sub: 'Register to purchase',
-      href: 'https://forms.gle/jwZgS352GqtLy6Gr8', external: true
+      id: 'deeni-tulba-mega-session-nov-2026',
+      until: '2026-11-22T21:00:00+05:00',
+      img: '/brand_assets/deeni-tulba-mega-session-card.webp', round: false,
+      title: 'Deeni Students Online Mega Session',
+      sub: 'Sun 22 Nov · 9:00 PM',
+      href: '/events/deeni-tulba-mega-session-nov-2026/'
+    },
+    {
+      id: 'khawateen-session-5-dec-2026',
+      until: '2026-12-04T21:00:00+05:00',
+      img: '/brand_assets/khawateen-session-5-card.webp', round: false,
+      title: 'Khawateen Session Part 5',
+      sub: 'Fri 4 Dec · 9:00 PM',
+      href: '/events/khawateen-session-5-dec-2026/'
     }
   ];
   (function homeNotes() {
