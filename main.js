@@ -996,7 +996,7 @@
       stubBottom: 'New Book',
       chip: 'New Book',
       title: 'Seerat & Modern Science',
-      meta: [{ icon: 'ticket', text: 'Price announced later' }],
+      meta: [{ icon: 'ticket', text: 'Rs. 500' }],
       note: 'By Soban Attari. Registrations are open — register now to reserve your copy.',
       href: '/seerat-mustafa-modern-science/',
       primary: { label: 'Register Now', href: 'https://forms.gle/jwZgS352GqtLy6Gr8', external: true },
@@ -1336,7 +1336,7 @@
     cover: '/brand_assets/seerat-e-mustafa-book-title-opt.webp',
     title: 'Seerat & Modern Science',
     urdu: 'سیرت النبی ﷺ اور جدید سائنس',
-    text: 'Want to buy the book? Register below. Price will be announced later.',
+    text: 'Want to buy the book? Register below. Price: Rs. 500.',
     register: 'https://forms.gle/jwZgS352GqtLy6Gr8',
     details: '/seerat-mustafa-modern-science/',
     appearMs: 1200,      // button pops in
