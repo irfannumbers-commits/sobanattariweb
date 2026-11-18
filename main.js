@@ -1344,7 +1344,6 @@
     stayMs: 7000         // how long it stays open each time
   };
   (function bookBubble() {
-    return;   // replaced by the two small Home notifications below
     const path = location.pathname;
     if (path !== '/' && path !== '/index.html') return;
 
@@ -1433,27 +1432,8 @@
   })();
 
 
-  // ---- Home page: compact event notifications (bottom-left) ----
-  // Slide in, then fold into a small round button after 10s.
-  // Each has ✕ and can be swiped away. Stays closed for the visit.
-  const HOME_NOTES = [
-    {
-      id: 'deeni-tulba-mega-session-nov-2026',
-      until: '2026-11-22T21:00:00+05:00',
-      img: '/brand_assets/deeni-tulba-mega-session-card.webp', round: false,
-      title: 'Deeni Students Online Mega Session',
-      sub: 'Sun 22 Nov · 9:00 PM',
-      href: '/events/deeni-tulba-mega-session-nov-2026/'
-    },
-    {
-      id: 'khawateen-session-5-dec-2026',
-      until: '2026-12-04T21:00:00+05:00',
-      img: '/brand_assets/khawateen-session-5-card.webp', round: false,
-      title: 'Khawateen Session Part 5',
-      sub: 'Fri 4 Dec · 9:00 PM',
-      href: '/events/khawateen-session-5-dec-2026/'
-    }
-  ];
+  // ---- Home page: small notifications (none active) ----
+  const HOME_NOTES = [];
   (function homeNotes() {
     const path = location.pathname;
     if (path !== '/' && path !== '/index.html') return;
