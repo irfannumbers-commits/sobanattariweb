@@ -4758,13 +4758,16 @@ h1[lang="ur"], h4[lang="ur"], .bdp-title { font-weight: 700; line-height: 1.5; }
   font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
   box-shadow: 0 10px 22px -10px rgba(245, 197, 24, 0.9);
   transition: background-color var(--transition), transform var(--transition);
+  touch-action: manipulation; -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 .bkb-btn:hover { background: #FFD95A; }
 .bkb-btn:active { transform: scale(0.98); }
 .bkb-btn:focus-visible { outline: 2px solid #ffffff; outline-offset: 2px; }
-.bkb-link { font-size: 14px; font-weight: 700; color: #ffffff; text-decoration: underline; text-decoration-color: #F5C518; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.bkb-link { font-size: 14px; font-weight: 700; color: #ffffff; text-decoration: underline; text-decoration-color: #F5C518; text-decoration-thickness: 2px; text-underline-offset: 4px; min-height: 44px; display: inline-flex; align-items: center; padding: 0 6px; margin: 0 -6px; touch-action: manipulation; -webkit-tap-highlight-color: rgba(0,0,0,0); }
+.bkb-link:hover { color: #F5C518; }
+.bkb-link:active { opacity: 0.75; }
 .bkb-link:focus-visible { outline: 2px solid #F5C518; outline-offset: 3px; border-radius: 2px; }
-.bkb-timer { position: absolute; left: 18px; right: 18px; bottom: 7px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, #F5C518, rgba(245, 197, 24, 0.4)); transform-origin: left; transform: scaleX(0); }
+.bkb-timer { position: absolute; left: 18px; right: 18px; bottom: 7px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, #F5C518, rgba(245, 197, 24, 0.4)); transform-origin: left; transform: scaleX(0); pointer-events: none; }
 @keyframes bkbTimer { from { transform: scaleX(1); } to { transform: scaleX(0); } }
 
 @media (min-width: 641px) {
