@@ -179,15 +179,12 @@
 
     const SITE = 'https://www.sobanattari.com';
     const TZ = 'Asia/Karachi';
-    const CITY_UR = { Lahore: 'لاہور', Karachi: 'کراچی', Faisalabad: 'فیصل آباد', Online: 'آن لائن' };
-    const MONTH_UR = ['جنوری', 'فروری', 'مارچ', 'اپریل', 'مئی', 'جون', 'جولائی', 'اگست', 'ستمبر', 'اکتوبر', 'نومبر', 'دسمبر'];
 
     const fmt = function (opts) { return new Intl.DateTimeFormat('en-GB', Object.assign({ timeZone: TZ }, opts)); };
     const fDay = fmt({ day: 'numeric' });
     const fWeekday = fmt({ weekday: 'short' });
     const fWeekdayLong = fmt({ weekday: 'long' });
     const fMonth = fmt({ month: 'short' });
-    const fMonthNum = fmt({ month: 'numeric' });
     const fYear = fmt({ year: 'numeric' });
     const fMonthYear = fmt({ month: 'long', year: 'numeric' });
     const fDayMonth = fmt({ day: 'numeric', month: 'long' });
@@ -222,11 +219,7 @@
       const t = fTime.format(new Date(e.s));
       return (e.showEnd ? t.replace(/ (AM|PM)$/, '') + ' – ' + fTime.format(new Date(e.x)) : t) + ' PKT';
     }
-    function whereHtml(e) {
-      const city = e.mode === 'Online' ? 'Online' : e.city;
-      const where = e.mode === 'Online' ? 'Online' : e.place;
-      return esc(where) + (city ? ' <span class="ue-ur" lang="ur" dir="rtl">' + CITY_UR[city] + '</span>' : '');
-    }
+    function whereHtml(e) { return esc(e.mode === 'Online' ? 'Online' : e.place); }
     function untilText(e, now) {
       if (now >= e.s) return 'Happening now';
       const m = Math.floor((e.s - now) / 60000);
@@ -318,11 +311,11 @@
         rest.forEach(function (e) {
           const key = fMonthYear.format(new Date(e.s));
           let g = groups[groups.length - 1];
-          if (!g || g.key !== key) { g = { key: key, ur: MONTH_UR[+fMonthNum.format(new Date(e.s)) - 1], items: [] }; groups.push(g); }
+          if (!g || g.key !== key) { g = { key: key, items: [] }; groups.push(g); }
           g.items.push(e);
         });
         listEl.innerHTML = groups.map(function (g) {
-          return '<h3 class="ue-month">' + esc(g.key) + ' <span class="ue-ur" lang="ur" dir="rtl">' + g.ur + '</span></h3>' +
+          return '<h3 class="ue-month">' + esc(g.key) + '</h3>' +
             '<ol class="ue-list">' + g.items.map(function (e) {
               const d = new Date(e.s);
               return '<li class="ue-item">' +
@@ -358,7 +351,7 @@
         return '<li class="ue-soon-item">' +
           '<img src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" loading="lazy" width="600" height="300" />' +
           '<div><h3 class="ue-item-title">' + esc(e.title) + '</h3>' +
-          '<p class="ue-line">' + (e.city ? esc(e.city) + ' <span class="ue-ur" lang="ur" dir="rtl">' + CITY_UR[e.city] + '</span> · ' : '') + (e.text ? esc(e.text) + ' · ' : '') + '<span class="ue-note">Date to be announced</span></p></div>' +
+          '<p class="ue-line">' + (e.city ? esc(e.city) + ' · ' : '') + (e.text ? esc(e.text) + ' · ' : '') + '<span class="ue-note">Date to be announced</span></p></div>' +
         '</li>';
       }).join('') : '<li class="ue-line">Nothing announced ' + (city === 'Online' ? 'online' : 'in ' + esc(city)) + ' yet.</li>';
       document.getElementById('ue-soon').hidden = !UPDATES.soon.length;
@@ -400,8 +393,8 @@
           '<img src="' + esc(bk.cover) + '" alt="Book cover: ' + esc(bk.title) + '" loading="lazy" width="200" height="300" />' +
           '<div class="ue-book-text">' +
             '<p class="ue-kicker">New book by Soban Attari</p>' +
-            '<p class="ue-book-ur" lang="ur" dir="rtl">' + esc(bk.urdu) + '</p>' +
-            '<p class="ue-line">' + esc(bk.title) + ' · <strong>' + esc(bk.price) + '</strong></p>' +
+            '<p class="ue-book-title">' + esc(bk.title) + '</p>' +
+            '<p class="ue-line">Price: <strong>' + esc(bk.price) + '</strong></p>' +
             '<div class="ue-acts">' +
               '<a class="ue-act ue-act-main" href="' + esc(bk.register) + '" target="_blank" rel="noopener">Register to purchase<span class="evf-sr"> (opens in a new tab)</span></a>' +
               '<a class="ue-act" href="' + esc(bk.details) + '">About the book</a>' +
