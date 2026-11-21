@@ -206,7 +206,6 @@
     };
     const ICON = {
       wa: '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>',
-      cal: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M12 14v4M10 16h4"/></svg>',
       map: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>'
     };
 
@@ -237,14 +236,6 @@
       if (h >= 1) return 'Starts in ' + part(h, 'hour') + (mi ? ' ' + part(mi, 'minute') : '');
       return mi >= 1 ? 'Starts in ' + part(mi, 'minute') : 'Starts in less than a minute';
     }
-    function gcalLink(e) {
-      const z = function (ms) { return new Date(ms).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); };
-      return 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
-        '&text=' + encodeURIComponent(e.title + ' with Soban Attari') +
-        '&dates=' + z(e.s) + '/' + z(e.x) +
-        '&details=' + encodeURIComponent(SITE + (e.href || '/updates/')) +
-        '&location=' + encodeURIComponent(e.mode === 'Online' ? 'Online' : e.place);
-    }
     function waLink(e) {
       const when = fWeekday.format(new Date(e.s)) + ', ' + fDayMonth.format(new Date(e.s)) + ', ' + timeText(e);
       return 'https://wa.me/?text=' + encodeURIComponent(e.title + ' with Soban Attari\n' + when + '\n' + (e.mode === 'Online' ? 'Online' : e.place) + '\n' + SITE + (e.href || '/updates/'));
@@ -253,7 +244,6 @@
       const out = [];
       if (e.href) out.push('<a class="ue-act ue-act-main" href="' + esc(e.href) + '">Details<span class="evf-sr">: ' + esc(e.title) + '</span></a>');
       out.push('<a class="ue-act" href="' + esc(waLink(e)) + '" target="_blank" rel="noopener">' + ICON.wa + 'Share<span class="evf-sr"> on WhatsApp (opens in a new tab)</span></a>');
-      out.push('<a class="ue-act" href="' + esc(gcalLink(e)) + '" target="_blank" rel="noopener">' + ICON.cal + 'Add to calendar<span class="evf-sr"> (opens in a new tab)</span></a>');
       if (e.mode !== 'Online') out.push('<a class="ue-act" href="https://www.google.com/maps/search/?api=1&amp;query=' + encodeURIComponent(e.place) + '" target="_blank" rel="noopener">' + ICON.map + 'Directions<span class="evf-sr"> (opens Google Maps)</span></a>');
       return '<div class="ue-acts">' + out.join('') + '</div>';
     }
@@ -336,14 +326,14 @@
             '<ol class="ue-list">' + g.items.map(function (e) {
               const d = new Date(e.s);
               return '<li class="ue-item">' +
-                '<p class="ue-date"><span class="ue-date-num">' + fDay.format(d) + '</span><span class="ue-date-sub">' + fWeekday.format(d) + ', ' + fMonth.format(d) + '</span></p>' +
+                '<p class="ue-date"><span class="ue-date-mon">' + fMonth.format(d) + '</span><span class="ue-date-num">' + fDay.format(d) + '</span><span class="ue-date-sub">' + fWeekday.format(d) + '</span></p>' +
                 '<div class="ue-item-body">' +
                   titleHtml(e, 'h4', 'ue-item-title') +
                   '<p class="ue-line">' + timeText(e) + ' · <span class="ue-away">' + daysAway(e.s, now) + '</span></p>' +
                   '<p class="ue-line">' + whereHtml(e) + (e.note ? ' · <span class="ue-note">' + esc(e.note) + '</span>' : '') + '</p>' +
                   actionsHtml(e) +
                 '</div>' +
-                '<img class="ue-item-img" src="' + esc(e.image) + '" alt="" loading="lazy" width="600" height="300" />' +
+                '<img class="ue-item-img" src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" loading="lazy" width="600" height="300" />' +
               '</li>';
             }).join('') + '</ol>';
         }).join('');
