@@ -172,7 +172,7 @@
     }
   };
 
-  (function renderUpdatesPage() {
+  (function updatesPage() {
     const nextBody = document.getElementById('upd-next-body');
     if (!nextBody) return;
 
@@ -187,6 +187,13 @@
     const fTime = new Intl.DateTimeFormat('en-US', { timeZone: TZ, hour: 'numeric', minute: '2-digit', hour12: true });
     const fYmd = fmt({ year: 'numeric', month: '2-digit', day: '2-digit' });
 
+    // Server time minus this device's clock. Stays 0 unless the device clock
+    // is clearly wrong; then the countdown follows the server instead.
+    let skew = 0;
+    const nowMs = function () { return Date.now() + skew; };
+    // Calendar day in Pakistan as a UTC-midnight timestamp, for "in N days"
+    const pkDay = function (ms) { return Date.parse(fYmd.format(new Date(ms)).split('/').reverse().join('-')); };
+
     const esc = function (s) {
       return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
     };
@@ -197,17 +204,12 @@
       live: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/></svg>',
       arrow: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
     };
-
-    const now = Date.now();
-    const events = UPDATES.events
+    const ALL = UPDATES.events
       .map(function (e) { return Object.assign({}, e, { s: Date.parse(e.start), x: Date.parse(e.end) }); })
-      .filter(function (e) { return e.x > now; })
       .sort(function (a, b) { return a.s - b.s; });
 
-    function daysAway(ms) {
-      const a = Date.parse(fYmd.format(new Date(now)).split('/').reverse().join('-'));
-      const b = Date.parse(fYmd.format(new Date(ms)).split('/').reverse().join('-'));
-      const d = Math.round((b - a) / 86400000);
+    function daysAway(ms, now) {
+      const d = Math.round((pkDay(ms) - pkDay(now)) / 86400000);
       return d <= 0 ? 'Today' : d === 1 ? 'Tomorrow' : 'In ' + d + ' days';
     }
     function timeText(e) {
@@ -224,91 +226,117 @@
       return '<div class="upd-tags">' + tags.join('') + '</div>';
     }
 
-    // Header summary
-    const stats = [];
-    if (events.length) stats.push('<li><b>' + events.length + '</b> upcoming</li>');
-    if (UPDATES.soon.length) stats.push('<li><b>' + UPDATES.soon.length + '</b> dates coming soon</li>');
-    if (events.length) stats.push('<li>Next: <b>' + fWeekday.format(new Date(events[0].s)) + ', ' + fDay.format(new Date(events[0].s)) + ' ' + fMonth.format(new Date(events[0].s)) + '</b></li>');
-    document.getElementById('upd-stats').innerHTML = stats.join('');
+    // What is on screen, so tick() knows when the page must be rebuilt
+    let shown = { spot: null, live: false, day: 0 };
+    let cells = null;
 
-    // Next up spotlight
-    if (events.length) {
-      const e = events[0];
-      const d = new Date(e.s);
-      const tag = e.href ? 'a' : 'div';
-      nextBody.innerHTML =
-        '<' + tag + ' class="upd-spot"' + (e.href ? ' href="' + esc(e.href) + '"' : '') + '>' +
-          '<div class="upd-spot-media"><img src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" width="1200" height="600" /></div>' +
-          '<div class="upd-spot-body">' +
-            '<span class="upd-next-pill"><span class="upd-live-dot" aria-hidden="true"></span><span id="upd-next-title">' + (now >= e.s ? 'Happening now' : 'Next up') + '</span></span>' +
-            '<span class="upd-label">' + labelHtml(e) + '</span>' +
-            '<h2 class="upd-spot-title">' + esc(e.title) + '</h2>' +
-            '<ul class="upd-meta">' +
-              '<li>' + ICON.cal + fWeekdayLong.format(d) + ', ' + fLongDate.format(d) + '</li>' +
-              '<li>' + ICON.clock + timeText(e) + '</li>' +
-              '<li>' + (e.mode === 'Online' ? ICON.live : ICON.pin) + esc(placeText(e)) + '</li>' +
-            '</ul>' +
-            tagsHtml(e) +
-            '<div class="upd-count" role="timer" aria-live="off" data-start="' + e.s + '" data-end="' + e.x + '">' +
-              ['Days', 'Hours', 'Mins', 'Secs'].map(function (u) { return '<span class="upd-count-cell"><b data-unit="' + u + '">00</b><small>' + u + '</small></span>'; }).join('') +
+    function render() {
+      const now = nowMs();
+      const events = ALL.filter(function (e) { return e.x > now; });
+      const spot = events[0] || null;
+      const live = !!spot && now >= spot.s;
+
+      const stats = [];
+      if (events.length) stats.push('<li><b>' + events.length + '</b> upcoming</li>');
+      if (UPDATES.soon.length) stats.push('<li><b>' + UPDATES.soon.length + '</b> dates coming soon</li>');
+      if (spot) stats.push(live ? '<li><b>Happening now</b></li>' : '<li>Next: <b>' + fWeekday.format(new Date(spot.s)) + ', ' + fDay.format(new Date(spot.s)) + ' ' + fMonth.format(new Date(spot.s)) + '</b></li>');
+      document.getElementById('upd-stats').innerHTML = stats.join('');
+
+      cells = null;
+      if (spot) {
+        const e = spot;
+        const d = new Date(e.s);
+        const tag = e.href ? 'a' : 'div';
+        nextBody.innerHTML =
+          '<' + tag + ' class="upd-spot"' + (e.href ? ' href="' + esc(e.href) + '"' : '') + '>' +
+            '<div class="upd-spot-media"><img src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" width="1200" height="600" /></div>' +
+            '<div class="upd-spot-body">' +
+              '<span class="upd-next-pill' + (live ? ' is-live' : '') + '"><span class="upd-live-dot" aria-hidden="true"></span><span id="upd-next-title">' + (live ? 'Happening now' : 'Next up') + '</span></span>' +
+              '<span class="upd-label">' + labelHtml(e) + '</span>' +
+              '<h2 class="upd-spot-title">' + esc(e.title) + '</h2>' +
+              '<ul class="upd-meta">' +
+                '<li>' + ICON.cal + fWeekdayLong.format(d) + ', ' + fLongDate.format(d) + '</li>' +
+                '<li>' + ICON.clock + timeText(e) + '</li>' +
+                '<li>' + (e.mode === 'Online' ? ICON.live : ICON.pin) + esc(placeText(e)) + '</li>' +
+              '</ul>' +
+              tagsHtml(e) +
+              (live
+                ? '<div class="upd-count"><span class="upd-count-live">Happening now</span></div>'
+                : '<div class="upd-count" role="timer" aria-label="Time left until the event starts">' +
+                    ['Days', 'Hours', 'Mins', 'Secs'].map(function (u) { return '<span class="upd-count-cell"><b data-unit="' + u + '">00</b><small>' + u + '</small></span>'; }).join('') +
+                  '</div>') +
+              (e.href ? '<span class="upd-spot-cta">View full details ' + ICON.arrow + '</span>' : '') +
             '</div>' +
-            (e.href ? '<span class="upd-spot-cta">View full details ' + ICON.arrow + '</span>' : '') +
-          '</div>' +
-        '</' + tag + '>';
-      document.getElementById('upd-next').hidden = false;
-
-      const box = nextBody.querySelector('.upd-count');
-      const cells = {};
-      box.querySelectorAll('b').forEach(function (b) { cells[b.dataset.unit] = b; });
-      const pad = function (n) { return String(n).padStart(2, '0'); };
-      (function tick() {
-        const left = e.s - Date.now();
-        if (left <= 0) {
-          box.innerHTML = '<span class="upd-count-live">' + (Date.now() < e.x ? 'Happening now' : 'This event has ended') + '</span>';
-          return;
+          '</' + tag + '>';
+        if (!live) {
+          cells = {};
+          nextBody.querySelectorAll('.upd-count b').forEach(function (b) { cells[b.dataset.unit] = b; });
         }
-        const sec = Math.floor(left / 1000);
-        cells.Days.textContent = pad(Math.floor(sec / 86400));
-        cells.Hours.textContent = pad(Math.floor(sec % 86400 / 3600));
-        cells.Mins.textContent = pad(Math.floor(sec % 3600 / 60));
-        cells.Secs.textContent = pad(sec % 60);
-        setTimeout(tick, 1000 - (Date.now() % 1000));
-      })();
+      } else {
+        nextBody.innerHTML = '';
+      }
+      document.getElementById('upd-next').hidden = !spot;
+
+      const rest = events.slice(1);
+      if (rest.length) {
+        const groups = [];
+        rest.forEach(function (e) {
+          const key = fMonthYear.format(new Date(e.s));
+          let g = groups[groups.length - 1];
+          if (!g || g.key !== key) { g = { key: key, items: [] }; groups.push(g); }
+          g.items.push(e);
+        });
+        document.getElementById('upd-agenda-list').innerHTML = groups.map(function (g) {
+          return '<div class="upd-month"><h3 class="upd-month-title">' + esc(g.key) + '<span>' + g.items.length + (g.items.length === 1 ? ' event' : ' events') + '</span></h3>' +
+            '<ol class="upd-rows">' + g.items.map(function (e) {
+              const d = new Date(e.s);
+              const tag = e.href ? 'a' : 'div';
+              return '<li><' + tag + ' class="upd-row' + (e.href ? '' : ' is-static') + '"' + (e.href ? ' href="' + esc(e.href) + '"' : '') + '>' +
+                '<span class="upd-date" aria-hidden="true"><small>' + fWeekday.format(d) + '</small><b>' + fDay.format(d) + '</b><small>' + fMonth.format(d) + '</small></span>' +
+                '<span class="upd-thumb"><img src="' + esc(e.image) + '" alt="" loading="lazy" width="600" height="300" /></span>' +
+                '<span class="upd-row-body">' +
+                  '<span class="upd-label">' + labelHtml(e) + '<em class="upd-away">' + daysAway(e.s, now) + '</em></span>' +
+                  '<span class="upd-row-title">' + esc(e.title) + '</span>' +
+                  '<span class="upd-row-meta"><span class="evf-sr">' + fWeekdayLong.format(d) + ', ' + fLongDate.format(d) + ', </span>' + ICON.clock + timeText(e) + '</span>' +
+                  '<span class="upd-row-meta">' + (e.mode === 'Online' ? ICON.live : ICON.pin) + esc(placeText(e)) + '</span>' +
+                  tagsHtml(e) +
+                '</span>' +
+                (e.href ? '<span class="upd-row-go">' + ICON.arrow + '</span>' : '') +
+              '</' + tag + '></li>';
+            }).join('') + '</ol></div>';
+        }).join('');
+      } else {
+        document.getElementById('upd-agenda-list').innerHTML = '';
+      }
+      document.getElementById('upd-agenda').hidden = !rest.length;
+
+      shown = { spot: spot, live: live, day: pkDay(now) };
+      paint(now);
     }
 
-    // Agenda: everything after the spotlight, grouped by month
-    const rest = events.slice(1);
-    if (rest.length) {
-      const groups = [];
-      rest.forEach(function (e) {
-        const key = fMonthYear.format(new Date(e.s));
-        let g = groups[groups.length - 1];
-        if (!g || g.key !== key) { g = { key: key, items: [] }; groups.push(g); }
-        g.items.push(e);
-      });
-      document.getElementById('upd-agenda-list').innerHTML = groups.map(function (g) {
-        return '<div class="upd-month"><h3 class="upd-month-title">' + esc(g.key) + '<span>' + g.items.length + (g.items.length === 1 ? ' event' : ' events') + '</span></h3>' +
-          '<ol class="upd-rows">' + g.items.map(function (e) {
-            const d = new Date(e.s);
-            const tag = e.href ? 'a' : 'div';
-            return '<li><' + tag + ' class="upd-row' + (e.href ? '' : ' is-static') + '"' + (e.href ? ' href="' + esc(e.href) + '"' : '') + '>' +
-              '<span class="upd-date" aria-hidden="true"><small>' + fWeekday.format(d) + '</small><b>' + fDay.format(d) + '</b><small>' + fMonth.format(d) + '</small></span>' +
-              '<span class="upd-thumb"><img src="' + esc(e.image) + '" alt="" loading="lazy" width="600" height="300" /></span>' +
-              '<span class="upd-row-body">' +
-                '<span class="upd-label">' + labelHtml(e) + '<em class="upd-away">' + daysAway(e.s) + '</em></span>' +
-                '<span class="upd-row-title">' + esc(e.title) + '</span>' +
-                '<span class="upd-row-meta"><span class="evf-sr">' + fWeekdayLong.format(d) + ', ' + fLongDate.format(d) + ', </span>' + ICON.clock + timeText(e) + '</span>' +
-                '<span class="upd-row-meta">' + (e.mode === 'Online' ? ICON.live : ICON.pin) + esc(placeText(e)) + '</span>' +
-                tagsHtml(e) +
-              '</span>' +
-              (e.href ? '<span class="upd-row-go">' + ICON.arrow + '</span>' : '') +
-            '</' + tag + '></li>';
-          }).join('') + '</ol></div>';
-      }).join('');
-      document.getElementById('upd-agenda').hidden = false;
+    function paint(now) {
+      if (!cells || !shown.spot) return;
+      const sec = Math.max(0, Math.floor((shown.spot.s - now) / 1000));
+      const pad = function (n) { return n < 10 ? '0' + n : String(n); };
+      const vals = { Days: pad(Math.floor(sec / 86400)), Hours: pad(Math.floor(sec % 86400 / 3600)), Mins: pad(Math.floor(sec % 3600 / 60)), Secs: pad(sec % 60) };
+      Object.keys(vals).forEach(function (k) { if (cells[k].textContent !== vals[k]) cells[k].textContent = vals[k]; });
     }
 
-    // Dates coming soon
+    // Rebuild when the spotlight event starts or ends, or the date changes in
+    // Pakistan; otherwise just update the four numbers. Every value is worked
+    // out from the clock each time, so a sleeping tab or phone catches up the
+    // moment it wakes.
+    let timer = 0;
+    function tick() {
+      clearTimeout(timer);
+      const now = nowMs();
+      const s = shown.spot;
+      if ((s && (now >= s.x || (!shown.live && now >= s.s))) || pkDay(now) !== shown.day) render();
+      else paint(now);
+      timer = setTimeout(tick, 1000 - (now % 1000) + 20);
+    }
+
+    // Static parts (they do not depend on the clock)
     if (UPDATES.soon.length) {
       document.getElementById('upd-soon-grid').innerHTML = UPDATES.soon.map(function (e) {
         return '<article class="upd-soon-card">' +
@@ -322,8 +350,6 @@
       }).join('');
       document.getElementById('upd-soon').hidden = false;
     }
-
-    // Book banner
     const bk = UPDATES.book;
     if (bk) {
       document.getElementById('upd-book-body').innerHTML =
@@ -340,6 +366,24 @@
           '</div>' +
         '</div>';
       document.getElementById('upd-book').hidden = false;
+    }
+
+    render();
+    tick();
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) tick(); });
+    window.addEventListener('pageshow', tick);
+
+    // The server's Date header is the current time (Vercel sends it fresh
+    // even for cached pages). Only a clearly wrong device clock is corrected,
+    // so a correct one never jumps by the header's one-second rounding.
+    if (window.fetch) {
+      const sent = Date.now();
+      fetch(location.pathname + '?t=' + sent, { method: 'HEAD', cache: 'no-store' }).then(function (r) {
+        const server = Date.parse(r.headers.get('date') || '');
+        if (!server) return;
+        const off = server - (sent + Date.now()) / 2;
+        if (Math.abs(off) > 60000) { skew = off; render(); tick(); }
+      }).catch(function () {});
     }
   })();
 
