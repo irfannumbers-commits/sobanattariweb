@@ -146,21 +146,22 @@
 
   // ---- Updates page: every event lives here; the page builds itself ----
   // Dated events are sorted by start time, grouped by month, and drop off
-  // once `end` passes. `soon` holds announced events with no date yet.
+  // once `end` passes. `soon` holds confirmed events with no date yet.
+  // `city` drives the city filter; online events also match "Online".
   // All times are Pakistan time (+05:00).
   const UPDATES = {
     events: [
-      { title: 'Online Mega Session for Deeni Tulba', label: 'Mega Session', href: '/events/deeni-tulba-mega-session-nov-2026/', image: '/brand_assets/deeni-tulba-mega-session-card.webp', start: '2026-11-22T21:00:00+05:00', end: '2026-11-22T23:00:00+05:00', mode: 'Online', note: 'Registration required' },
-      { title: 'Youth Talks Faisalabad', label: 'Youth Talks', href: '/events/youth-talks-faisalabad-nov-2026/', image: '/brand_assets/youth-talks-faisalabad-card-v2.webp', start: '2026-11-27T20:00:00+05:00', end: '2026-11-27T22:00:00+05:00', mode: 'Onsite', place: 'Shahryar Restaurant, Faisalabad', note: 'Registration required' },
-      { title: 'Youth Talks Lahore', label: 'Youth Talks', href: '/events/youth-talks-lahore-dec-2026/', image: '/brand_assets/youth-talks-lahore-dec-2026-card.webp', start: '2026-12-02T19:30:00+05:00', end: '2026-12-02T21:30:00+05:00', mode: 'Onsite', place: 'Jamia Masjid Sakina Siddique, Qaddafi Stadium, Lahore' },
-      { title: 'Khawateen Session · Part 5', label: 'Khawateen Session', labelUrdu: 'خواتین سیشن', href: '/events/khawateen-session-5-dec-2026/', image: '/brand_assets/khawateen-session-5-card.webp', start: '2026-12-04T21:00:00+05:00', end: '2026-12-04T23:00:00+05:00', mode: 'Online', note: 'Only for females' },
-      { title: 'Grand Youth Talk · Karachi', label: 'Grand Youth Talk', image: '/brand_assets/grand-youth-talk-karachi-jan2027-card.jpg', start: '2027-01-07T20:45:00+05:00', end: '2027-01-07T23:00:00+05:00', showEnd: true, mode: 'Onsite', place: 'Faysal Marquee, Shahrah-e-Faisal, Karachi', note: 'Only for males · Free entry' }
+      { title: 'Online Mega Session for Deeni Tulba', href: '/events/deeni-tulba-mega-session-nov-2026/', image: '/brand_assets/deeni-tulba-mega-session-card.webp', start: '2026-11-22T21:00:00+05:00', end: '2026-11-22T23:00:00+05:00', mode: 'Online', note: 'Registration required' },
+      { title: 'Youth Talks Faisalabad', href: '/events/youth-talks-faisalabad-nov-2026/', image: '/brand_assets/youth-talks-faisalabad-card-v2.webp', start: '2026-11-27T20:00:00+05:00', end: '2026-11-27T22:00:00+05:00', mode: 'Onsite', city: 'Faisalabad', place: 'Shahryar Restaurant, Jail Road, Faisalabad', note: 'Registration required' },
+      { title: 'Youth Talks Lahore', href: '/events/youth-talks-lahore-dec-2026/', image: '/brand_assets/youth-talks-lahore-dec-2026-card.webp', start: '2026-12-02T19:30:00+05:00', end: '2026-12-02T21:30:00+05:00', mode: 'Onsite', city: 'Lahore', place: 'Jamia Masjid Sakina Siddique, Qaddafi Stadium, Lahore' },
+      { title: 'Khawateen Session · Part 5', href: '/events/khawateen-session-5-dec-2026/', image: '/brand_assets/khawateen-session-5-card.webp', start: '2026-12-04T21:00:00+05:00', end: '2026-12-04T23:00:00+05:00', mode: 'Online', note: 'Only for females' },
+      { title: 'Grand Youth Talk · Karachi', image: '/brand_assets/grand-youth-talk-karachi-jan2027-card.jpg', start: '2027-01-07T20:45:00+05:00', end: '2027-01-07T23:00:00+05:00', showEnd: true, mode: 'Onsite', city: 'Karachi', place: 'Faysal Marquee, Shahrah-e-Faisal, Karachi', note: 'Only for males · Free entry' }
     ],
     soon: [
-      { title: 'Youth Qirat Competition', label: 'Competition', image: '/brand_assets/youth-qirat-competition-card.webp', text: 'With cash prizes and much more' },
-      { title: 'Youth Night Karachi', label: 'Youth Night', image: '/brand_assets/youth-night-karachi-card.webp' },
-      { title: 'Youth Night Lahore', label: 'Youth Night', image: '/brand_assets/youth-night-lahore-card.webp' },
-      { title: 'Lyari Youth Talks', label: 'Youth Talks', image: '/brand_assets/lyari-youth-talks-card.webp' }
+      { title: 'Youth Qirat Competition', image: '/brand_assets/youth-qirat-competition-card.webp', text: 'With cash prizes and much more' },
+      { title: 'Youth Night Karachi', image: '/brand_assets/youth-night-karachi-card.webp', city: 'Karachi' },
+      { title: 'Youth Night Lahore', image: '/brand_assets/youth-night-lahore-card.webp', city: 'Lahore' },
+      { title: 'Lyari Youth Talks', image: '/brand_assets/lyari-youth-talks-card.webp', city: 'Karachi' }
     ],
     book: {
       title: 'Seerat-un-Nabi ﷺ & Modern Science',
@@ -173,17 +174,23 @@
   };
 
   (function updatesPage() {
-    const nextBody = document.getElementById('upd-next-body');
-    if (!nextBody) return;
+    const nextEl = document.getElementById('ue-next');
+    if (!nextEl) return;
 
+    const SITE = 'https://www.sobanattari.com';
     const TZ = 'Asia/Karachi';
+    const CITY_UR = { Lahore: 'لاہور', Karachi: 'کراچی', Faisalabad: 'فیصل آباد', Online: 'آن لائن' };
+    const MONTH_UR = ['جنوری', 'فروری', 'مارچ', 'اپریل', 'مئی', 'جون', 'جولائی', 'اگست', 'ستمبر', 'اکتوبر', 'نومبر', 'دسمبر'];
+
     const fmt = function (opts) { return new Intl.DateTimeFormat('en-GB', Object.assign({ timeZone: TZ }, opts)); };
     const fDay = fmt({ day: 'numeric' });
     const fWeekday = fmt({ weekday: 'short' });
     const fWeekdayLong = fmt({ weekday: 'long' });
     const fMonth = fmt({ month: 'short' });
+    const fMonthNum = fmt({ month: 'numeric' });
+    const fYear = fmt({ year: 'numeric' });
     const fMonthYear = fmt({ month: 'long', year: 'numeric' });
-    const fLongDate = fmt({ day: 'numeric', month: 'long', year: 'numeric' });
+    const fDayMonth = fmt({ day: 'numeric', month: 'long' });
     const fTime = new Intl.DateTimeFormat('en-US', { timeZone: TZ, hour: 'numeric', minute: '2-digit', hour12: true });
     const fYmd = fmt({ year: 'numeric', month: '2-digit', day: '2-digit' });
 
@@ -198,184 +205,230 @@
       return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
     };
     const ICON = {
-      cal: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>',
-      clock: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>',
-      pin: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
-      live: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m17 10 5-3v10l-5-3"/></svg>',
-      arrow: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+      wa: '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>',
+      cal: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M12 14v4M10 16h4"/></svg>',
+      map: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>'
     };
+
     const ALL = UPDATES.events
       .map(function (e) { return Object.assign({}, e, { s: Date.parse(e.start), x: Date.parse(e.end) }); })
       .sort(function (a, b) { return a.s - b.s; });
 
+    const inCity = function (e, c) { return c === 'All' || (c === 'Online' ? e.mode === 'Online' : e.city === c); };
     function daysAway(ms, now) {
       const d = Math.round((pkDay(ms) - pkDay(now)) / 86400000);
-      return d <= 0 ? 'Today' : d === 1 ? 'Tomorrow' : 'In ' + d + ' days';
+      return d <= 0 ? 'today' : d === 1 ? 'tomorrow' : 'in ' + d + ' days';
     }
     function timeText(e) {
       const t = fTime.format(new Date(e.s));
       return (e.showEnd ? t.replace(/ (AM|PM)$/, '') + ' – ' + fTime.format(new Date(e.x)) : t) + ' PKT';
     }
-    function placeText(e) { return e.mode === 'Online' ? 'Online' : e.place; }
-    function labelHtml(e) {
-      return esc(e.label) + (e.labelUrdu ? ' <span lang="ur" dir="rtl">' + esc(e.labelUrdu) + '</span>' : '');
+    function whereHtml(e) {
+      const city = e.mode === 'Online' ? 'Online' : e.city;
+      const where = e.mode === 'Online' ? 'Online' : e.place;
+      return esc(where) + (city ? ' <span class="ue-ur" lang="ur" dir="rtl">' + CITY_UR[city] + '</span>' : '');
     }
-    function tagsHtml(e) {
-      const tags = ['<span class="upd-tag ' + (e.mode === 'Online' ? 'is-online' : 'is-onsite') + '">' + esc(e.mode) + '</span>'];
-      if (e.note) e.note.split(' · ').forEach(function (n) { tags.push('<span class="upd-tag">' + esc(n) + '</span>'); });
-      return '<div class="upd-tags">' + tags.join('') + '</div>';
+    function untilText(e, now) {
+      if (now >= e.s) return 'Happening now';
+      const m = Math.floor((e.s - now) / 60000);
+      const d = Math.floor(m / 1440), h = Math.floor(m % 1440 / 60), mi = m % 60;
+      const part = function (n, w) { return n + ' ' + w + (n === 1 ? '' : 's'); };
+      if (d >= 1) return 'Starts in ' + part(d, 'day') + (h ? ' ' + part(h, 'hour') : '');
+      if (h >= 1) return 'Starts in ' + part(h, 'hour') + (mi ? ' ' + part(mi, 'minute') : '');
+      return mi >= 1 ? 'Starts in ' + part(mi, 'minute') : 'Starts in less than a minute';
+    }
+    function gcalLink(e) {
+      const z = function (ms) { return new Date(ms).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); };
+      return 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+        '&text=' + encodeURIComponent(e.title + ' with Soban Attari') +
+        '&dates=' + z(e.s) + '/' + z(e.x) +
+        '&details=' + encodeURIComponent(SITE + (e.href || '/updates/')) +
+        '&location=' + encodeURIComponent(e.mode === 'Online' ? 'Online' : e.place);
+    }
+    function waLink(e) {
+      const when = fWeekday.format(new Date(e.s)) + ', ' + fDayMonth.format(new Date(e.s)) + ', ' + timeText(e);
+      return 'https://wa.me/?text=' + encodeURIComponent(e.title + ' with Soban Attari\n' + when + '\n' + (e.mode === 'Online' ? 'Online' : e.place) + '\n' + SITE + (e.href || '/updates/'));
+    }
+    function actionsHtml(e) {
+      const out = [];
+      if (e.href) out.push('<a class="ue-act ue-act-main" href="' + esc(e.href) + '">Details<span class="evf-sr">: ' + esc(e.title) + '</span></a>');
+      out.push('<a class="ue-act" href="' + esc(waLink(e)) + '" target="_blank" rel="noopener">' + ICON.wa + 'Share<span class="evf-sr"> on WhatsApp (opens in a new tab)</span></a>');
+      out.push('<a class="ue-act" href="' + esc(gcalLink(e)) + '" target="_blank" rel="noopener">' + ICON.cal + 'Add to calendar<span class="evf-sr"> (opens in a new tab)</span></a>');
+      if (e.mode !== 'Online') out.push('<a class="ue-act" href="https://www.google.com/maps/search/?api=1&amp;query=' + encodeURIComponent(e.place) + '" target="_blank" rel="noopener">' + ICON.map + 'Directions<span class="evf-sr"> (opens Google Maps)</span></a>');
+      return '<div class="ue-acts">' + out.join('') + '</div>';
+    }
+    const titleHtml = function (e, tagName, cls) {
+      return '<' + tagName + ' class="' + cls + '">' + (e.href ? '<a href="' + esc(e.href) + '">' + esc(e.title) + '</a>' : esc(e.title)) + '</' + tagName + '>';
+    };
+
+    // City filter: cities that appear in the data, plus Online
+    const cities = [];
+    ALL.concat(UPDATES.soon).forEach(function (e) {
+      const c = e.mode === 'Online' ? 'Online' : e.city;
+      if (c && cities.indexOf(c) < 0) cities.push(c);
+    });
+    cities.sort(function (a, b) { return a === 'Online' ? 1 : b === 'Online' ? -1 : a.localeCompare(b); });
+    let city = 'All';
+    const filterEl = document.getElementById('ue-filter');
+    if (cities.length > 1) {
+      filterEl.innerHTML = ['All'].concat(cities).map(function (c) {
+        return '<button type="button" class="ue-chip" data-city="' + c + '" aria-pressed="' + (c === 'All') + '">' + c + '</button>';
+      }).join('');
+      filterEl.hidden = false;
+      filterEl.addEventListener('click', function (ev) {
+        const btn = ev.target.closest('.ue-chip');
+        if (!btn || btn.dataset.city === city) return;
+        city = btn.dataset.city;
+        filterEl.querySelectorAll('.ue-chip').forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+        render();
+        renderSoon();
+      });
     }
 
-    // What is on screen, so tick() knows when the page must be rebuilt
-    let shown = { spot: null, live: false, day: 0 };
-    let cells = null;
+    let shown = { spot: null, live: false, day: 0, text: '' };
+    let untilEl = null;
 
     function render() {
       const now = nowMs();
-      const events = ALL.filter(function (e) { return e.x > now; });
+      const upcoming = ALL.filter(function (e) { return e.x > now; });
+      const events = upcoming.filter(function (e) { return inCity(e, city); });
       const spot = events[0] || null;
       const live = !!spot && now >= spot.s;
 
-      const stats = [];
-      if (events.length) stats.push('<li><b>' + events.length + '</b> upcoming</li>');
-      if (UPDATES.soon.length) stats.push('<li><b>' + UPDATES.soon.length + '</b> dates coming soon</li>');
-      if (spot) stats.push(live ? '<li><b>Happening now</b></li>' : '<li>Next: <b>' + fWeekday.format(new Date(spot.s)) + ', ' + fDay.format(new Date(spot.s)) + ' ' + fMonth.format(new Date(spot.s)) + '</b></li>');
-      document.getElementById('upd-stats').innerHTML = stats.join('');
+      const parts = [];
+      if (upcoming.length) parts.push(upcoming.length + (upcoming.length === 1 ? ' event' : ' events') + ' scheduled');
+      if (UPDATES.soon.length) parts.push(UPDATES.soon.length + ' more announced');
+      document.getElementById('ue-summary').textContent = parts.join(' · ');
 
-      cells = null;
+      untilEl = null;
       if (spot) {
-        const e = spot;
-        const d = new Date(e.s);
-        const tag = e.href ? 'a' : 'div';
-        nextBody.innerHTML =
-          '<' + tag + ' class="upd-spot"' + (e.href ? ' href="' + esc(e.href) + '"' : '') + '>' +
-            '<div class="upd-spot-media"><img src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" width="1200" height="600" /></div>' +
-            '<div class="upd-spot-body">' +
-              '<span class="upd-next-pill' + (live ? ' is-live' : '') + '"><span class="upd-live-dot" aria-hidden="true"></span><span id="upd-next-title">' + (live ? 'Happening now' : 'Next up') + '</span></span>' +
-              '<span class="upd-label">' + labelHtml(e) + '</span>' +
-              '<h2 class="upd-spot-title">' + esc(e.title) + '</h2>' +
-              '<ul class="upd-meta">' +
-                '<li>' + ICON.cal + fWeekdayLong.format(d) + ', ' + fLongDate.format(d) + '</li>' +
-                '<li>' + ICON.clock + timeText(e) + '</li>' +
-                '<li>' + (e.mode === 'Online' ? ICON.live : ICON.pin) + esc(placeText(e)) + '</li>' +
-              '</ul>' +
-              tagsHtml(e) +
-              (live
-                ? '<div class="upd-count"><span class="upd-count-live">Happening now</span></div>'
-                : '<div class="upd-count" role="timer" aria-label="Time left until the event starts">' +
-                    ['Days', 'Hours', 'Mins', 'Secs'].map(function (u) { return '<span class="upd-count-cell"><b data-unit="' + u + '">00</b><small>' + u + '</small></span>'; }).join('') +
-                  '</div>') +
-              (e.href ? '<span class="upd-spot-cta">View full details ' + ICON.arrow + '</span>' : '') +
+        const e = spot, d = new Date(e.s);
+        nextEl.innerHTML =
+          '<article class="ue-next">' +
+            '<div class="ue-next-media">' + (e.href ? '<a href="' + esc(e.href) + '" tabindex="-1" aria-hidden="true">' : '') +
+              '<img src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" width="1200" height="600" />' + (e.href ? '</a>' : '') + '</div>' +
+            '<div class="ue-next-body">' +
+              '<p class="ue-kicker">' + (live ? 'Happening now' : 'Next event') + '</p>' +
+              titleHtml(e, 'h3', 'ue-next-title') +
+              '<p class="ue-line"><strong>' + fWeekdayLong.format(d) + ', ' + fDayMonth.format(d) + '</strong> · ' + timeText(e) + '</p>' +
+              '<p class="ue-line">' + whereHtml(e) + (e.note ? ' · <span class="ue-note">' + esc(e.note) + '</span>' : '') + '</p>' +
+              '<p class="ue-until' + (live ? ' is-live' : '') + '" id="ue-until">' + untilText(e, now) + '</p>' +
+              actionsHtml(e) +
             '</div>' +
-          '</' + tag + '>';
-        if (!live) {
-          cells = {};
-          nextBody.querySelectorAll('.upd-count b').forEach(function (b) { cells[b.dataset.unit] = b; });
-        }
+          '</article>';
+        untilEl = document.getElementById('ue-until');
       } else {
-        nextBody.innerHTML = '';
+        nextEl.innerHTML = '';
       }
-      document.getElementById('upd-next').hidden = !spot;
 
       const rest = events.slice(1);
+      const listEl = document.getElementById('ue-list');
       if (rest.length) {
         const groups = [];
         rest.forEach(function (e) {
           const key = fMonthYear.format(new Date(e.s));
           let g = groups[groups.length - 1];
-          if (!g || g.key !== key) { g = { key: key, items: [] }; groups.push(g); }
+          if (!g || g.key !== key) { g = { key: key, ur: MONTH_UR[+fMonthNum.format(new Date(e.s)) - 1], items: [] }; groups.push(g); }
           g.items.push(e);
         });
-        document.getElementById('upd-agenda-list').innerHTML = groups.map(function (g) {
-          return '<div class="upd-month"><h3 class="upd-month-title">' + esc(g.key) + '<span>' + g.items.length + (g.items.length === 1 ? ' event' : ' events') + '</span></h3>' +
-            '<ol class="upd-rows">' + g.items.map(function (e) {
+        listEl.innerHTML = groups.map(function (g) {
+          return '<h3 class="ue-month">' + esc(g.key) + ' <span class="ue-ur" lang="ur" dir="rtl">' + g.ur + '</span></h3>' +
+            '<ol class="ue-list">' + g.items.map(function (e) {
               const d = new Date(e.s);
-              const tag = e.href ? 'a' : 'div';
-              return '<li><' + tag + ' class="upd-row' + (e.href ? '' : ' is-static') + '"' + (e.href ? ' href="' + esc(e.href) + '"' : '') + '>' +
-                '<span class="upd-date" aria-hidden="true"><small>' + fWeekday.format(d) + '</small><b>' + fDay.format(d) + '</b><small>' + fMonth.format(d) + '</small></span>' +
-                '<span class="upd-thumb"><img src="' + esc(e.image) + '" alt="" loading="lazy" width="600" height="300" /></span>' +
-                '<span class="upd-row-body">' +
-                  '<span class="upd-label">' + labelHtml(e) + '<em class="upd-away">' + daysAway(e.s, now) + '</em></span>' +
-                  '<span class="upd-row-title">' + esc(e.title) + '</span>' +
-                  '<span class="upd-row-meta"><span class="evf-sr">' + fWeekdayLong.format(d) + ', ' + fLongDate.format(d) + ', </span>' + ICON.clock + timeText(e) + '</span>' +
-                  '<span class="upd-row-meta">' + (e.mode === 'Online' ? ICON.live : ICON.pin) + esc(placeText(e)) + '</span>' +
-                  tagsHtml(e) +
-                '</span>' +
-                (e.href ? '<span class="upd-row-go">' + ICON.arrow + '</span>' : '') +
-              '</' + tag + '></li>';
-            }).join('') + '</ol></div>';
+              return '<li class="ue-item">' +
+                '<p class="ue-date"><span class="ue-date-num">' + fDay.format(d) + '</span><span class="ue-date-sub">' + fWeekday.format(d) + ', ' + fMonth.format(d) + '</span></p>' +
+                '<div class="ue-item-body">' +
+                  titleHtml(e, 'h4', 'ue-item-title') +
+                  '<p class="ue-line">' + timeText(e) + ' · <span class="ue-away">' + daysAway(e.s, now) + '</span></p>' +
+                  '<p class="ue-line">' + whereHtml(e) + (e.note ? ' · <span class="ue-note">' + esc(e.note) + '</span>' : '') + '</p>' +
+                  actionsHtml(e) +
+                '</div>' +
+                '<img class="ue-item-img" src="' + esc(e.image) + '" alt="" loading="lazy" width="600" height="300" />' +
+              '</li>';
+            }).join('') + '</ol>';
         }).join('');
       } else {
-        document.getElementById('upd-agenda-list').innerHTML = '';
+        listEl.innerHTML = '';
       }
-      document.getElementById('upd-agenda').hidden = !rest.length;
 
-      shown = { spot: spot, live: live, day: pkDay(now) };
-      paint(now);
+      const empty = document.getElementById('ue-empty');
+      empty.hidden = !!spot;
+      if (!spot) {
+        empty.textContent = city === 'All'
+          ? 'No dated events right now. See the confirmed events below; their dates are coming soon.'
+          : 'No dated events ' + (city === 'Online' ? 'online' : 'in ' + city) + ' right now.';
+      }
+
+      shown = { spot: spot, live: live, day: pkDay(now), text: untilEl ? untilEl.textContent : '' };
     }
 
-    function paint(now) {
-      if (!cells || !shown.spot) return;
-      const sec = Math.max(0, Math.floor((shown.spot.s - now) / 1000));
-      const pad = function (n) { return n < 10 ? '0' + n : String(n); };
-      const vals = { Days: pad(Math.floor(sec / 86400)), Hours: pad(Math.floor(sec % 86400 / 3600)), Mins: pad(Math.floor(sec % 3600 / 60)), Secs: pad(sec % 60) };
-      Object.keys(vals).forEach(function (k) { if (cells[k].textContent !== vals[k]) cells[k].textContent = vals[k]; });
+    function renderSoon() {
+      const items = UPDATES.soon.filter(function (e) { return city === 'All' || e.city === city; });
+      document.getElementById('ue-soon-list').innerHTML = items.length ? items.map(function (e) {
+        return '<li class="ue-soon-item">' +
+          '<img src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" loading="lazy" width="600" height="300" />' +
+          '<div><h3 class="ue-item-title">' + esc(e.title) + '</h3>' +
+          '<p class="ue-line">' + (e.city ? esc(e.city) + ' <span class="ue-ur" lang="ur" dir="rtl">' + CITY_UR[e.city] + '</span> · ' : '') + (e.text ? esc(e.text) + ' · ' : '') + '<span class="ue-note">Date to be announced</span></p></div>' +
+        '</li>';
+      }).join('') : '<li class="ue-line">Nothing announced ' + (city === 'Online' ? 'online' : 'in ' + esc(city)) + ' yet.</li>';
+      document.getElementById('ue-soon').hidden = !UPDATES.soon.length;
     }
 
-    // Rebuild when the spotlight event starts or ends, or the date changes in
-    // Pakistan; otherwise just update the four numbers. Every value is worked
-    // out from the clock each time, so a sleeping tab or phone catches up the
-    // moment it wakes.
+    // Rebuild when the featured event starts or ends, or the date changes in
+    // Pakistan; otherwise only refresh the "Starts in" line when it changes.
+    // Every value comes from the clock, so a sleeping tab catches up on wake.
     let timer = 0;
     function tick() {
       clearTimeout(timer);
       const now = nowMs();
       const s = shown.spot;
-      if ((s && (now >= s.x || (!shown.live && now >= s.s))) || pkDay(now) !== shown.day) render();
-      else paint(now);
+      if ((s && (now >= s.x || (!shown.live && now >= s.s))) || pkDay(now) !== shown.day) {
+        render();
+      } else if (untilEl && s) {
+        const t = untilText(s, now);
+        if (t !== shown.text) { untilEl.textContent = t; shown.text = t; }
+      }
       timer = setTimeout(tick, 1000 - (now % 1000) + 20);
     }
 
-    // Static parts (they do not depend on the clock)
-    if (UPDATES.soon.length) {
-      document.getElementById('upd-soon-grid').innerHTML = UPDATES.soon.map(function (e) {
-        return '<article class="upd-soon-card">' +
-          '<span class="upd-soon-media"><img src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" loading="lazy" width="600" height="300" /></span>' +
-          '<span class="upd-soon-body">' +
-            '<span class="upd-label">' + esc(e.label) + '</span>' +
-            '<h3>' + esc(e.title) + '</h3>' +
-            (e.text ? '<p>' + esc(e.text) + '</p>' : '') +
-            '<span class="upd-tba"><span class="upd-live-dot" aria-hidden="true"></span>Date to be announced</span>' +
-          '</span></article>';
+    // From recent sessions: the same recaps the home page shows
+    const recent = HOME_RECAPS.slice(0, 4);
+    if (recent.length) {
+      document.getElementById('ue-recent-list').innerHTML = recent.map(function (r) {
+        return '<li><a class="ue-recent-item" href="/blog/' + esc(r.slug) + '/">' +
+          '<img src="/brand_assets/sessions/' + esc(r.slug) + '-1-opt.webp" alt="Soban Attari at ' + esc(r.uni) + '" loading="lazy" width="600" height="450" />' +
+          '<span class="ue-recent-uni">' + esc(r.uni) + '</span>' +
+          '<span class="ue-recent-title">' + esc(r.title) + '</span></a></li>';
       }).join('');
-      document.getElementById('upd-soon').hidden = false;
+      document.getElementById('ue-recent').hidden = false;
     }
+
     const bk = UPDATES.book;
     if (bk) {
-      document.getElementById('upd-book-body').innerHTML =
-        '<div class="upd-book">' +
-          '<img class="upd-book-cover" src="' + esc(bk.cover) + '" alt="Book cover: ' + esc(bk.title) + '" loading="lazy" width="200" height="300" />' +
-          '<div class="upd-book-copy">' +
-            '<span class="upd-label">New book by Soban Attari</span>' +
-            '<p class="upd-book-urdu" lang="ur" dir="rtl">' + esc(bk.urdu) + '</p>' +
-            '<p class="upd-book-en">' + esc(bk.title) + ' · <b>' + esc(bk.price) + '</b></p>' +
-          '</div>' +
-          '<div class="upd-book-actions">' +
-            '<a class="btn btn-primary" href="' + esc(bk.register) + '" target="_blank" rel="noopener">Register to purchase<span class="evf-sr"> (opens in a new tab)</span></a>' +
-            '<a class="upd-book-link" href="' + esc(bk.details) + '">Book details</a>' +
+      document.getElementById('ue-book-body').innerHTML =
+        '<div class="ue-book">' +
+          '<img src="' + esc(bk.cover) + '" alt="Book cover: ' + esc(bk.title) + '" loading="lazy" width="200" height="300" />' +
+          '<div class="ue-book-text">' +
+            '<p class="ue-kicker">New book by Soban Attari</p>' +
+            '<p class="ue-book-ur" lang="ur" dir="rtl">' + esc(bk.urdu) + '</p>' +
+            '<p class="ue-line">' + esc(bk.title) + ' · <strong>' + esc(bk.price) + '</strong></p>' +
+            '<div class="ue-acts">' +
+              '<a class="ue-act ue-act-main" href="' + esc(bk.register) + '" target="_blank" rel="noopener">Register to purchase<span class="evf-sr"> (opens in a new tab)</span></a>' +
+              '<a class="ue-act" href="' + esc(bk.details) + '">About the book</a>' +
+            '</div>' +
           '</div>' +
         '</div>';
-      document.getElementById('upd-book').hidden = false;
+      document.getElementById('ue-book').hidden = false;
     }
 
     render();
+    renderSoon();
     tick();
     document.addEventListener('visibilitychange', function () { if (!document.hidden) tick(); });
     window.addEventListener('pageshow', tick);
 
     // The server's Date header is the current time (Vercel sends it fresh
-    // even for cached pages). Only a clearly wrong device clock is corrected,
-    // so a correct one never jumps by the header's one-second rounding.
+    // even for cached pages). Only a clearly wrong device clock is corrected.
     if (window.fetch) {
       const sent = Date.now();
       fetch(location.pathname + '?t=' + sent, { method: 'HEAD', cache: 'no-store' }).then(function (r) {
