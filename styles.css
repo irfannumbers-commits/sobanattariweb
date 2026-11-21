@@ -5003,7 +5003,6 @@ h1[lang="ur"], h4[lang="ur"], .bdp-title { font-weight: 700; line-height: 1.5; }
 
 @media (max-width: 860px) {
   .ue-next { grid-template-columns: 1fr; gap: 18px; }
-  .ue-item { grid-template-columns: 56px minmax(0, 1fr) 150px; gap: 16px; }
   .ue-recent { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
@@ -5023,4 +5022,22 @@ h1[lang="ur"], h4[lang="ur"], .bdp-title { font-weight: 700; line-height: 1.5; }
   .ue-soon { grid-template-columns: 1fr; gap: 26px; }
   .ue-recent { gap: 16px; }
   .ue-book > img { width: 60px; }
+}
+
+/* Updates page, tablet and desktop: each event is a card with its full
+   poster on top, two to a row. A card left alone in its row (a month with
+   one event, or the odd one out) spans the row with the poster beside the
+   details, so no half-empty rows. Phones keep the stacked list above. */
+@media (min-width: 641px) {
+  .ue-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 20px; }
+  .ue-item {
+    grid-template-columns: 60px minmax(0, 1fr); grid-template-areas: "img img" "date body";
+    gap: 16px; align-content: start; padding: 14px 16px 20px;
+    border: 1px solid var(--border-light); border-radius: 10px; background: var(--bg-light);
+  }
+  .ue-item:last-child:nth-child(odd) {
+    grid-column: 1 / -1; align-items: center; gap: 24px; padding: 16px 24px 16px 16px;
+    grid-template-columns: minmax(0, 1.05fr) 60px minmax(0, 1fr); grid-template-areas: "img date body";
+  }
+  .ue-item-title { font-size: 20px; }
 }
