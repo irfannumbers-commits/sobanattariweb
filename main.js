@@ -155,7 +155,7 @@
       { title: 'Youth Talks Faisalabad', href: '/events/youth-talks-faisalabad-nov-2026/', image: '/brand_assets/youth-talks-faisalabad-card-v2.webp', start: '2026-11-27T20:00:00+05:00', end: '2026-11-27T22:00:00+05:00', mode: 'Onsite', city: 'Faisalabad', place: 'Shahryar Restaurant, Jail Road, Faisalabad', note: 'Registration required' },
       { title: 'Youth Talks Lahore', href: '/events/youth-talks-lahore-dec-2026/', image: '/brand_assets/youth-talks-lahore-dec-2026-card.webp', start: '2026-12-02T19:30:00+05:00', end: '2026-12-02T21:30:00+05:00', mode: 'Onsite', city: 'Lahore', place: 'Jamia Masjid Sakina Siddique, Qaddafi Stadium, Lahore' },
       { title: 'Khawateen Session · Part 5', href: '/events/khawateen-session-5-dec-2026/', image: '/brand_assets/khawateen-session-5-card.webp', start: '2026-12-04T21:00:00+05:00', end: '2026-12-04T23:00:00+05:00', mode: 'Online', note: 'Only for females' },
-      { title: 'Grand Youth Talk · Karachi', image: '/brand_assets/grand-youth-talk-karachi-jan2027-card.jpg', start: '2027-01-07T20:45:00+05:00', end: '2027-01-07T23:00:00+05:00', showEnd: true, mode: 'Onsite', city: 'Karachi', place: 'Faysal Marquee, Shahrah-e-Faisal, Karachi', note: 'Only for males · Free entry' }
+      { title: 'Grand Youth Talk · Karachi', image: '/brand_assets/grand-youth-talk-karachi-jan2027-card.webp', start: '2027-01-07T20:45:00+05:00', end: '2027-01-07T23:00:00+05:00', showEnd: true, mode: 'Onsite', city: 'Karachi', place: 'Faysal Marquee, Shahrah-e-Faisal, Karachi', note: 'Only for males · Free entry' }
     ],
     soon: [
       { title: 'Youth Qirat Competition', image: '/brand_assets/youth-qirat-competition-card.webp', text: 'With cash prizes and much more' },
