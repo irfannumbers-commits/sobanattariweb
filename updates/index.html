@@ -82,326 +82,58 @@
     <a href="/#book-session" onclick="closeMenu()">Book a Session</a>
   </div>
 
-  <header class="page-header section-dark updates-hero page-header-compact">
+  <header class="page-header section-dark upd-hero">
     <div class="container">
       <nav class="hero-breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <svg class="crumb-sep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
         <span class="current" aria-current="page">Updates</span>
       </nav>
-      <h1>Event Updates</h1>
+      <span class="section-label">Talks &middot; Seminars &middot; Online Sessions</span>
+      <h1>Upcoming Events</h1>
+      <p class="upd-hero-sub">Where to meet Soban Attari next, in person and online.</p>
+      <ul class="upd-stats" id="upd-stats" aria-label="Event summary"></ul>
     </div>
   </header>
 
   <main>
-    <section class="section-light updates-section">
+    <section class="section-light upd-next" id="upd-next" aria-labelledby="upd-next-title" hidden>
+      <div class="container" id="upd-next-body"></div>
+    </section>
+
+    <section class="section-off-white upd-agenda" id="upd-agenda" aria-labelledby="upd-agenda-title" hidden>
       <div class="container">
-        <div class="updates-section-heading">
-          <span class="updates-live-badge"><span class="updates-live-dot" aria-hidden="true"></span><span data-upcoming-count>12 upcoming &middot; 4 coming soon</span></span>
+        <div class="upd-section-head">
+          <span class="section-label">Calendar</span>
+          <h2 id="upd-agenda-title">Also Coming Up</h2>
         </div>
-        <div class="event-teasers event-teasers-2up">
-
-        <div class="event-teaser-link is-soon">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Youth Qirat Competition by Team Soban Attari" style="background-image:url('/brand_assets/youth-qirat-competition-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">New · Youth Competition</span>
-              <h3>Youth Qirat Competition</h3>
-              <div class="ets-facts"><span>Cash Prize</span><span>And Much More</span></div>
-              <span class="event-teaser-soon">Date &amp; venue to be announced soon</span>
-            </div>
-          </article>
-        </div>
-
-        <a href="/events/karachi-schedule-nov-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Soban Attari Karachi schedule, 13 to 16 November" style="background-image:url('/brand_assets/karachi-schedule-nov-2026-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Karachi Schedule</span>
-              <h3>Karachi Schedule · 7 Sessions</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                13 &ndash; 16 Nov &middot; Karachi
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <a href="/events/khatri-youth-seminar-nov-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Khatri Youth Seminar with Soban Attari" style="background-image:url('/brand_assets/khatri-youth-seminar-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Youth Seminar</span>
-              <h3>Khatri Youth Seminar</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Fri, 13 Nov &middot; 9:00 PM PKT
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <a href="/events/gulshan-professionals-meetup-nov-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Professionals Meetup in Gulshan-e-Maymar with Soban Attari" style="background-image:url('/brand_assets/gulshan-professionals-meetup-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Private Mehfil</span>
-              <h3>Professionals Meetup &middot; Gulshan-e-Maymar</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Sat, 14 Nov &middot; 9:00 PM PKT
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <a href="/events/baldia-youth-seminar-nov-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Youth Seminar in Baldia Town with Soban Attari" style="background-image:url('/brand_assets/baldia-youth-seminar-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Youth Seminar</span>
-              <h3>Youth Seminar Baldia Town</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Sat, 14 Nov &middot; 10:00 PM PKT
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <a href="/events/ilma-university-genz-session-nov-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Gen Z Issues session at ILMA University with Soban Attari" style="background-image:url('/brand_assets/ilma-university-genz-session-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">ILMA University</span>
-              <h3>Gen Z Issues and Their Solutions</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Sun, 15 Nov &middot; 12:00 &ndash; 3:00 PM PKT
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <a href="/events/fos-meetup-karachi-nov-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Special FOS Meetup in Karachi with Soban Attari" style="background-image:url('/brand_assets/fos-meetup-karachi-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Private Event</span>
-              <h3>Special FOS Meetup &middot; Karachi</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Sun, 15 Nov &middot; 7:00 PM PKT
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <a href="/events/dhoraji-youth-seminar-nov-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Youth Seminar by Dhoraji Association with Soban Attari" style="background-image:url('/brand_assets/dhoraji-youth-seminar-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Youth Seminar</span>
-              <h3>Youth Seminar &middot; Dhoraji Association</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Sun, 15 Nov &middot; 8:45 PM PKT
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <a href="/events/suzuki-seerat-conference-nov-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Seerat Conference at Suzuki Pakistan with Soban Attari" style="background-image:url('/brand_assets/suzuki-seerat-conference-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Seerat Conference</span>
-              <h3>Seerat Conference at Suzuki</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Mon, 16 Nov &middot; 2:00 PM PKT
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <a href="/events/deeni-tulba-mega-session-nov-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Online Mega Session for Deeni Tulba with Soban Attari" style="background-image:url('/brand_assets/deeni-tulba-mega-session-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Mega Session</span>
-              <h3>Online Mega Session for Deeni Tulba</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Sun, 22 Nov &middot; 9:00 PM PKT
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <a href="/events/youth-talks-faisalabad-nov-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Youth Talks Faisalabad with Soban Attari" style="background-image:url('/brand_assets/youth-talks-faisalabad-card-v2.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Youth Talks</span>
-              <h3>Youth Talks Faisalabad</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Fri, 27 Nov &middot; 8:00 PM PKT
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <a href="/events/youth-talks-lahore-dec-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Youth Talks Lahore with Soban Attari" style="background-image:url('/brand_assets/youth-talks-lahore-dec-2026-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Youth Talks</span>
-              <h3>Youth Talks Lahore</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Wed, 2 Dec &middot; 7:30 PM PKT
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <a href="/events/khawateen-session-5-dec-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Khawateen Session Part 5 with Soban Attari" style="background-image:url('/brand_assets/khawateen-session-5-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Khawateen Session <span lang="ur" dir="rtl">خواتین سیشن</span></span>
-              <h3>Khawateen Session · Part 5</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Fri, 4 Dec &middot; 9:00 PM PKT &middot; Online
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <div class="event-teaser-link" data-event-end="2027-01-07T23:00:00+05:00">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Grand Youth Talk by Soban Attari, Karachi, 7 January 2027" style="background-image:url('/brand_assets/grand-youth-talk-karachi-jan2027-card.jpg')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Grand Youth Talk</span>
-              <h3>Grand Youth Talk · Karachi</h3>
-              <div class="ets-facts"><span>Onsite</span><span>Only for males</span><span>Free entry</span></div>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Thu, 7 Jan 2027 &middot; 8:45 – 11:00 PM &middot; Faysal Marquee
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <a href="https://forms.gle/jwZgS352GqtLy6Gr8" target="_blank" rel="noopener" class="event-teaser-link is-book">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Seerat-un-Nabi aur Jadeed Science, a book by Soban Attari" style="background-image:url('/brand_assets/seerat-science-book-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">New Book</span>
-              <h3><span lang="ur" dir="rtl">سیرت النبی ﷺ اور جدید سائنس</span></h3>
-              <div class="event-teaser-time">By Soban Attari</div>
-              <span class="event-teaser-soon">Price: Rs. 500 &middot; Register now</span>
-              <span class="event-teaser-cta">Register to Purchase</span>
-            </div>
-          </article>
-        </a>
-
-
-        <div class="event-teaser-link is-disabled" data-event-end="2026-10-28T17:00:00+05:00">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="UMT Gen Z Session" style="background-image:url('/brand_assets/umt-gen-z-session-card.webp')"></div>
-            <div class="event-teaser-body">
-              <h3>UMT Gen Z Session</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Wed, 28 Oct &middot; 3:30 PM–5:00 PM
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <a href="/events/females-session-oct-2026/" class="event-teaser-link">
-          <article class="event-teaser">
-            <div class="event-teaser-image" style="background-image:url('/brand_assets/khawateen-session-card.webp')">
-            </div>
-            <div class="event-teaser-body">
-              <span class="section-label">Khawateen Session <span lang="ur" dir="rtl">خواتین سیشن</span></span>
-              <h3>Online Youth Talks Females Session</h3>
-              <div class="event-teaser-time">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                Fri, 6 Nov &middot; 9:00 PM PKT
-              </div>
-              <span class="event-teaser-cta">View Full Details</span>
-            </div>
-          </article>
-        </a>
-
-        <div class="event-teaser-link is-disabled">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Youth Night Karachi" style="background-image:url('/brand_assets/youth-night-karachi-card.webp')"></div>
-            <div class="event-teaser-body"><h3>Youth Night Karachi</h3><span class="event-teaser-soon">Date to be announced soon</span></div>
-          </article>
-        </div>
-
-        <div class="event-teaser-link is-disabled">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Youth Night Lahore" style="background-image:url('/brand_assets/youth-night-lahore-card.webp')"></div>
-            <div class="event-teaser-body"><h3>Youth Night Lahore</h3><span class="event-teaser-soon">Date to be announced soon</span></div>
-          </article>
-        </div>
-
-        <!-- Hidden for now — Hyderabad Youth Talks (uncomment to show again)
-
-        <div class="event-teaser-link is-disabled">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Hyderabad Youth Talks" style="background-image:url('/brand_assets/hyderabad-youth-talks-card.webp')"></div>
-            <div class="event-teaser-body"><h3>Hyderabad Youth Talks</h3><span class="event-teaser-soon">Date to be announced soon</span></div>
-          </article>
-        </div>
-
-        -->
-
-        <div class="event-teaser-link is-disabled">
-          <article class="event-teaser">
-            <div class="event-teaser-image" role="img" aria-label="Lyari Youth Talks" style="background-image:url('/brand_assets/lyari-youth-talks-card.webp')"></div>
-            <div class="event-teaser-body"><h3>Lyari Youth Talks</h3><span class="event-teaser-soon">Date to be announced soon</span></div>
-          </article>
-        </div>
-
-        </div>
-
+        <div id="upd-agenda-list"></div>
       </div>
     </section>
+
+    <section class="section-light upd-soon" id="upd-soon" aria-labelledby="upd-soon-title" hidden>
+      <div class="container">
+        <div class="upd-section-head upd-section-head-split">
+          <div>
+            <span class="section-label">Announced</span>
+            <h2 id="upd-soon-title">Dates Coming Soon</h2>
+          </div>
+          <a class="upd-wa" href="https://whatsapp.com/channel/0029VaCXU29CxoB2JMf6Py1u" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>
+            Get the dates first on WhatsApp
+          </a>
+        </div>
+        <div class="upd-soon-grid" id="upd-soon-grid"></div>
+      </div>
+    </section>
+
+    <section class="upd-book-band" id="upd-book" aria-label="New book" hidden>
+      <div class="container" id="upd-book-body"></div>
+    </section>
+
+    <noscript>
+      <section class="section-light"><div class="container"><p>Please turn on JavaScript to see upcoming events, or follow the <a href="https://whatsapp.com/channel/0029VaCXU29CxoB2JMf6Py1u">WhatsApp channel</a> for every announcement.</p></div></section>
+    </noscript>
 
     <section class="section-dark updates-cta">
       <div class="container animate-on-scroll">
