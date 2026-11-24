@@ -3668,12 +3668,15 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
    use it keep the plain stacked layout untouched. */
 .event-hero-grid { display: grid; grid-template-columns: minmax(0, 420px) 1fr; gap: var(--space-xl); align-items: center; }
 .event-hero-grid .event-poster img { width: 100%; height: auto; aspect-ratio: auto; object-fit: contain; }
+.event-hero-grid.is-landscape { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
 .event-hero-grid .event-header { max-width: none; margin: 0; padding-top: 0; }
 .event-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
 @media (max-width: 900px) {
   .event-hero-grid { grid-template-columns: 1fr; gap: var(--space-lg); }
   .event-hero-grid .event-poster { max-width: 420px; margin: 0 auto; }
   .event-hero-grid .event-header { padding-top: 26px; }
+  .event-hero-grid.is-landscape { grid-template-columns: 1fr; }
+  .event-hero-grid.is-landscape .event-poster { max-width: 680px; }
 }
 
 /* Header block right under the poster: label, title, meta pills, lede, tags */
@@ -3722,6 +3725,7 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
   .event-hero-grid { gap: 22px; }
   .event-hero-grid .event-header { padding-top: 0; }
   .event-hero-grid .event-poster { max-width: 400px; }
+  .event-hero-grid.is-landscape .event-poster { max-width: none; }
   .event-header .section-label { margin-bottom: 6px; }
   .event-header h1 { font-size: clamp(27px, 7.4vw, 34px); line-height: 1.1; }
 
@@ -5036,14 +5040,18 @@ h1[lang="ur"], h4[lang="ur"], .bdp-title { font-weight: 700; line-height: 1.5; }
 .ue-chip[aria-pressed="true"] .ue-chip-n { color: var(--accent-text); }
 
 
-/* Coming soon: compact rows */
-.ue-soon { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 0; }
-.ue-soon-item { flex-direction: row; align-items: center; gap: 14px; padding: 10px; border: 1px solid var(--border-light); border-radius: 10px; background: var(--bg-light); }
-.ue-soon-item img { width: 132px; flex-shrink: 0; border-radius: 6px; }
-.ue-soon-body { min-width: 0; }
-.ue-soon-title { font-size: 17px; line-height: 1.3; margin: 0 0 2px; }
-.ue-soon-meta { font-size: 14px; color: var(--text-muted); margin: 0 0 6px; }
-.ue-tba { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 4px; color: var(--accent-text); background: var(--accent-dim); }
+/* Coming soon: poster cards, two to a row */
+.ue-soon { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 0; }
+.ue-soon-item { flex-direction: column; gap: 0; padding: 14px 14px 18px; border: 1px solid var(--border-light); border-radius: 10px; background: var(--bg-light); }
+.ue-soon-item img { width: 100%; border-radius: 6px; }
+.ue-soon-body { min-width: 0; padding: 14px 2px 0; }
+.ue-soon-title { font-size: 20px; line-height: 1.25; margin: 0 0 4px; }
+.ue-soon-title a { color: inherit; text-decoration: none; }
+.ue-soon-title a:hover { color: var(--accent-text); }
+.ue-soon-title a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.ue-soon-meta { font-size: 15px; color: var(--text-muted); margin: 0; }
+.ue-soon-foot { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
+.ue-tba { display: inline-block; font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 4px; color: var(--accent-text); background: var(--accent-dim); }
 .ue-wa { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none; color: var(--text-dark); border: 1px solid var(--border-light); background: var(--bg-light); transition: border-color 0.15s ease, color 0.15s ease; }
 .ue-wa svg { color: #1f9d55; }
 .ue-wa:hover { border-color: var(--accent); color: var(--accent-text); }
@@ -5052,9 +5060,8 @@ h1[lang="ur"], h4[lang="ur"], .bdp-title { font-weight: 700; line-height: 1.5; }
 #ue-soon .ue-head-row { align-items: center; flex-wrap: wrap; }
 
 @media (max-width: 640px) {
-  .ue-soon { grid-template-columns: 1fr; gap: 10px; }
-  .ue-soon-item img { width: 112px; }
-  .ue-soon-title { font-size: 16px; }
+  .ue-soon { grid-template-columns: 1fr; gap: 18px; }
+  .ue-soon-title { font-size: 19px; }
   #ue-book.ue-section { padding: 22px 0; }
   .ue-recent li:nth-child(n+3) { display: none; }
 }

@@ -158,7 +158,7 @@
       { title: 'Grand Youth Talk · Karachi', image: '/brand_assets/grand-youth-talk-karachi-jan2027-card.webp', poster: '/brand_assets/grand-youth-talk-karachi-jan2027-poster.webp', start: '2027-01-07T20:45:00+05:00', end: '2027-01-07T23:00:00+05:00', showEnd: true, mode: 'Onsite', city: 'Karachi', place: 'Faysal Marquee, Shahrah-e-Faisal, Karachi', venue: 'Faysal Marquee, Karachi', note: 'Only for males · Free entry' }
     ],
     soon: [
-      { title: 'Youth Qirat Competition', image: '/brand_assets/youth-qirat-competition-card.webp', text: 'With cash prizes and much more' },
+      { title: 'Youth Qirat Competition', href: '/events/youth-qirat-competition/', image: '/brand_assets/youth-qirat-competition-card.webp', text: 'Big cash prize · Registration opens soon' },
       { title: 'Youth Night Karachi', image: '/brand_assets/youth-night-karachi-card.webp', city: 'Karachi' },
       { title: 'Youth Night Lahore', image: '/brand_assets/youth-night-lahore-card.webp', city: 'Lahore' },
       { title: 'Lyari Youth Talks', image: '/brand_assets/lyari-youth-talks-card.webp', city: 'Karachi' }
@@ -363,11 +363,14 @@
     function renderSoon() {
       const items = UPDATES.soon.filter(function (e) { return city === 'All' || e.city === city; });
       document.getElementById('ue-soon-list').innerHTML = items.map(function (e) {
+        const img = '<img src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" loading="lazy" width="600" height="300" />';
         return '<li class="ue-soon-item">' +
-          '<img src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" loading="lazy" width="600" height="300" />' +
-          '<div class="ue-soon-body"><h3 class="ue-soon-title">' + esc(e.title) + '</h3>' +
+          (e.href ? '<a href="' + esc(e.href) + '" tabindex="-1" aria-hidden="true">' + img + '</a>' : img) +
+          '<div class="ue-soon-body">' + titleHtml(e, 'h3', 'ue-soon-title') +
           '<p class="ue-soon-meta">' + esc([e.city, e.text].filter(Boolean).join(' · ') || 'Pakistan') + '</p>' +
-          '<span class="ue-tba">Date soon</span></div>' +
+          '<div class="ue-soon-foot"><span class="ue-tba">Date soon</span>' +
+          (e.href ? '<a class="ue-act ue-act-main" href="' + esc(e.href) + '">Details<span class="evf-sr">: ' + esc(e.title) + '</span></a>' : '') +
+          '</div></div>' +
         '</li>';
       }).join('');
       document.getElementById('ue-soon').hidden = !items.length;
