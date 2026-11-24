@@ -1616,7 +1616,7 @@
     cover: '/brand_assets/seerat-e-mustafa-book-title-opt.webp',
     title: 'Seerat & Modern Science',
     urdu: 'سیرت النبی ﷺ اور جدید سائنس',
-    text: 'Reserve your copy today. <b class="bkb-price">Rs. 500</b>',
+    text: 'Get your copy today. <b class="bkb-price">Rs. 500</b>',
     register: 'https://forms.gle/jwZgS352GqtLy6Gr8',
     details: '/seerat-mustafa-modern-science/',
     appearMs: 1200,      // button pops in
@@ -1643,8 +1643,8 @@
         '</div>' +
         '<p class="bkb-text">' + BOOK_BUBBLE.text + '</p>' +
         '<div class="bkb-actions">' +
-          '<a class="bkb-btn" href="' + BOOK_BUBBLE.register + '" target="_blank" rel="noopener">Reserve Now<span class="evf-sr"> (opens in a new tab)</span></a>' +
-          '<a class="bkb-link" href="' + BOOK_BUBBLE.details + '">About the book</a>' +
+          '<a class="bkb-btn" href="' + BOOK_BUBBLE.register + '" target="_blank" rel="noopener">Register to Purchase<span class="evf-sr"> (opens in a new tab)</span></a>' +
+          '<a class="bkb-link" href="' + BOOK_BUBBLE.details + '">Details</a>' +
         '</div>' +
         '<span class="bkb-timer" aria-hidden="true"></span>' +
       '</section>' +
