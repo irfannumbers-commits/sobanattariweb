@@ -152,10 +152,10 @@
   const UPDATES = {
     events: [
       { title: 'Online Mega Session for Deeni Tulba', href: '/events/deeni-tulba-mega-session-nov-2026/', image: '/brand_assets/deeni-tulba-mega-session-card.webp', start: '2026-11-22T21:00:00+05:00', end: '2026-11-22T23:00:00+05:00', mode: 'Online', note: 'Registration required' },
-      { title: 'Youth Talks Faisalabad', href: '/events/youth-talks-faisalabad-nov-2026/', image: '/brand_assets/youth-talks-faisalabad-card-v2.webp', start: '2026-11-27T20:00:00+05:00', end: '2026-11-27T22:00:00+05:00', mode: 'Onsite', city: 'Faisalabad', place: 'Shahryar Restaurant, Jail Road, Faisalabad', note: 'Registration required' },
-      { title: 'Youth Talks Lahore', href: '/events/youth-talks-lahore-dec-2026/', image: '/brand_assets/youth-talks-lahore-dec-2026-card.webp', start: '2026-12-02T19:30:00+05:00', end: '2026-12-02T21:30:00+05:00', mode: 'Onsite', city: 'Lahore', place: 'Jamia Masjid Sakina Siddique, Qaddafi Stadium, Lahore' },
-      { title: 'Khawateen Session · Part 5', href: '/events/khawateen-session-5-dec-2026/', image: '/brand_assets/khawateen-session-5-card.webp', start: '2026-12-04T21:00:00+05:00', end: '2026-12-04T23:00:00+05:00', mode: 'Online', note: 'Only for females' },
-      { title: 'Grand Youth Talk · Karachi', image: '/brand_assets/grand-youth-talk-karachi-jan2027-card.webp', start: '2027-01-07T20:45:00+05:00', end: '2027-01-07T23:00:00+05:00', showEnd: true, mode: 'Onsite', city: 'Karachi', place: 'Faysal Marquee, Shahrah-e-Faisal, Karachi', note: 'Only for males · Free entry' }
+      { title: 'Youth Talks Faisalabad', href: '/events/youth-talks-faisalabad-nov-2026/', image: '/brand_assets/youth-talks-faisalabad-card-v2.webp', poster: '/brand_assets/youth-talks-faisalabad-poster-v2.webp', start: '2026-11-27T20:00:00+05:00', end: '2026-11-27T22:00:00+05:00', mode: 'Onsite', city: 'Faisalabad', place: 'Shahryar Restaurant, Jail Road, Faisalabad', venue: 'Shahryar Restaurant, Faisalabad', note: 'Registration required' },
+      { title: 'Youth Talks Lahore', href: '/events/youth-talks-lahore-dec-2026/', image: '/brand_assets/youth-talks-lahore-dec-2026-card.webp', poster: '/brand_assets/youth-talks-lahore-dec-2026-poster.webp', start: '2026-12-02T19:30:00+05:00', end: '2026-12-02T21:30:00+05:00', mode: 'Onsite', city: 'Lahore', place: 'Jamia Masjid Sakina Siddique, Qaddafi Stadium, Lahore', venue: 'Jamia Masjid Sakina Siddique, Lahore' },
+      { title: 'Khawateen Session · Part 5', href: '/events/khawateen-session-5-dec-2026/', image: '/brand_assets/khawateen-session-5-card.webp', poster: '/brand_assets/khawateen-session-5-poster.webp', start: '2026-12-04T21:00:00+05:00', end: '2026-12-04T23:00:00+05:00', mode: 'Online', note: 'Only for females' },
+      { title: 'Grand Youth Talk · Karachi', image: '/brand_assets/grand-youth-talk-karachi-jan2027-card.webp', poster: '/brand_assets/grand-youth-talk-karachi-jan2027-poster.webp', start: '2027-01-07T20:45:00+05:00', end: '2027-01-07T23:00:00+05:00', showEnd: true, mode: 'Onsite', city: 'Karachi', place: 'Faysal Marquee, Shahrah-e-Faisal, Karachi', venue: 'Faysal Marquee, Karachi', note: 'Only for males · Free entry' }
     ],
     soon: [
       { title: 'Youth Qirat Competition', image: '/brand_assets/youth-qirat-competition-card.webp', text: 'With cash prizes and much more' },
@@ -181,10 +181,8 @@
     const TZ = 'Asia/Karachi';
 
     const fmt = function (opts) { return new Intl.DateTimeFormat('en-GB', Object.assign({ timeZone: TZ }, opts)); };
-    const fDay = fmt({ day: 'numeric' });
     const fWeekday = fmt({ weekday: 'short' });
     const fWeekdayLong = fmt({ weekday: 'long' });
-    const fMonth = fmt({ month: 'short' });
     const fYear = fmt({ year: 'numeric' });
     const fMonthYear = fmt({ month: 'long', year: 'numeric' });
     const fDayMonth = fmt({ day: 'numeric', month: 'long' });
@@ -203,11 +201,14 @@
     };
     const ICON = {
       wa: '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>',
-      map: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>'
+      map: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
+      cal: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="17" rx="2"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/></svg>',
+      clock: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 7v5l3 2"/></svg>',
+      pin: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>'
     };
 
     const ALL = UPDATES.events
-      .map(function (e) { return Object.assign({}, e, { s: Date.parse(e.start), x: Date.parse(e.end) }); })
+      .map(function (e) { const o = Object.assign({}, e, { s: Date.parse(e.start), x: Date.parse(e.end) }); o.src = o; return o; })
       .sort(function (a, b) { return a.s - b.s; });
 
     const inCity = function (e, c) { return c === 'All' || (c === 'Online' ? e.mode === 'Online' : e.city === c); };
@@ -219,7 +220,17 @@
       const t = fTime.format(new Date(e.s));
       return (e.showEnd ? t.replace(/ (AM|PM)$/, '') + ' – ' + fTime.format(new Date(e.x)) : t) + ' PKT';
     }
-    function whereHtml(e) { return esc(e.mode === 'Online' ? 'Online' : e.place); }
+    function factsHtml(e, now, featured) {
+      const d = new Date(e.s);
+      const row = function (icon, label, html) {
+        return '<li><span class="ue-fact-ico">' + icon + '</span><span class="evf-sr">' + label + ': </span><span>' + html + '</span></li>';
+      };
+      return '<ul class="ue-facts">' +
+        row(ICON.cal, 'Date', '<strong>' + fWeekdayLong.format(d) + ', ' + fDayMonth.format(d) + '</strong>') +
+        row(ICON.clock, 'Time', '<strong>' + timeText(e) + '</strong>' + (featured ? '' : ' <span class="ue-away">' + daysAway(e.s, now) + '</span>')) +
+        row(ICON.pin, 'Venue', '<strong>' + esc(e.mode === 'Online' ? 'Online' : (e.venue || e.place)) + '</strong>') +
+      '</ul>' + (e.note ? '<p class="ue-note-line">' + esc(e.note) + '</p>' : '');
+    }
     function untilText(e, now) {
       if (now >= e.s) return 'Happening now';
       const m = Math.floor((e.s - now) / 60000);
@@ -229,14 +240,19 @@
       if (h >= 1) return 'Starts in ' + part(h, 'hour') + (mi ? ' ' + part(mi, 'minute') : '');
       return mi >= 1 ? 'Starts in ' + part(mi, 'minute') : 'Starts in less than a minute';
     }
-    function waLink(e) {
-      const when = fWeekday.format(new Date(e.s)) + ', ' + fDayMonth.format(new Date(e.s)) + ', ' + timeText(e);
-      return 'https://wa.me/?text=' + encodeURIComponent(e.title + ' with Soban Attari\n' + when + '\n' + (e.mode === 'Online' ? 'Online' : e.place) + '\n' + SITE + (e.href || '/updates/'));
+    function shareText(e) {
+      const d = new Date(e.s);
+      return '*' + e.title + '* with Soban Attari\n' +
+        '\u{1F4C5} ' + fWeekdayLong.format(d) + ', ' + fDayMonth.format(d) + ' \u00b7 ' + timeText(e) + '\n' +
+        '\u{1F4CD} ' + (e.mode === 'Online' ? 'Online' : e.place) + '\n' +
+        (e.note ? e.note + '\n' : '') +
+        '\nDetails: ' + SITE + (e.href || '/updates/');
     }
+    function waLink(e) { return 'https://wa.me/?text=' + encodeURIComponent(shareText(e)); }
     function actionsHtml(e) {
       const out = [];
       if (e.href) out.push('<a class="ue-act ue-act-main" href="' + esc(e.href) + '">Details<span class="evf-sr">: ' + esc(e.title) + '</span></a>');
-      out.push('<a class="ue-act" href="' + esc(waLink(e)) + '" target="_blank" rel="noopener">' + ICON.wa + 'Share<span class="evf-sr"> on WhatsApp (opens in a new tab)</span></a>');
+      out.push('<a class="ue-act ue-share" data-share="' + ALL.indexOf(e.src) + '" href="' + esc(waLink(e)) + '" target="_blank" rel="noopener">' + ICON.wa + 'Share<span class="evf-sr"> on WhatsApp (opens in a new tab)</span></a>');
       if (e.mode !== 'Online') out.push('<a class="ue-act" href="https://www.google.com/maps/search/?api=1&amp;query=' + encodeURIComponent(e.place) + '" target="_blank" rel="noopener">' + ICON.map + 'Directions<span class="evf-sr"> (opens Google Maps)</span></a>');
       return '<div class="ue-acts">' + out.join('') + '</div>';
     }
@@ -246,16 +262,19 @@
 
     // City filter: cities that appear in the data, plus Online
     const cities = [];
-    ALL.concat(UPDATES.soon).forEach(function (e) {
+    const counts = {};
+    ALL.filter(function (e) { return e.x > nowMs(); }).concat(UPDATES.soon).forEach(function (e) {
       const c = e.mode === 'Online' ? 'Online' : e.city;
-      if (c && cities.indexOf(c) < 0) cities.push(c);
+      if (!c) return;
+      if (cities.indexOf(c) < 0) cities.push(c);
+      counts[c] = (counts[c] || 0) + 1;
     });
     cities.sort(function (a, b) { return a === 'Online' ? 1 : b === 'Online' ? -1 : a.localeCompare(b); });
     let city = 'All';
     const filterEl = document.getElementById('ue-filter');
     if (cities.length > 1) {
       filterEl.innerHTML = ['All'].concat(cities).map(function (c) {
-        return '<button type="button" class="ue-chip" data-city="' + c + '" aria-pressed="' + (c === 'All') + '">' + c + '</button>';
+        return '<button type="button" class="ue-chip" data-city="' + c + '" aria-pressed="' + (c === 'All') + '">' + c + (counts[c] ? '<span class="ue-chip-n">' + counts[c] + '</span>' : '') + '</button>';
       }).join('');
       filterEl.hidden = false;
       filterEl.addEventListener('click', function (ev) {
@@ -285,7 +304,7 @@
 
       untilEl = null;
       if (spot) {
-        const e = spot, d = new Date(e.s);
+        const e = spot;
         nextEl.innerHTML =
           '<article class="ue-next">' +
             '<div class="ue-next-media">' + (e.href ? '<a href="' + esc(e.href) + '" tabindex="-1" aria-hidden="true">' : '') +
@@ -293,8 +312,7 @@
             '<div class="ue-next-body">' +
               '<p class="ue-kicker">' + (live ? 'Happening now' : 'Next event') + '</p>' +
               titleHtml(e, 'h3', 'ue-next-title') +
-              '<p class="ue-line"><strong>' + fWeekdayLong.format(d) + ', ' + fDayMonth.format(d) + '</strong> · ' + timeText(e) + '</p>' +
-              '<p class="ue-line">' + whereHtml(e) + (e.note ? ' · <span class="ue-note">' + esc(e.note) + '</span>' : '') + '</p>' +
+              factsHtml(e, now, true) +
               '<p class="ue-until' + (live ? ' is-live' : '') + '" id="ue-until">' + untilText(e, now) + '</p>' +
               actionsHtml(e) +
             '</div>' +
@@ -317,16 +335,13 @@
         listEl.innerHTML = groups.map(function (g) {
           return '<h3 class="ue-month">' + esc(g.key) + '</h3>' +
             '<ol class="ue-list">' + g.items.map(function (e) {
-              const d = new Date(e.s);
               return '<li class="ue-item">' +
-                '<p class="ue-date"><span class="ue-date-mon">' + fMonth.format(d) + '</span><span class="ue-date-num">' + fDay.format(d) + '</span><span class="ue-date-sub">' + fWeekday.format(d) + '</span></p>' +
+                '<img class="ue-item-img" src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" loading="lazy" width="600" height="300" />' +
                 '<div class="ue-item-body">' +
                   titleHtml(e, 'h4', 'ue-item-title') +
-                  '<p class="ue-line">' + timeText(e) + ' · <span class="ue-away">' + daysAway(e.s, now) + '</span></p>' +
-                  '<p class="ue-line">' + whereHtml(e) + (e.note ? ' · <span class="ue-note">' + esc(e.note) + '</span>' : '') + '</p>' +
+                  factsHtml(e, now, false) +
                   actionsHtml(e) +
                 '</div>' +
-                '<img class="ue-item-img" src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" loading="lazy" width="600" height="300" />' +
               '</li>';
             }).join('') + '</ol>';
         }).join('');
@@ -347,14 +362,15 @@
 
     function renderSoon() {
       const items = UPDATES.soon.filter(function (e) { return city === 'All' || e.city === city; });
-      document.getElementById('ue-soon-list').innerHTML = items.length ? items.map(function (e) {
+      document.getElementById('ue-soon-list').innerHTML = items.map(function (e) {
         return '<li class="ue-soon-item">' +
           '<img src="' + esc(e.image) + '" alt="' + esc(e.title) + ' poster" loading="lazy" width="600" height="300" />' +
-          '<div><h3 class="ue-item-title">' + esc(e.title) + '</h3>' +
-          '<p class="ue-line">' + (e.city ? esc(e.city) + ' · ' : '') + (e.text ? esc(e.text) + ' · ' : '') + '<span class="ue-note">Date to be announced</span></p></div>' +
+          '<div class="ue-soon-body"><h3 class="ue-soon-title">' + esc(e.title) + '</h3>' +
+          '<p class="ue-soon-meta">' + esc([e.city, e.text].filter(Boolean).join(' · ') || 'Pakistan') + '</p>' +
+          '<span class="ue-tba">Date soon</span></div>' +
         '</li>';
-      }).join('') : '<li class="ue-line">Nothing announced ' + (city === 'Online' ? 'online' : 'in ' + esc(city)) + ' yet.</li>';
-      document.getElementById('ue-soon').hidden = !UPDATES.soon.length;
+      }).join('');
+      document.getElementById('ue-soon').hidden = !items.length;
     }
 
     // Rebuild when the featured event starts or ends, or the date changes in
@@ -402,6 +418,48 @@
           '</div>' +
         '</div>';
       document.getElementById('ue-book').hidden = false;
+    }
+
+    // Share: phones send the portrait poster with the text through the
+    // system share sheet; everything else falls back to the WhatsApp link.
+    const posterFiles = {};
+    function loadPoster(e) {
+      if (!e.poster) return Promise.resolve(null);
+      if (!posterFiles[e.poster]) {
+        posterFiles[e.poster] = fetch(e.poster).then(function (r) {
+          if (!r.ok) throw new Error('poster');
+          return r.blob();
+        }).then(function (b) {
+          return new File([b], e.poster.split('/').pop(), { type: b.type || 'image/webp' });
+        }).catch(function () { delete posterFiles[e.poster]; return null; });
+      }
+      return posterFiles[e.poster];
+    }
+    const canShareFiles = !!(navigator.canShare && window.File);
+    const shareEvent = function (el) { return ALL[Number(el.dataset.share)]; };
+    if (canShareFiles) {
+      const io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { loadPoster(shareEvent(en.target)); io.unobserve(en.target); }
+        });
+      }, { rootMargin: '200px' }) : null;
+      const watch = function () { if (io) document.querySelectorAll('.ue-share').forEach(function (a) { io.observe(a); }); };
+      new MutationObserver(watch).observe(nextEl.parentNode, { childList: true, subtree: true });
+      watch();
+      nextEl.parentNode.addEventListener('click', function (ev) {
+        const a = ev.target.closest('.ue-share');
+        if (!a) return;
+        const e = shareEvent(a);
+        if (!e || !e.poster) return;
+        ev.preventDefault();
+        loadPoster(e).then(function (file) {
+          const data = { text: shareText(e) };
+          if (file && navigator.canShare({ files: [file] })) data.files = [file];
+          return navigator.share(data);
+        }).catch(function (err) {
+          if (!err || err.name !== 'AbortError') window.open(a.href, '_blank', 'noopener');
+        });
+      });
     }
 
     render();
