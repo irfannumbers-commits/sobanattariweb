@@ -4752,6 +4752,7 @@ h1[lang="ur"], h4[lang="ur"], .bdp-title { font-weight: 700; line-height: 1.5; }
 .bkb-title { font-family: var(--font-display); font-size: 20px; line-height: 1.15; color: #ffffff; }
 .bkb-urdu { font-size: 14px; color: rgba(255, 255, 255, 0.85); text-align: left; }
 .bkb-text { margin: 12px 0 0; font-size: 13.5px; line-height: 1.5; color: rgba(255, 255, 255, 0.85); }
+.bkb-price { display: block; margin-top: 2px; font-size: 16px; font-weight: 700; color: #F5C518; }
 .bkb-actions { display: flex; align-items: center; gap: 16px; margin-top: 14px; }
 .bkb-btn {
   flex: 1; min-height: 44px; display: inline-flex; align-items: center; justify-content: center;
