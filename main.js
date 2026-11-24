@@ -977,14 +977,11 @@
     });
   }
 
-  // ---- Floating "Contact Us" button — every page, always reachable ----
-  // The full #contact section (home page only) and the "Contact" nav link
-  // are otherwise the only ways to reach out, and on mobile that means
-  // opening the hamburger menu first. This stays pinned bottom-right on
-  // every page so Email is always one tap away.
+  // ---- Floating "Email us" button — home page only ----
+  // Pinned bottom-right once the visitor has scrolled through half of the
+  // home page; every other page keeps the corner clear.
   (function setupContactFab() {
-    // Event and course detail pages keep the screen for their sticky Register / Directions bar
-    if (location.pathname.indexOf('/events/') === 0 || document.querySelector('.event-hero-actions')) return;
+    if (location.pathname !== '/' && location.pathname !== '/index.html') return;
     const EMAIL = 'team@sobanattari.com';
     const HINT_KEY = 'sa-email-hint-seen';
     const MAIL_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>';
@@ -1057,30 +1054,33 @@
       }, 2000);
     }
 
-    // Home page: stay out of the way while the hero (and the purpose strip
-    // right under it) fills the screen; appear once the hero scrolls away.
-    // Every page: also step aside at the footer, so it never covers the
-    // footer's own links or the last lines of text on a phone.
-    const hero = document.getElementById('hero');
+    // Hidden until the bottom of the screen reaches the middle of the page,
+    // and again at the footer so it never covers the footer links. A marker
+    // sits at half the page height and moves when the page grows (images).
     const footer = document.getElementById('footer');
-    let heroVisible = false;
+    let pastHalf = false;
     let footerVisible = false;
+    wrap.classList.add('is-hidden');
     function syncHidden() {
-      const hidden = heroVisible || footerVisible;
+      const hidden = !pastHalf || footerVisible;
       wrap.classList.toggle('is-hidden', hidden);
       if (hidden) { close(); hideHint(); } else scheduleHint();
     }
     if ('IntersectionObserver' in window) {
-      if (hero) {
-        heroVisible = true;
-        wrap.classList.add('is-hidden');
-        new IntersectionObserver(function (entries) {
-          heroVisible = entries[0].intersectionRatio >= 0.35;
-          syncHidden();
-        }, { threshold: [0, 0.35] }).observe(hero);
-      } else {
-        scheduleHint();
-      }
+      const anchor = document.createElement('div');
+      anchor.setAttribute('aria-hidden', 'true');
+      anchor.style.cssText = 'position:relative;height:0;';
+      const marker = document.createElement('div');
+      marker.style.cssText = 'position:absolute;left:0;width:1px;height:1px;pointer-events:none;';
+      anchor.appendChild(marker);
+      document.body.insertBefore(anchor, document.body.firstChild);
+      const place = function () { marker.style.top = Math.round(document.documentElement.scrollHeight / 2) + 'px'; };
+      place();
+      if ('ResizeObserver' in window) new ResizeObserver(place).observe(document.body);
+      new IntersectionObserver(function (entries) {
+        pastHalf = entries[0].isIntersecting || entries[0].boundingClientRect.top < 0;
+        syncHidden();
+      }).observe(marker);
       if (footer) {
         new IntersectionObserver(function (entries) {
           footerVisible = entries[0].isIntersecting;
@@ -1088,6 +1088,7 @@
         }).observe(footer);
       }
     } else {
+      wrap.classList.remove('is-hidden');
       scheduleHint();
     }
   })();
