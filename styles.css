@@ -4692,9 +4692,9 @@ h1[lang="ur"], h4[lang="ur"] { font-weight: 700; line-height: 1.5; }
   width: min(360px, calc(100vw - 32px));
   padding: 18px 18px 16px;
   border-radius: 22px 22px 22px 6px;
-  background: linear-gradient(150deg, #FFD84A 0%, #F5C518 60%, #E8B400 100%);
+  background: #ffffff;
   color: #111111;
-  box-shadow: 0 30px 60px -18px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  box-shadow: 0 30px 60px -18px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.06);
   transform-origin: 0% 100%;
   opacity: 0; visibility: hidden; pointer-events: none;
   transform: translate(-6px, 30px) scale(0.18);
@@ -4702,7 +4702,7 @@ h1[lang="ur"], h4[lang="ur"] { font-weight: 700; line-height: 1.5; }
 }
 .bkb-panel::after {   /* bubble tail pointing at the button */
   content: ""; position: absolute; left: 22px; bottom: -7px; width: 16px; height: 16px;
-  background: #EDBB06; transform: rotate(45deg); border-radius: 3px;
+  background: #ffffff; transform: rotate(45deg); border-radius: 3px;
 }
 .bkb.is-open .bkb-panel {
   opacity: 1; visibility: visible; pointer-events: auto; transform: none;
@@ -4718,7 +4718,7 @@ h1[lang="ur"], h4[lang="ur"] { font-weight: 700; line-height: 1.5; }
   position: absolute; top: 12px; right: 12px; z-index: 1;
   width: 34px; height: 34px; border-radius: 50%; border: 0; cursor: pointer;
   display: grid; place-items: center;
-  background: rgba(0, 0, 0, 0.12); color: #111111;
+  background: #f1f1f1; color: #111111;
   box-shadow: none;
   transition: transform var(--transition), background-color var(--transition);
 }
@@ -4732,26 +4732,26 @@ h1[lang="ur"], h4[lang="ur"] { font-weight: 700; line-height: 1.5; }
 .bkb-from i { width: 8px; height: 8px; border-radius: 50%; background: #C0392B; animation: bkbDot 1.8s ease-out infinite; }
 @keyframes bkbDot { 0% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.6); } 70%, 100% { box-shadow: 0 0 0 7px rgba(192, 57, 43, 0); } }
 .bkb-title { font-family: var(--font-display); font-size: 20px; line-height: 1.15; color: #111111; }
-.bkb-urdu { font-size: 14px; color: #3a3000; text-align: left; }
-.bkb-text { margin: 12px 0 0; font-size: 13.5px; line-height: 1.5; color: #3a3000; }
+.bkb-urdu { font-size: 14px; color: #4a4a4a; text-align: left; }
+.bkb-text { margin: 12px 0 0; font-size: 13.5px; line-height: 1.5; color: #4a4a4a; }
 .bkb-price { display: block; margin-top: 2px; font-size: 22px; font-weight: 800; color: #111111; }
 .bkb-actions { display: flex; align-items: center; gap: 16px; margin-top: 14px; }
 .bkb-btn {
   flex: 1; min-height: 44px; display: inline-flex; align-items: center; justify-content: center;
-  border-radius: 12px; background: #111111; color: #F5C518; text-decoration: none;
+  border-radius: 12px; background: #F5C518; color: #111111; text-decoration: none;
   font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
   box-shadow: 0 10px 22px -10px rgba(0, 0, 0, 0.7);
   transition: background-color var(--transition), color var(--transition), transform var(--transition);
   touch-action: manipulation; -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
-.bkb-btn:hover { background: #2a2a2a; color: #ffffff; }
+.bkb-btn:hover { background: #e0b000; color: #111111; }
 .bkb-btn:active { transform: scale(0.98); }
 .bkb-btn:focus-visible { outline: 2px solid #111111; outline-offset: 2px; }
 .bkb-link { font-size: 14px; font-weight: 700; color: #111111; text-decoration: underline; text-decoration-color: #111111; text-decoration-thickness: 2px; text-underline-offset: 4px; min-height: 44px; display: inline-flex; align-items: center; padding: 0 6px; margin: 0 -6px; touch-action: manipulation; -webkit-tap-highlight-color: rgba(0,0,0,0); }
 .bkb-link:hover { color: #5a4600; }
 .bkb-link:active { opacity: 0.75; }
 .bkb-link:focus-visible { outline: 2px solid #111111; outline-offset: 3px; border-radius: 2px; }
-.bkb-timer { position: absolute; left: 18px; right: 18px; bottom: 7px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, #111111, rgba(0, 0, 0, 0.25)); transform-origin: left; transform: scaleX(0); pointer-events: none; }
+.bkb-timer { position: absolute; left: 18px; right: 18px; bottom: 7px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, #F5C518, rgba(245, 197, 24, 0.35)); transform-origin: left; transform: scaleX(0); pointer-events: none; }
 @keyframes bkbTimer { from { transform: scaleX(1); } to { transform: scaleX(0); } }
 
 @media (min-width: 641px) {
