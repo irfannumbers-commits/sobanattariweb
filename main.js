@@ -1790,6 +1790,11 @@
       if (root.classList.contains('is-open')) close(); else open();
     });
     root.querySelector('.bkb-close').addEventListener('click', function () { close(); fab.focus({ preventScroll: true }); });
+    // Anywhere on the card opens the book page; only Register goes to the form
+    panel.addEventListener('click', function (e) {
+      if (e.target.closest('.bkb-btn, .bkb-close, .bkb-link')) return;
+      location.href = BOOK_BUBBLE.details;
+    });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('is-open')) close(); });
     panel.addEventListener('mouseenter', pause);
     panel.addEventListener('mouseleave', resume);
