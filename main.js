@@ -1182,16 +1182,22 @@
 
   // ---- Hero video: starts quietly over its first-frame poster ----
   // The poster is the video's first frame, so playback begins without a
-  // visible jump and no loader is shown. Slow connections and Data Saver get
-  // the smaller copy; everyone else gets the full-quality file. The MP4s are
-  // faststart, so playback begins while the rest downloads.
+  // visible jump and no loader is shown. Every visitor gets full quality in
+  // the smallest format their browser plays: AV1 (~1.9 MB, Chrome/Android/
+  // Firefox), HEVC (~2.1 MB, Safari/iPhone), else the H.264 file (~4.3 MB).
+  // All are faststart, so playback begins while the rest downloads.
   // Only skipped for people who turned on "reduce motion" in their OS.
   (function heroVideo() {
     const videos = document.querySelectorAll('video[data-src]');
     if (!videos.length) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const slowLine = !!conn && (conn.saveData || /(^|-)(2g|3g)$/.test(conn.effectiveType || '') || (conn.downlink > 0 && conn.downlink < 1.5));
+    const probe = document.createElement('video');
+    const plays = function (type) { return !!probe.canPlayType && probe.canPlayType(type) === 'probably'; };
+    function pickSource(v) {
+      if (v.dataset.srcAv1 && plays('video/mp4; codecs="av01.0.05M.08"')) return v.dataset.srcAv1;
+      if (v.dataset.srcHevc && plays('video/mp4; codecs="hvc1.1.6.L93.B0"')) return v.dataset.srcHevc;
+      return v.dataset.src;
+    }
 
     videos.forEach(function (video) {
       const host = video.parentElement;
@@ -1219,7 +1225,7 @@
 
       function start() {
         const source = document.createElement('source');
-        source.src = (slowLine && video.dataset.srcSd) || video.dataset.src;
+        source.src = pickSource(video);
         source.type = 'video/mp4';
         video.appendChild(source);
         video.removeAttribute('data-src');
