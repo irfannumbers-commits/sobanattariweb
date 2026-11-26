@@ -705,20 +705,31 @@ body.menu-open { overflow: hidden; }
   content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid var(--accent);
   animation: updatesDotPulse 1.8s ease-out infinite;
 }
-.btn-live-dot { background: #ff5a4a; }
-.btn-live-dot::after { border-color: #ff5a4a; }
+.btn-live-dot { background: #111111; }
+.btn-live-dot::after { border-color: #111111; }
 
 .hero-actions { justify-content: center; align-items: center; gap: 14px; }
 
-/* hero CTA — glass outline with a live dot, so the gold book card is the one gold action on screen */
-.btn-live.btn-primary {
-  position: relative; gap: 10px; padding: 12px 20px 12px 18px; border-radius: 8px; font-size: 12px; letter-spacing: 1.2px;
-  background: rgba(255, 255, 255, 0.08); color: #ffffff; border: 1.5px solid rgba(255, 255, 255, 0.85);
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-  transition: transform var(--transition), background-color var(--transition), color var(--transition);
+/* primary CTA — live dot, count badge, arrow, glow + periodic shine */
+.btn-live {
+  position: relative; overflow: hidden; isolation: isolate;
+  gap: 10px; padding: 13px 20px 13px 18px; border-radius: 6px; font-size: 12px; letter-spacing: 1.2px;
+  background: #ffffff; color: #111111;
+  box-shadow: 0 14px 34px -12px rgba(255, 255, 255, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.5);
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+.btn-live::after {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 45%; z-index: -1;
+  background: linear-gradient(100deg, transparent, rgba(17, 17, 17, 0.08), transparent);
+  transform: translateX(-160%) skewX(-18deg);
+  animation: btnShine 4.2s ease-in-out infinite 1.6s;
+}
+@keyframes btnShine {
+  0%, 62% { transform: translateX(-160%) skewX(-18deg); }
+  100% { transform: translateX(330%) skewX(-18deg); }
 }
 .btn-live-arrow { width: 15px; height: 15px; transition: transform var(--transition); }
-.btn-live.btn-primary:hover { opacity: 1; transform: translateY(-2px); background: #ffffff; color: #111111; }
+.btn-live:hover { opacity: 1; transform: translateY(-2px); background: #f2f2f2; box-shadow: 0 18px 40px -12px rgba(255, 255, 255, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.7); }
 .btn-live:hover .btn-live-arrow { transform: translateX(4px); }
 .btn-live:active { transform: translateY(0) scale(0.98); }
 .btn-live:focus-visible { outline: 2px solid #ffffff; outline-offset: 3px; }
@@ -819,7 +830,7 @@ body.menu-open { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-step { animation: none; opacity: 1; transform: none; }
-  .hero-scroll-line::after, .btn-live-dot::after { animation: none; }
+  .btn-live::after, .hero-scroll-line::after, .btn-live-dot::after { animation: none; }
 }
 
 /* Phones & small tablets: cinematic layout. The video crops to its centre on
@@ -4811,21 +4822,6 @@ h1[lang="ur"], h4[lang="ur"] { font-weight: 700; line-height: 1.5; }
 .bkb-timer { left: 14px; right: 14px; bottom: 6px; height: 2.5px; }
 @media (min-width: 641px) {
   .bkb-panel { width: 320px; bottom: 80px; }
-}
-/* Phones: the book card is a full-width bar at the bottom of the hero */
-@media (max-width: 640px) {
-  #hero { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 176px); }
-  .bkb { left: 10px; right: 10px; bottom: max(10px, env(safe-area-inset-bottom, 0px)); }
-  .bkb.is-open .bkb-fab { opacity: 0; pointer-events: none; }
-  .bkb-panel { left: 0; right: 0; bottom: 0; width: auto; padding: 12px 12px 12px 14px; border-radius: 16px; transform-origin: 50% 100%; transform: translateY(24px) scale(0.96); }
-  .bkb-panel::after, .bkb-urdu, .bkb-timer { display: none; }
-  .bkb-top { gap: 12px; padding-right: 34px; }
-  .bkb-cover { width: 44px; }
-  .bkb-title { font-size: 16px; }
-  .bkb-text { margin-top: 8px; font-size: 0; line-height: 1; }
-  .bkb-price { display: inline; margin: 0; font-size: 19px; }
-  .bkb-actions { margin-top: 10px; gap: 16px; }
-  .bkb-btn { flex: 1; min-height: 44px; font-size: 12px; }
 }
 
 /* Event page: multi-session schedule list (Karachi schedule) */
