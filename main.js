@@ -412,7 +412,7 @@
           '<img src="' + esc(bk.cover) + '" alt="Book cover: ' + esc(bk.title) + '" loading="lazy" width="200" height="300" />' +
           '<div class="ue-book-text">' +
             '<p class="ue-kicker">New book by Soban Attari</p>' +
-            '<p class="ue-book-title">' + esc(bk.title) + '</p>' +
+            '<p class="ue-book-title">' + esc(bk.title).replace('\uFDFA', '<span class="bkp-saw" lang="ar">\uFDFA</span>') + '</p>' +
             '<p class="ue-line">Price: <strong>' + esc(bk.price) + '</strong></p>' +
             '<div class="ue-acts">' +
               '<a class="ue-act ue-act-main" href="' + esc(bk.register) + '" target="_blank" rel="noopener">Register to purchase<span class="evf-sr"> (opens in a new tab)</span></a>' +
