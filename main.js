@@ -1751,9 +1751,13 @@
     const fab = root.querySelector('.bkb-fab');
     const timer = root.querySelector('.bkb-timer');
     let closeTimer = null, paused = false, remaining = 0, startedAt = 0;
+    // Phones: the card is a bar at the bottom of the hero; it stays until
+    // closed and folds into the round button once the hero scrolls away.
+    const asBar = window.matchMedia('(max-width: 640px)');
 
     function scheduleClose(ms) {
       clearTimeout(closeTimer);
+      if (asBar.matches) return;
       remaining = ms; startedAt = Date.now();
       timer.style.animation = 'none'; void timer.offsetWidth;
       timer.style.animation = 'bkbTimer ' + ms + 'ms linear forwards';
@@ -1780,7 +1784,7 @@
     function resume() {
       if (!paused) return;
       paused = false;
-      if (!root.classList.contains('is-open')) return;
+      if (!root.classList.contains('is-open') || asBar.matches) return;
       startedAt = Date.now();
       timer.style.animationPlayState = 'running';
       closeTimer = setTimeout(close, remaining);
@@ -1807,6 +1811,12 @@
       requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('is-in'); }); });
       // opens by itself every time the Home page loads, then folds back
       setTimeout(open, BOOK_BUBBLE.autoOpenMs - BOOK_BUBBLE.appearMs);
+      const hero = document.getElementById('hero');
+      if (hero && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          if (asBar.matches && !entries[0].isIntersecting && root.classList.contains('is-open')) close();
+        }).observe(hero);
+      }
     }, BOOK_BUBBLE.appearMs);
   })();
 
