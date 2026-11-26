@@ -4728,6 +4728,7 @@ h1[lang="ur"], h4[lang="ur"] { font-weight: 700; line-height: 1.5; }
 
 /* the card: a chat bubble that grows out of the button (diagonal: up + right) */
 .bkb-panel {
+  cursor: pointer;
   position: absolute; left: 0; bottom: 74px;
   width: min(360px, calc(100vw - 32px));
   padding: 18px 18px 16px;
