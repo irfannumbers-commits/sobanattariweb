@@ -5043,3 +5043,70 @@ h1[lang="ur"], h4[lang="ur"] { font-weight: 700; line-height: 1.5; }
   #ue-book.ue-section { padding: 22px 0; }
   .ue-recent li:nth-child(n+3) { display: none; }
 }
+
+/* Books page: featured book + compact "coming soon" shelf */
+.bks-section { padding: 48px 0 72px; background: var(--bg-light); }
+.bks-wrap { max-width: 1040px; }
+.bks-label { margin: 0 0 14px; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+.bks-cover { position: relative; display: block; aspect-ratio: 2 / 3; border-radius: 2px 6px 6px 2px; overflow: hidden; background: var(--bg-off-white); box-shadow: 0 18px 30px -18px rgba(0, 0, 0, 0.55), 0 3px 8px -3px rgba(0, 0, 0, 0.25); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.bks-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.bks-cover::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 7%; background: linear-gradient(90deg, rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.16) 45%, rgba(0, 0, 0, 0.1) 70%, rgba(0, 0, 0, 0)); pointer-events: none; }
+
+.bks-feature { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 40px; align-items: center; padding: 32px 36px; border-radius: 16px; background: linear-gradient(160deg, #FFF8E1 0%, #FFEDB0 100%); }
+.bks-feature-cover { display: block; }
+.bks-feature-cover:hover .bks-cover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 26px 40px -18px rgba(0, 0, 0, 0.6), 0 3px 8px -3px rgba(0, 0, 0, 0.25); }
+.bks-new { display: inline-flex; align-items: center; gap: 7px; padding: 4px 11px; border-radius: 999px; background: #111111; color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+.bks-new i { width: 6px; height: 6px; border-radius: 50%; background: #ff5a4a; }
+.bks-feature-title { font-size: clamp(24px, 3vw, 32px); line-height: 1.15; margin: 12px 0 4px; }
+.bks-feature-title a { color: var(--text-dark); text-decoration: none; }
+.bks-feature-title a:hover { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+.bks-feature-title a:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 3px; border-radius: 2px; }
+.bks-feature-ur { font-family: 'Noto Naskh Arabic', serif; font-size: 19px; font-weight: 700; line-height: 1.6; color: #5a4600; margin: 0 0 8px; text-align: left; }
+.bks-feature-desc { font-size: 16px; line-height: 1.65; color: var(--text-body); margin: 0 0 14px; max-width: 560px; }
+.bks-facts { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.bks-facts li { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 8px; background: rgba(255, 255, 255, 0.75); font-size: 14px; font-weight: 600; color: var(--text-dark); }
+.bks-facts svg { color: #8f6c00; }
+.bks-buy { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 20px; }
+.bks-price { display: inline-flex; align-items: baseline; gap: 8px; font-family: var(--font-display); font-size: 30px; font-weight: 800; color: #111111; }
+.bks-price small { font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+.bks-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 10px; background: var(--accent); color: #111111; text-decoration: none; white-space: nowrap; font-size: 14px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; box-shadow: 0 12px 22px -12px rgba(160, 120, 0, 0.8); transition: background-color 0.2s ease, transform 0.2s ease; }
+.bks-btn:hover { background: #e0b000; }
+.bks-btn:active { transform: scale(0.98); }
+.bks-btn:focus-visible { outline: 3px solid #111111; outline-offset: 3px; }
+.bks-link { font-size: 15px; font-weight: 700; color: #111111; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.bks-link:hover { color: #5a4600; }
+.bks-link:focus-visible { outline: 2px solid #111111; outline-offset: 3px; border-radius: 2px; }
+
+.bks-soon-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 56px 0 22px; }
+.bks-h { font-size: 24px; margin: 0; }
+.bks-wa { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--border-light); font-size: 14px; font-weight: 600; color: var(--text-dark); text-decoration: none; transition: border-color 0.2s ease, color 0.2s ease; }
+.bks-wa:hover { border-color: var(--accent); color: var(--accent-text); }
+.bks-wa:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.bks-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 32px 24px; }
+.bks-item { min-width: 0; }
+.bks-item .bks-cover { margin-bottom: 14px; }
+.bks-item:hover .bks-cover { transform: translateY(-4px); }
+.bks-name { font-size: 15px; line-height: 1.3; margin: 0 0 2px; }
+.bks-ur { font-family: 'Noto Naskh Arabic', serif; font-size: 14px; line-height: 1.7; color: var(--text-muted); margin: 0 0 6px; text-align: left; }
+.bks-tag { display: inline-block; padding: 3px 8px; border-radius: 4px; background: var(--accent-dim); color: var(--accent-text); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+
+@media (max-width: 860px) {
+  .bks-grid { gap: 26px 14px; }
+  .bks-name { font-size: 14px; }
+}
+@media (max-width: 640px) {
+  .bks-section { padding: 28px 0 48px; }
+  .bks-feature { grid-template-columns: 1fr; gap: 20px; padding: 24px 18px; text-align: center; }
+  .bks-feature-cover { width: 160px; margin: 0 auto; }
+  .bks-feature-ur { text-align: center; }
+  .bks-feature-desc { margin-left: auto; margin-right: auto; font-size: 15px; }
+  .bks-facts, .bks-buy { justify-content: center; }
+  .bks-btn { width: 100%; }
+  .bks-soon-head { margin-top: 40px; }
+  .bks-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 12px; }
+  .bks-item .bks-cover { margin-bottom: 10px; }
+  .bks-name { font-size: 13px; }
+  .bks-ur { font-size: 12px; line-height: 1.6; margin-bottom: 4px; }
+  .bks-tag { font-size: 9.5px; padding: 2px 6px; }
+}
+@media (prefers-reduced-motion: reduce) { .bks-cover { transition: none; } }
