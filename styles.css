@@ -2507,11 +2507,20 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 .bkp-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 56px; align-items: center; max-width: 1040px; }
 .bkp-book-wrap { display: flex; justify-content: center; perspective: 1400px; padding: 10px 0 34px; }
 .bkp-book {
+  --ry: -26deg; --rx: 4deg; --gx: 30%; --gy: 20%;
   position: relative; width: min(300px, 100%); aspect-ratio: 2 / 3;
-  transform: rotateY(-22deg) rotateX(3deg); transform-style: preserve-3d;
-  transition: transform 0.5s ease;
+  transform: rotateY(var(--ry)) rotateX(var(--rx)); transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(.2, .9, .3, 1.2);
+  touch-action: pan-y; cursor: grab; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
 }
-.bkp-book:hover { transform: rotateY(-10deg) rotateX(2deg); }
+.bkp-book img { -webkit-user-drag: none; }
+.bkp-book.is-tilting { transition: transform 0.12s ease-out; }
+.bkp-glare {
+  position: absolute; inset: 0; z-index: 2; border-radius: 2px 6px 6px 2px; pointer-events: none;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0) 55%);
+  mix-blend-mode: soft-light; opacity: 0.7; transition: opacity 0.4s ease;
+}
+.bkp-book.is-tilting .bkp-glare { opacity: 1; }
 .bkp-book img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 2px 6px 6px 2px; box-shadow: 0 30px 50px -18px rgba(60, 40, 0, 0.55), 0 8px 16px -8px rgba(0, 0, 0, 0.35); }
 .bkp-book::before {   /* spine fold on the cover */
   content: ""; position: absolute; z-index: 1; top: 0; bottom: 0; left: 0; width: 7%; border-radius: 2px 0 0 2px;
@@ -2519,7 +2528,7 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
   pointer-events: none;
 }
 .bkp-book::after {    /* page edges */
-  content: ""; position: absolute; z-index: -1; top: 1.5%; bottom: 1.5%; right: -14px; width: 16px;
+  content: ""; position: absolute; z-index: -1; top: 1.5%; bottom: 1.5%; right: -18px; width: 20px;
   background: repeating-linear-gradient(90deg, #ffffff 0 2px, #e9e2cf 2px 3px);
   transform: rotateY(60deg); transform-origin: left center; border-radius: 0 3px 3px 0;
   box-shadow: inset -2px 0 4px rgba(0, 0, 0, 0.12);
@@ -2536,7 +2545,8 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
 .bkp-price { display: flex; align-items: baseline; gap: 10px; margin: 0 0 14px; font-family: var(--font-display); font-size: 36px; font-weight: 800; line-height: 1; color: #111111; }
 .bkp-price small { font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
 .bkp-btn {
-  display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 54px; padding: 0 24px;
+  display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 54px; padding: 0 18px;
+  white-space: nowrap;
   border-radius: 10px; background: #111111; color: var(--accent); text-decoration: none;
   font-size: 15px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
   box-shadow: 0 14px 26px -14px rgba(0, 0, 0, 0.7);
@@ -2576,19 +2586,25 @@ a.session-card:hover .session-photo .sp-fg { transform: scale(1.03); }
   .bkp-body { padding: 36px 0 40px; }
 }
 @media (max-width: 560px) {
-  .bkp-topics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .bkp-topics { gap: 8px; }
+  .bkp-btn { font-size: clamp(13px, 3.9vw, 15px); letter-spacing: 0.04em; gap: 8px; }
+  .bkp-price { font-size: 32px; }
+  .bkp-topics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .bkp-topics li { flex-direction: row; justify-content: flex-start; gap: 10px; padding: 10px 12px; text-align: left; }
   .bkp-topics svg { width: 34px; height: 34px; padding: 8px; flex-shrink: 0; }
   .bkp-topics li:last-child { grid-column: 1 / -1; }
   .bkp-facts { gap: 6px; }
   .bkp-facts li { padding: 6px 9px; font-size: 13px; gap: 5px; }
   .bkp-facts svg { width: 15px; height: 15px; }
-  .bkp-buy { padding: 18px 16px 16px; }
+  .bkp-buy { padding: 18px 14px 16px; }
   .bkp-end-row { flex-direction: column; align-items: stretch; text-align: center; gap: 14px; }
   .bkp-end .bkp-btn { width: 100%; }
 }
-@media (prefers-reduced-motion: reduce) { .bkp-book, .bkp-btn, .bkp-btn::after { transition: none; } }
+@media (max-width: 340px) {
+  .bkp-btn { letter-spacing: 0.02em; padding: 0 12px; }
+  .bkp-btn::after { display: none; }
+  .bkp-facts li { font-size: 12px; padding: 5px 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .bkp-book, .bkp-btn, .bkp-btn::after { transition: none; } .bkp-glare { display: none; } }
 
 /* =========================================================
    PAGE VIDEO BANNER — breadcrumb-led pages that swap the usual

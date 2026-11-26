@@ -977,6 +977,38 @@
     });
   }
 
+  // ---- Book page: the 3D book leans toward the finger or cursor ----
+  (function bookTilt() {
+    const book = document.querySelector('.bkp-book');
+    if (!book || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const REST = { ry: -26, rx: 4 };
+    let frame = 0, last = null;
+    function apply() {
+      frame = 0;
+      if (!last) return;
+      const r = book.getBoundingClientRect();
+      const x = Math.min(Math.max((last.x - r.left) / r.width, 0), 1);
+      const y = Math.min(Math.max((last.y - r.top) / r.height, 0), 1);
+      book.style.setProperty('--ry', (REST.ry + 10 + (x - 0.5) * 34).toFixed(1) + 'deg');
+      book.style.setProperty('--rx', (REST.rx - (y - 0.5) * 20).toFixed(1) + 'deg');
+      book.style.setProperty('--gx', (x * 100).toFixed(0) + '%');
+      book.style.setProperty('--gy', (y * 100).toFixed(0) + '%');
+    }
+    function move(e) {
+      last = { x: e.clientX, y: e.clientY };
+      book.classList.add('is-tilting');
+      if (!frame) frame = requestAnimationFrame(apply);
+    }
+    function reset() {
+      last = null;
+      book.classList.remove('is-tilting');
+      ['--ry', '--rx', '--gx', '--gy'].forEach(function (k) { book.style.removeProperty(k); });
+    }
+    book.addEventListener('pointerdown', move);
+    book.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse' || e.buttons) move(e); });
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (t) { book.addEventListener(t, reset); });
+  })();
+
   // ---- Floating "Email us" button — home page only ----
   // Pinned bottom-right once the visitor has scrolled through half of the
   // home page; every other page keeps the corner clear.
