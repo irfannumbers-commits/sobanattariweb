@@ -1180,63 +1180,30 @@
     watch.forEach(function (el) { io.observe(el); });
   })();
 
-  // ---- Hero video: always plays, with a loader while it buffers ----
-  // The poster (preloaded) paints instantly; the video starts streaming right
-  // away on every connection (the MP4 is faststart, so it plays while it
-  // downloads). A slim gold bar + "Loading video" chip sit over the poster
-  // until the first frame plays, and come back if playback stalls to buffer.
+  // ---- Hero video: starts quietly over its first-frame poster ----
+  // The poster is the video's first frame, so playback begins without a
+  // visible jump and no loader is shown. Slow connections and Data Saver get
+  // the smaller copy; everyone else gets the full-quality file. The MP4s are
+  // faststart, so playback begins while the rest downloads.
   // Only skipped for people who turned on "reduce motion" in their OS.
   (function heroVideo() {
     const videos = document.querySelectorAll('video[data-src]');
     if (!videos.length) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const slowLine = !!conn && (conn.saveData || /(^|-)(2g|3g)$/.test(conn.effectiveType || '') || (conn.downlink > 0 && conn.downlink < 1.5));
 
     videos.forEach(function (video) {
       const host = video.parentElement;
-      const loader = document.createElement('div');
-      loader.className = 'video-loader';
-      loader.setAttribute('aria-hidden', 'true');
-      loader.innerHTML =
-        '<span class="video-loader-chip"><span class="video-loader-ring"></span>Loading video</span>' +
-        '<span class="video-loader-bar"></span>';
-      host.appendChild(loader);
-
-      // The loader only appears if the wait is long enough to notice — on a
-      // good connection the video starts first and the loader never flashes.
-      // Once shown it stays at least 700ms, so it never blinks on and off.
-      let showTimer = null;
-      let shownAt = 0;
-      function showLoaderSoon(delay) {
-        clearTimeout(showTimer);
-        showTimer = setTimeout(function () {
-          shownAt = Date.now();
-          loader.classList.add('is-active');
-        }, delay);
-      }
-      function hideLoader() {
-        clearTimeout(showTimer);
-        if (!loader.classList.contains('is-active')) return;
-        showTimer = setTimeout(function () {
-          loader.classList.remove('is-active');
-        }, Math.max(0, 700 - (Date.now() - shownAt)));
-      }
-
-      video.addEventListener('playing', function () {
-        hideLoader();
-        host.classList.add('video-ready');
-      });
-      // brief stalls are normal; only show the loader if one lasts
-      video.addEventListener('waiting', function () { showLoaderSoon(800); });
-      video.addEventListener('error', hideLoader, true);
+      video.addEventListener('playing', function () { host.classList.add('video-ready'); });
 
       let retryArmed = false;
       function play() {
         const p = video.play();
         if (p && p.catch) {
           p.catch(function () {
-            // autoplay refused (e.g. iOS Low Power Mode): keep the poster,
-            // drop the loader, and start on the visitor's first interaction
-            hideLoader();
+            // autoplay refused (e.g. iOS Low Power Mode): keep the poster
+            // and start on the visitor's first interaction
             if (retryArmed) return;
             retryArmed = true;
             const types = ['pointerdown', 'touchstart', 'keydown'];
@@ -1252,13 +1219,12 @@
 
       function start() {
         const source = document.createElement('source');
-        source.src = video.dataset.src;
+        source.src = (slowLine && video.dataset.srcSd) || video.dataset.src;
         source.type = 'video/mp4';
         video.appendChild(source);
         video.removeAttribute('data-src');
         video.preload = 'auto';
         video.load();
-        showLoaderSoon(600);
         play();
       }
       // Let the headline fonts land first (they're small) so the video never
